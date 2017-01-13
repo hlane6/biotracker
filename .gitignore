@@ -1,0 +1,7 @@
+node_modules
+env
+biotracker.egg-info
+
+.DS_Store
+*.pyc
+.*.swp
