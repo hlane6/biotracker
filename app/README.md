@@ -27,7 +27,7 @@ To run the server locally (can be found at localhost:5000):
     export FLASK_DEBUG=true
     flask run
 
-To build the frontend bundle run:
+To build the frontend bundle run (in another tab in terminal):
 
     webpack
 
