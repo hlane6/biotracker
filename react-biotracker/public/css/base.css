@@ -1,0 +1,32 @@
+@import url("./normalize.css");
+@import url("./skeleton.css");
+
+button {
+    margin: 5px;
+}
+
+.bt-header {
+    border-bottom: 1px solid black;
+    margin-bottom: 25px;
+}
+
+.bt-video {
+    display: none;
+}
+
+.bt-canvas {
+    border: 5px solid black;
+    max-width: 720px;
+}
+
+.bt-video-controls-list {
+    list-style: none;
+    display: block;
+    float: none;
+    width: 100%;
+}
+
+.bt-video-controls-list li {
+    display: inline;
+    width: 20%;
+}

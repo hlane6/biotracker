@@ -1,0 +1,5 @@
+frame_num,tgt_id,x,y,theta,typename,tracklet_id,
+1,1,3,4,45.0,ant,1,
+1,2,7,8,90.0,ant,2,
+2,1,4,5,45.0,ant,1,
+2,2,7,9,90.0,ant,2,
