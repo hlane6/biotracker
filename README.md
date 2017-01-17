@@ -1,3 +1,6 @@
-Currently contains demo code for a working example of using video + canvas for a web app.
+Repo for Team 144 Jr Design
 
-run `node app.js` from the demo folder to start the web app
+app/ - current code
+demo/ - old javascript reference
+react-biotracker/ - react reference
+carden-biotracker/ - cardens reference material
