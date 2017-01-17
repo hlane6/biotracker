@@ -12,14 +12,14 @@ Run all commands from the root directory.
 
 Now lets use a virtual environment to install our packages:
     
-    python -m  venv env
+    python3 -m  venv env
     source env/bin/activate
 
 Now you can run these commands to install the requirements:
 
     npm install -g webpack
     npm install
-    pip install -e .
+    pip3 install -e .
 
 To run the server locally (can be found at localhost:5000):
 
