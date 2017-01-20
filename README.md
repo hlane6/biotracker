@@ -1,6 +1,6 @@
 Repo for Team 144 Jr Design
 
-app/ - current code
-demo/ - old javascript reference
-react-biotracker/ - react reference
-carden-biotracker/ - cardens reference material
++ app/ - current code, all work is done in this folder
++ demo/ - old javascript reference material
++ react-biotracker/ - react reference material
++ carden-biotracker/ - cardens python reference material
