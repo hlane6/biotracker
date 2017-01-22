@@ -1,0 +1,19 @@
+<head>
+    <title>Biotracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <div class="container">
+    	<video width="640" height="480" controls>
+		  <source src="/video" type="video/mp4"> 
+			Your browser does not support the video tag.
+		</video>
+
+    	<form action="/csvData">
+		    <input type="submit" value="Download Data File" />
+		</form>
+    	<form action="/">
+		    <input type="submit" value="Change video" />
+		</form>
+    </div>
+</body>

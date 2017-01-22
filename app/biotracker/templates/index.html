@@ -1,8 +1,34 @@
 <head>
     <title>Biotracker</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+	<script>
+	/* 
+	 * Check if the csv data file matches the video file before proceeding
+	 */
+	function validateForm() {
+	    var csvUrl = document.forms['fileForm']['csvData'].value;
+	    if (csvUrl != '') {
+		    var videoUrl = document.forms['fileForm']['video'].value;
+		    var videoName = videoUrl.substring(videoUrl.lastIndexOf('\\') + 1);
+		    var csvname = csvUrl.substring(csvUrl.lastIndexOf('\\') + 1);
+		    if (videoName.split('.')[0] != csvname.split('.')[0]) {
+		        alert("The CSV data does not match this video file!");
+		        return false;
+		    }
+	    }
+	}
+	</script>
 </head>
+
 <body>
-    <div class="container"></div>
-    <script type="text/javascript" src="{{ url_for('static', filename='bundle.js') }}"></script>
+	<h1>Biotracker - Analyzing Movement Patterns</h1>
+    <div class="container">
+    	<form name="fileForm" enctype="multipart/form-data" action="/uploadFiles" method="post" onsubmit="return validateForm()">
+			<p>Upload a video to analyze (.mp4)</p>
+			<input type="file" name="video" id="video" accept=".mp4" required>
+			<p>If you have associated data, add it here (.csv)</p>
+			<input type="file" name="csvData" id="csvData" accept=".csv">
+			<input type="submit" value="Start" >
+		</form>
+    </div>
 </body>
