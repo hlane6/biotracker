@@ -37,9 +37,11 @@ def handle_data():
 	if csvData.filename == '':
 		name = video.filename.split('.')[0]
 		file = None
-		f = open(name + '.csv', 'r+')
-		file = FileStorage(f)
-		file.save(os.path.join(app.config['DATA_FOLDER'], file.filename))
+		with open(name + '.csv', 'w') as f: # Create writable file
+			with open(name + '.csv', 'r+') as fr: # Use readable file for FileStorage() object
+				file = FileStorage(fr)
+				file.save(os.path.join(app.config['DATA_FOLDER'], file.filename))
+				os.remove(name + '.csv') # Clean up the aux file we created
 	else:
 		csvData.save(os.path.join(app.config['DATA_FOLDER'], secure_filename(csvData.filename)))
 
