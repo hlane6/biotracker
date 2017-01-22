@@ -1,6 +1,18 @@
-# Airbnb JavaScript Style Guide
+# JavaScript Style Guide
 
-*A mostly reasonable approach to JavaScript*
+Attempt to follow the conventions set forth in this style guide whenever pushing
+code. ESLink can be used to see if code complies with this style guide and can
+be run using this command
+
+    ./node_modules/.bin/eslint myfile.js
+
+That command assumes you have installed eslint locally by running:
+
+    npm install eslint --save-dev
+
+If you would rather install it globally run:
+
+    npm install eslint -g
 
 ## Table of Contents
 
