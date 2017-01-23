@@ -37,8 +37,10 @@ def handle_data():
 	if csvData.filename == '':
 		name = video.filename.split('.')[0]
 		file = None
-		with open(name + '.csv', 'w') as f: # Create writable file
-			with open(name + '.csv', 'r+') as fr: # Use readable file for FileStorage() object
+		
+		#While the following looks silly, it is a work around for permissions when we save the file as FileStorage() object
+		with open(name + '.csv', 'w') as f:
+			with open(name + '.csv', 'r+') as fr:
 				file = FileStorage(fr)
 				file.save(os.path.join(app.config['DATA_FOLDER'], file.filename))
 				os.remove(name + '.csv') # Clean up the aux file we created
@@ -81,8 +83,8 @@ def fetch_csvData():
 
 def is_match(video, csv):
 	"""
-	Endpoint to serve the save mp4 video
-	Prevents Caching to ensure that the newest upload is what always return
+	Checks if a csv file matches a given mp4 file. 
+	If the names are the same return true
 	"""
 	return video.filename.split('.')[0] == csv.filename.split('.')[0]
 
