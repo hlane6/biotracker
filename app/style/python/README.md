@@ -1,5 +1,12 @@
 #Python Style Guide
 
+Attempt to follow the conventions set forth in this style guide whenever pushing code. To see whether any given code conforms to this style guide, simply run:
+
+    pep8 my_python_file.py
+
+If you do not have pep8 installed on your machine, install it through pip by running:
+
+    pip3 install pep8
 
 ##Table of Contents
 
@@ -999,23 +1006,3 @@ near the top of the file; this tells type checker to ignore all annotations. (Mo
 * Users who don't want to use type checkers are free to ignore them. However, it is expected that users of third party library packages may want to run type checkers over those packages. For this purpose PEP 484 recommends the use of stub files: .pyi files that are read by the type checker in preference of the corresponding .py files. Stub files can be distributed with a library, or separately (with the library author's permission) through the typeshed repo [5] .
 
 * For code that needs to be backwards compatible, type annotations can be added in the form of comments. See the relevant section of PEP 484 [6] .
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

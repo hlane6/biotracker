@@ -1,16 +1,10 @@
 # JavaScript Style Guide
 
-Attempt to follow the conventions set forth in this style guide whenever pushing
-code. ESLink can be used to see if code complies with this style guide and can
-be run using this command
+Attempt to follow the conventions set forth in this style guide whenever pushing code. ESLint can be used to see if code complies with this style guide and can be run using this command:
 
-    ./node_modules/.bin/eslint myfile.js
+    eslint myfile.js
 
-That command assumes you have installed eslint locally by running:
-
-    npm install eslint --save-dev
-
-If you would rather install it globally run:
+If you do not have eslint installed, install it with npm by running:
 
     npm install eslint -g
 
