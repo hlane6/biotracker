@@ -1,6 +1,41 @@
 #Python Style Guide
 
-##Code lay-out
+
+##Table of Contents
+
+1. [Code Layout](#code-layout)
+	* [Indentation](#indentation)
+	* [Tabs or Spaces](#tabs-or-spaces)
+	* [Maximum Line Length](#maximum-line-length)
+	* [Line Breaks](#should-a-line-break-before-or-after-a-binary-operator)
+	* [Blank Lines](#blank-lines)
+	* [Source File Encoding](#source-file-encoding)
+	* [Imports](#imports)
+	* [Module level dunder names](#module-level-dunder-names)
+2. [String Quotes](#string-quotes)
+3. [Whitespace](#whitespace-in-expressions-and-statements)
+4. [Comments](#comments)
+5. [Naming Conventions](#naming-conventions)
+	* [Overriding Principle](#overriding-principle)
+	* [Descriptive: Naming Styles](#descriptive-naming-styles)
+	* [Prescriptive: Naming Conventions](#prescriptive-naming-conventions)
+		* [Names to Avoid](#names-to-avoid)
+		* [Package and Module Names](#package-and-module-names)
+		* [Class Names](#class-names)
+		* [Type Variable Names](#type-variable -names)
+		* [Exception Names](#exception-names)
+		* [Global Variable Names](#global-variable -names)
+		* [Function Names](#function-names)
+		* [Function and method arguments](#function-and-method-arguments)
+		* [Method Names and Instance Variables](#method-names-and-instance-variables)
+		* [Constants](#constants)
+		* [Designing for inheritance](#designing-for-inheritance)
+		* [Public and internal interfaces](#public-and-internal-interfaces)
+6. [Programming Recommendations](#programming-recommendations)
+	* [Function Annotations](#function-annotations)
+
+
+##Code Layout
 
 ###Indentation
 
@@ -101,7 +136,7 @@ result = some_function_that_takes_arguments(
 
 ###Tabs or Spaces?
 
-are the preferred indentation method.
+Spaces are the preferred indentation method.
 
 Tabs should be used solely to remain consistent with code that is already indented with tabs.
 
@@ -287,11 +322,13 @@ import os
 import sys
 ```
 
+
 ##String Quotes
 
 In Python, single-quoted strings and double-quoted strings are the same. This PEP does not make a recommendation for this. Pick a rule and stick to it. When a string contains single or double quote characters, however, use the other one to avoid backslashes in the string. It improves readability.
 
 For triple-quoted strings, always use double quote characters to be consistent with the docstring convention in PEP 257 .
+
 
 ##Whitespace in Expressions and Statements
 
@@ -490,6 +527,7 @@ do_one(); do_two(); do_three(long, argument,
 if foo == 'blah': one(); two(); three()
 ```
 
+
 ##Comments
 
 Comments that contradict the code are worse than no comments. Always make a priority of keeping the comments up-to-date when the code changes!
@@ -543,6 +581,7 @@ Optional plotz says to frobnicate the bizbaz first.
 ```
 
 * For one liner docstrings, please keep the closing """ on the same line.
+
 
 ##Naming Conventions
 
@@ -717,6 +756,7 @@ Even with `__all__` set appropriately, internal interfaces (packages, modules, c
 An interface is also considered internal if any containing namespace (package, module or class) is considered internal.
 
 Imported names should always be considered an implementation detail. Other modules must not rely on indirect access to such imported names unless they are an explicitly documented part of the containing module's API, such as `os.path` or a package's `__init__` module that exposes functionality from submodules.
+
 
 ##Programming Recommendations
 
