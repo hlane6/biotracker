@@ -1,6 +1,8 @@
 node_modules
 env
 biotracker.egg-info
+video
+data
 
 .DS_Store
 *.pyc
