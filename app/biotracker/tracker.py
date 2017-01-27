@@ -41,7 +41,7 @@ class Tracker(object):
         ''' Generates tracklets for an individual frame '''
         pass
 
-    def detect_targets(self):
+    def detect_targets(self, image):
         ''' Detects targets from the contour image of a frame '''
         pass
 
