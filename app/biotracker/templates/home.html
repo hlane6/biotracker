@@ -1,13 +1,54 @@
 <head>
     <title>Biotracker</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+
+    <script type="text/javascript">
+    var fps = 30;
+
+    function vidplay() {
+       var video = document.getElementById("Vid");
+       var button = document.getElementById("play");
+       if (video.paused) {
+          video.play();
+          button.textContent = "||";
+       } else {
+          video.pause();
+          button.textContent = ">";
+       }
+    }
+
+    function restart() {
+        var video = document.getElementById("Vid");
+        video.currentTime = 0;
+    }
+
+    function skip(value) {
+        var video = document.getElementById("Vid");
+        video.currentTime += value;
+    }
+
+    function seekFrame() {
+        var video = document.getElementById("Vid");
+        video.currentTime = parseInt(document.getElementById("frame").value) / fps;
+    }  
+    </script>
 </head>
 <body>
     <div class="container">
-    	<video width="640" height="480" controls>
+    	<video width="640" height="480" controls id="Vid">
 		  <source src="/video" type="video/mp4"> 
 			Your browser does not support the video tag.
 		</video>
+        <div id="buttonbar">
+            <button id="restart" onclick="restart();">[]</button> 
+            <button id="rew" onclick="skip(-5)">&lt;&lt;</button>
+            <button id="play" onclick="vidplay()">&gt;</button>
+            <button id="fastFwd" onclick="skip(5)">&gt;&gt;</button>
+            <form>
+                <input type="number" name="frame" id="frame"><br>
+            </form>
+            <button onclick="seekFrame()">Find frame</button>
+        </div>
 
     	<form action="/csvData">
 		    <input type="submit" value="Download Data File" />
