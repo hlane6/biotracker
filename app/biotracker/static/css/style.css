@@ -1,8 +1,7 @@
 .container {
             max-width: 500px;
-            padding-top: 100px;
+            padding-top: 20px;
 }
-h2 {color: red;}
 
 /* remove margins and padding from list, add background color */
 ul.topnavbar {
