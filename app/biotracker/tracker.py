@@ -29,15 +29,19 @@ class Tracker(object):
 
         video.release()
 
-    def get_background(self):
-        return None
+    def get_background(self, video):
+        ''' Computes the background image of a given video '''
+        pass
 
-    def process_video(self):
-        return None
+    def process_video(self, video):
+        ''' Generates tracklets frame by frame for a given video '''
+        pass
 
-    def process_frame(self):
-        return None
+    def process_frame(self, frame):
+        ''' Generates tracklets for an individual frame '''
+        pass
 
     def detect_targets(self):
-        return None
+        ''' Detects targets from the contour image of a frame '''
+        pass
 
