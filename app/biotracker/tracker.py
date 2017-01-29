@@ -5,12 +5,13 @@ import os
 
 
 class Tracker(object):
-    ''' Handles the generation of tracklets for a given video. Does not associate the 
-        tracklets with ids. Initial generated tracklets may contain errors.
+    ''' Handles the generation of tracklets for a given video.
+        Does not associate the tracklets with ids. Initial generated tracklets
+        may contain errors.
 
         self.background -- the computed background image of the video
-        self.tracklets -- the tracklets for the entire video, indexing 0 gives tracklets
-                for frame 0 and so forth
+        self.tracklets -- the tracklets for the entire video, indexing 0 gives
+                tracklets for frame 0 and so forth
     '''
 
     def __init__(self, filename=None):
@@ -44,4 +45,3 @@ class Tracker(object):
     def detect_targets(self, image):
         ''' Detects targets from the contour image of a frame '''
         pass
-
