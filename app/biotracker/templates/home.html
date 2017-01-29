@@ -31,17 +31,18 @@
     function seekFrame() {
         var video = document.getElementById("Vid");
         video.currentTime = parseInt(document.getElementById("frame").value) / fps;
-    }  
+    }
     </script>
-</head>
-<body>
+
+{% endblock %}
+{% block content %}
     <div class="container">
-    	<video width="640" height="480" controls id="Vid">
-		  <source src="/video" type="video/mp4"> 
-			Your browser does not support the video tag.
-		</video>
+        <video width="640" height="480" id="Vid">
+          <source src="/video" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
         <div id="buttonbar">
-            <button id="restart" onclick="restart();">[]</button> 
+            <button id="restart" onclick="restart();">[]</button>
             <button id="rew" onclick="skip(-5)">&lt;&lt;</button>
             <button id="play" onclick="play()">&gt;</button>
             <button id="fastFwd" onclick="skip(5)">&gt;&gt;</button>
@@ -50,14 +51,6 @@
             </form>
             <button onclick="seekFrame()">Find frame</button>
         </div>
-{% endblock %}
-{% block content %}
-    <div class="container">
-        <video width="640" height="480" controls>
-          <source src="/video" type="video/mp4"> 
-            Your browser does not support the video tag.
-        </video>
-
 
         <form action="/csvData">
             <input type="submit" value="Download Data File" />
