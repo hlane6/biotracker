@@ -36,27 +36,7 @@
 
 {% endblock %}
 {% block content %}
-    <div class="container">
-        <video width="640" height="480" id="Vid">
-          <source src="/video" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        <div id="buttonbar">
-            <button id="restart" onclick="restart();">[]</button>
-            <button id="rew" onclick="skip(-5)">&lt;&lt;</button>
-            <button id="play" onclick="play()">&gt;</button>
-            <button id="fastFwd" onclick="skip(5)">&gt;&gt;</button>
-            <form>
-                <input type="number" name="frame" id="frame"><br>
-            </form>
-            <button onclick="seekFrame()">Find frame</button>
-        </div>
-
-        <form action="/csvData">
-            <input type="submit" value="Download Data File" />
-        </form>
-        <form action="/">
-            <input type="submit" value="Change video" />
-        </form>
+    <div id="root">
     </div>
+    <script type='text/javascript' src={{ url_for('static', filename='bundle.js')}}>
 {% endblock %}

@@ -1,8 +1,8 @@
-import Splash from './components/splash';
+import Tracker from './components/Tracker';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
 ReactDOM.render(
-    <Splash />,
-    document.querySelector('.container')
+    <Tracker />,
+    document.getElementById('root')
 );
