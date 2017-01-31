@@ -20,6 +20,7 @@ export default class Video extends React.Component {
     constructor(props) {
         super(props);
         this.onReady = this.onReady.bind(this);
+        this.style = { visibility: 'hidden' };
     }
 
     componentDidMount() {
@@ -28,8 +29,8 @@ export default class Video extends React.Component {
 
     /**
     * We dont know the duration of the video until it loads,
-    * so we send the duration back up to its parents by passing
-    * it through the provided callback
+    * so we send the duration back up through a callback to be
+    * updated elsewhere
     */
     onReady() {
         this.props.onReady(this.video.duration);
@@ -39,6 +40,7 @@ export default class Video extends React.Component {
         return (
             <video className='video'
                     src={ this.props.src }
+                    style={ this.style }
                     type='video/mp4'
                     ref={(video) => { this.video = video; }}
             >
