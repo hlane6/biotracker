@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * React Component to handle the inner workings of canvas
+ * Foundational component to handle the inner workings of canvas
  * Provides a callback function that will run every frame to
  * handle the drawing. Inspired from react-canvas
  */
@@ -45,7 +45,7 @@ export default class Canvas extends React.Component {
 
         return (
             <canvas style={ this.style }
-                    className="bt-canvas"
+                    className="canvas"
                     ref='canvas'
                     { ...other }>
                 { this.props.children }
