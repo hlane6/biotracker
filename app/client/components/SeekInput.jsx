@@ -8,7 +8,8 @@ export default class SeekInput extends React.Component {
     static defaultProps = {
         frame: 0,
         duration: 1,
-        handleSeekCallback : function() {},
+        handleSeekCallback: () => {},
+        playPauseCallback: () => {},
     };
 
     static propTypes = {
@@ -30,22 +31,7 @@ export default class SeekInput extends React.Component {
         this.handleMouseUp = this.handleMouseUp.bind(this);
     }
 
-    render() {
-        return (
-            <div>
-                <input
-                        type='range' min={ 0 } max={ this.props.duration } step='any'
-                        value={ this.props.frame / 30 }
-                        onMouseDown={ this.handleMouseDown }
-                        onChange={ this.handleChange }
-                        onMouseUp={ this.handleMouseUp }
-                        style={ this.style }
-                />
-            </div>
-        );
-    }
-
-    handleMouseDown(event) {
+    handleMouseDown() {
         this.props.playPauseCallback(true);
     }
 
@@ -53,7 +39,22 @@ export default class SeekInput extends React.Component {
         this.props.handleSeekCallback(parseFloat(event.target.value) * 30);
     }
 
-    handleMouseUp(event) {
+    handleMouseUp() {
         this.props.playPauseCallback(true);
+    }
+
+    render() {
+        return (
+          <div>
+            <input
+              type="range" min={0} max={this.props.duration} step="any"
+              value={this.props.frame / 30}
+              onMouseDown={this.handleMouseDown}
+              onChange={this.handleChange}
+              onMouseUp={this.handleMouseUp}
+              style={this.style}
+            />
+          </div>
+        );
     }
 }
