@@ -6,7 +6,8 @@
         "import"
     ],
     "rules": {
-        "indent": ["error", 4]
+        "indent": ["error", 4],
+        "keywords-space": 0
     },
     "parser": "babel-eslint"
 }
