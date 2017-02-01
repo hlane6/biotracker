@@ -33,7 +33,7 @@ export default class Video extends React.Component {
     * updated elsewhere
     */
     onReady() {
-        this.props.onReady(this.video.duration);
+        this.props.onReady(this.rawVideo.duration);
     }
 
     render() {
@@ -42,7 +42,7 @@ export default class Video extends React.Component {
                     src={ this.props.src }
                     style={ this.style }
                     type='video/mp4'
-                    ref={(video) => { this.video = video; }}
+                    ref={(video) => { this.rawVideo = video; }}
             >
                     onReady={ this.onReady }
             </video>
