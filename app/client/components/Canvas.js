@@ -40,7 +40,7 @@ export default class Canvas extends React.Component {
     }
 
     render() {
-        const { ...other } = this.props;
+        const { draw, ...other } = this.props;
         requestAnimationFrame(this.requestAnimationFrameCallback);
 
         return (

@@ -78,7 +78,7 @@ export default class VideoCanvas extends React.Component {
     }
 
     getVideo() {
-        return this.video.getVideo();
+        return this.video.rawVideo;
     }
 
     updateDuration(duration) {

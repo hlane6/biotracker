@@ -20,11 +20,11 @@ export default class Video extends React.Component {
     constructor(props) {
         super(props);
         this.onReady = this.onReady.bind(this);
-        this.style = { visibility: 'hidden' };
+        this.style = { display: 'none' };
     }
 
     componentDidMount() {
-        this.video.addEventListener('canplay', this.onReady);
+        this.rawVideo.addEventListener('canplay', this.onReady);
     }
 
     /**
