@@ -71,9 +71,9 @@ export default class VideoControls extends React.Component {
         if (time === undefined && frame === undefined && deltaFrame === undefined) {
             return;
         } else if (time === undefined && deltaFrame === undefined && frame !== undefined) {
-            time = frame * 30;
+            this.seek(frame * 30);
         } else if (time === undefined && frame === undefined && deltaFrame !== undefined) {
-            time = this.props.time + (deltaFrame / 30);
+            this.seek(this.props.time + (deltaFrame / 30));
         }
         this.seek(time);
     }

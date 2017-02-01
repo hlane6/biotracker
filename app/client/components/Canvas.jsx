@@ -18,7 +18,6 @@ export default class Canvas extends React.Component {
     static propTypes = {
         draw: React.PropTypes.func,
         onClick: React.PropTypes.func,
-        step: React.PropTypes.number,
         width: React.PropTypes.number,
         height: React.PropTypes.number,
     };
