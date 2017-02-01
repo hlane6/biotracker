@@ -12,10 +12,10 @@ export default class VideoCanvas extends React.Component {
         paused: false,
         frame: 0,
         src: '',
-        playPauseCallback: function() {},
-        seekCallback: function() {},
-        drawCallback: function() {},
-        onClick: function() {},
+        playPauseCallback: () => {},
+        seekCallback: () => {},
+        drawCallback: () => {},
+        onClick: () => {},
     };
 
     static propTypes = {
@@ -36,53 +36,49 @@ export default class VideoCanvas extends React.Component {
         this.updateDuration = this.updateDuration.bind(this);
     }
 
-    render() {
-        return (
-            <div className='videoCanvas'>
-                <Video
-                        src={ this.props.src }
-                        ref={(video) => { this.video = video; }}
-                        onReady={ this.updateDuration }
-                />
-                <Canvas
-                        draw={ this.draw }
-                        width={ 720 }
-                        height={ 480 }
-                        step={ 33.367 }
-                        onClick={ this.props.onClick }
-                />
-                <VideoControls
-                        paused={ this.props.paused }
-                        frame={ this.props.frame }
-                        duration={ this.state.duration }
-                        getVideo={ this.getVideo }
-                        playPauseCallback={ this.props.playPauseCallback }
-                        seekCallback={ this.props.seekCallback }
-                />
-            </div>
-        );
+    getVideo() {
+        return this.video.rawVideo;
     }
 
-    draw({ ctx, delta }) {
+    draw({ ctx }) {
         const { width, height } = ctx.canvas;
 
-        //ctx.save();
-        //ctx.clearRect(0, 0, width, height);
+        // ctx.clearRect(0, 0, width, height);
         ctx.drawImage(this.getVideo(), 0, 0, width, height);
-
-        //ctx.restore();
 
         if (this.props.paused || this.getVideo().ended) { return; }
         this.getVideo().currentTime = this.props.frame / 30.0;
         this.props.drawCallback();
     }
 
-    getVideo() {
-        return this.video.rawVideo;
-    }
-
     updateDuration(duration) {
-        this.setState({ duration: duration });
+        this.setState({ duration });
     }
 
+    render() {
+        return (
+          <div className="videoCanvas">
+            <Video
+              src={this.props.src}
+              ref={(video) => { this.video = video; }}
+              onReady={this.updateDuration}
+            />
+            <Canvas
+              draw={this.draw}
+              width={720}
+              height={480}
+              step={33}
+              onClick={this.props.onClick}
+            />
+            <VideoControls
+              paused={this.props.paused}
+              frame={this.props.frame}
+              duration={this.state.duration}
+              getVideo={this.getVideo}
+              playPauseCallback={this.props.playPauseCallback}
+              seekCallback={this.props.seekCallback}
+            />
+          </div>
+        );
+    }
 }
