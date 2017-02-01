@@ -10,7 +10,7 @@ export default class VideoCanvas extends React.Component {
 
     static defaultProps = {
         paused: false,
-        time: 0.0,
+        frame: 0,
         src: '',
         playPauseCallback: function() {},
         seekCallback: function() {},
@@ -20,7 +20,7 @@ export default class VideoCanvas extends React.Component {
 
     static propTypes = {
         paused: React.PropTypes.bool,
-        time: React.PropTypes.number,
+        frame: React.PropTypes.number,
         src: React.PropTypes.string,
         playPauseCallback: React.PropTypes.func,
         seekCallback: React.PropTypes.func,
@@ -30,7 +30,6 @@ export default class VideoCanvas extends React.Component {
 
     constructor(props) {
         super(props);
-
         this.state = { duration: 1.0 };
         this.draw = this.draw.bind(this);
         this.getVideo = this.getVideo.bind(this);
@@ -40,7 +39,6 @@ export default class VideoCanvas extends React.Component {
     render() {
         return (
             <div className='videoCanvas'>
-                <Header />
                 <Video
                         src={ this.props.src }
                         ref={(video) => { this.video = video; }}
@@ -55,7 +53,6 @@ export default class VideoCanvas extends React.Component {
                 />
                 <VideoControls
                         paused={ this.props.paused }
-                        time={ this.props.time }
                         frame={ this.props.frame }
                         duration={ this.state.duration }
                         getVideo={ this.getVideo }

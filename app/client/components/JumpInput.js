@@ -7,7 +7,7 @@ import Button from './Button';
 export default class JumpInput extends React.Component {
 
     static defaultProps = {
-        inputCallback : function() {},
+        handleJumpCallback : function() {},
     };
 
     static propTypes = {
@@ -15,7 +15,7 @@ export default class JumpInput extends React.Component {
          * A callback function to handle the change of input higher up in
          * the app. Takes in one argument, a frame as a number
          */
-        inputCallback : React.PropTypes.func,
+        handleJumpCallback : React.PropTypes.func,
     };
 
     constructor(props) {
@@ -50,7 +50,7 @@ export default class JumpInput extends React.Component {
             // states and become red or something.
             alert('Invalid frame requested');
         } else {
-            this.props.inputCallback({ frame: frame });
+            this.props.handleJumpCallback(frame);
         }
 
         this.setState({ value: '' });

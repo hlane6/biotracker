@@ -8,7 +8,7 @@ export default class SeekInput extends React.Component {
     static defaultProps = {
         frame: 0,
         duration: 1,
-        inputCallback : function() {},
+        handleSeekCallback : function() {},
     };
 
     static propTypes = {
@@ -18,7 +18,8 @@ export default class SeekInput extends React.Component {
          * A callback function to handle the change of input higher up in
          * the app. Takes in one argument, a frame as a number
          */
-        inputCallback: React.PropTypes.func,
+        handleSeekCallback: React.PropTypes.func,
+        playPauseCallback: React.PropTypes.func,
     };
     constructor(props) {
         super(props);
@@ -49,7 +50,7 @@ export default class SeekInput extends React.Component {
     }
 
     handleChange(event) {
-        this.props.handleSeek({ frame: parseFloat(event.target.value) * 30 });
+        this.props.handleSeekCallback(parseFloat(event.target.value) * 30);
     }
 
     handleMouseUp(event) {
