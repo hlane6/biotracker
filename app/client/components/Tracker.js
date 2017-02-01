@@ -39,8 +39,8 @@ export default class Tracker extends React.Component {
         this.setState({ frame: frame });
     }
 
-    handleDraw(frame) {
-        this.setState((prevState, props) => {{
+    handleDraw() {
+        this.setState((prevState, props) => { return {
             frame: prevState.frame + 1
         }});
     }

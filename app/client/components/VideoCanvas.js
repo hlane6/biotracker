@@ -42,7 +42,7 @@ export default class VideoCanvas extends React.Component {
                 <Video
                         src={ this.props.src }
                         ref={(video) => { this.video = video; }}
-                        onLoad={ this.updateDuration }
+                        onReady={ this.updateDuration }
                 />
                 <Canvas
                         draw={ this.draw }
@@ -66,15 +66,15 @@ export default class VideoCanvas extends React.Component {
     draw({ ctx, delta }) {
         const { width, height } = ctx.canvas;
 
-        ctx.save();
-        ctx.clearRect(0, 0, width, height);
+        //ctx.save();
+        //ctx.clearRect(0, 0, width, height);
         ctx.drawImage(this.getVideo(), 0, 0, width, height);
 
-        ctx.restore();
+        //ctx.restore();
 
-        if (this.props.paused) { return; }
+        if (this.props.paused || this.getVideo().ended) { return; }
         this.getVideo().currentTime = this.props.frame / 30.0;
-        this.props.drawCallback(this.props.frame);
+        this.props.drawCallback();
     }
 
     getVideo() {
