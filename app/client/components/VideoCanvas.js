@@ -1,9 +1,7 @@
 import React from 'react';
-import Canvas from './canvas';
-import Corrections from './corrections.js';
-import Header from './header';
-import Video from './video';
-import VideoControls from './video-controls';
+import Canvas from './Canvas';
+import Video from './Video';
+import VideoControls from './VideoControls';
 
 /**
  * Combines a video and a canvas and provides the controls
@@ -13,6 +11,7 @@ export default class VideoCanvas extends React.Component {
     static defaultProps = {
         paused: false,
         time: 0.0,
+        src: '',
         playPauseCallback: function() {},
         seekCallback: function() {},
         drawCallback: function() {},
@@ -22,6 +21,7 @@ export default class VideoCanvas extends React.Component {
     static propTypes = {
         paused: React.PropTypes.bool,
         time: React.PropTypes.number,
+        src: React.PropTypes.string,
         playPauseCallback: React.PropTypes.func,
         seekCallback: React.PropTypes.func,
         drawCallback: React.PropTypes.func,
@@ -42,7 +42,7 @@ export default class VideoCanvas extends React.Component {
             <div className='videoCanvas'>
                 <Header />
                 <Video
-                        src={ process.env.PUBLIC_URL + '/test.mp4' }
+                        src={ this.props.src }
                         ref={(video) => { this.video = video; }}
                         onLoad={ this.updateDuration }
                 />
