@@ -4,5 +4,9 @@
         "react",
         "jsx-a11y",
         "import"
-    ]
+    ],
+    "rules": {
+        "indent": ["error", 4]
+    },
+    "parser": "babel-eslint"
 }

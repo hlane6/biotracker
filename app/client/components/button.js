@@ -6,8 +6,8 @@ import React from 'react';
 export default class Button extends React.Component {
 
     static defaultProps = {
-        handler     : function() {},
-        text        : ""
+        handler: function() {},
+        text : ""
     };
 
     static propTypes = {
@@ -17,9 +17,11 @@ export default class Button extends React.Component {
 
     render() {
         return (
-            <button className="button"
-                    onClick={ this.props.handler }>
-                { this.props.text }
+            <button
+                className="button"
+                onClick={this.props.handler}
+            >
+                {this.props.text}
             </button>
         );
     }
