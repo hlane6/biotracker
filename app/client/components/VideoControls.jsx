@@ -11,7 +11,7 @@ export default class VideoControls extends React.Component {
 
     static defaultProps = {
         paused: false,
-        frame: 0,
+        time: 0,
         duration: 1.0,
         getVideo: () => {},
         playPauseCallback: () => {},
@@ -20,7 +20,7 @@ export default class VideoControls extends React.Component {
 
     static propTypes = {
         paused: React.PropTypes.bool,
-        frame: React.PropTypes.number,
+        time: React.PropTypes.number,
         duration: React.PropTypes.number,
 
         /** This is a function that returns an html video element
@@ -42,11 +42,11 @@ export default class VideoControls extends React.Component {
 
         this.playPause = this.playPause.bind(this);
         this.seek = this.seek.bind(this);
-        this.jumpBackward = this.seek.bind(this, -10);
-        this.stepBackward = this.seek.bind(this, -1);
-        this.stepForward = this.seek.bind(this, 1);
-        this.jumpForward = this.seek.bind(this, 10);
         this.handleSeekInput = this.handleSeekInput.bind(this);
+        this.jumpBackward = this.handleSeekInput.bind(this, { deltaFrame: -10 });
+        this.stepBackward = this.handleSeekInput.bind(this, { deltaFrame: -1 });
+        this.stepForward = this.handleSeekInput.bind(this, { deltaFrame: 1 });
+        this.jumpForward = this.handleSeekInput.bind(this, { deltaFrame: 10 });
     }
 
     playPause() {
@@ -59,30 +59,30 @@ export default class VideoControls extends React.Component {
         this.props.playPauseCallback(!this.props.paused);
     }
 
-    seek(frames) {
-        const newFrame = (this.props.frame + frames);
-        const newTime = (newFrame / 30) + 0.00001;
-
-        if (newTime > this.props.getVideo().duration) {
+    seek(time) {
+        if (time > this.props.getVideo().duration || time < 0) {
             return;
         }
-
-        this.props.getVideo().currentTime = newTime;
-        this.props.seekCallback(newFrame);
+        this.props.getVideo().currentTime = time;
+        this.props.seekCallback(time);
     }
 
-    handleSeekInput(frame) {
-        if (frame === undefined) {
+    handleSeekInput({ time, frame, deltaFrame }) {
+        if (time === undefined && frame === undefined && deltaFrame === undefined) {
             return;
+        } else if (time === undefined && deltaFrame === undefined && frame !== undefined) {
+            time = frame * 30;
+        } else if (time === undefined && frame === undefined && deltaFrame !== undefined) {
+            time = this.props.time + (deltaFrame / 30);
         }
-        this.seek(frame - this.props.frame);
+        this.seek(time);
     }
 
     render() {
         return (
           <div className="videoControls">
             <SeekInput
-              frame={this.props.frame}
+              time={this.props.time}
               duration={this.props.duration}
               handleSeekCallback={this.handleSeekInput}
               playPauseCallback={this.props.playPauseCallback}
@@ -97,7 +97,7 @@ export default class VideoControls extends React.Component {
             <JumpInput
               handleJumpCallback={this.handleSeekInput}
             />
-            <h6>{this.props.frame} {this.props.frame * 30}</h6>
+            <h6>{this.props.time} {this.props.time * 30}</h6>
           </div>
         );
     }

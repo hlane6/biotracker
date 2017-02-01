@@ -21,6 +21,7 @@ export default class Video extends React.Component {
         super(props);
         this.onReady = this.onReady.bind(this);
         this.style = { display: 'none' };
+        this.style = {};
     }
 
     componentDidMount() {
@@ -44,7 +45,7 @@ export default class Video extends React.Component {
             style={this.style}
             type="video/mp4"
             ref={(video) => { this.rawVideo = video; }}
-            onReady={this.onReady}
+            controls
           />
         );
     }

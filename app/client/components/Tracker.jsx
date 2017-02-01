@@ -8,6 +8,7 @@ export default class Tracker extends React.Component {
         this.state = {
             paused: true,
             frame: 0,
+            time: 0.0,
         };
         this.handlePlayPause = this.handlePlayPause.bind(this);
         this.handleSeek = this.handleSeek.bind(this);
@@ -19,12 +20,12 @@ export default class Tracker extends React.Component {
         this.setState({ paused });
     }
 
-    handleSeek(frame) {
-        this.setState({ frame });
+    handleSeek(time) {
+        this.setState({ time });
     }
 
-    handleDraw() {
-        this.setState(prevState => ({ frame: prevState.frame + 1 }));
+    handleDraw(time) {
+        this.setState({ time });
     }
 
     /* eslint-disable */
@@ -39,7 +40,7 @@ export default class Tracker extends React.Component {
           <div>
             <VideoCanvas
               paused={this.state.paused}
-              frame={this.state.frame}
+              time={this.state.time}
               src={'/video'}
               playPauseCallback={this.handlePlayPause}
               seekCallback={this.handleSeek}

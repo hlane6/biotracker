@@ -37,7 +37,7 @@ export default class JumpInput extends React.Component {
             // states and become red or something.
             alert('Invalid frame requested'); // eslint-disable-line
         } else {
-            this.props.handleJumpCallback(frame);
+            this.props.handleJumpCallback({ frame });
         }
 
         this.setState({ value: '' });

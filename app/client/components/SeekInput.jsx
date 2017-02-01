@@ -6,14 +6,14 @@ import React from 'react';
 export default class SeekInput extends React.Component {
 
     static defaultProps = {
-        frame: 0,
+        time: 0,
         duration: 1,
         handleSeekCallback: () => {},
         playPauseCallback: () => {},
     };
 
     static propTypes = {
-        frame: React.PropTypes.number,
+        time: React.PropTypes.number,
         duration: React.PropTypes.number,
         /**
          * A callback function to handle the change of input higher up in
@@ -36,7 +36,7 @@ export default class SeekInput extends React.Component {
     }
 
     handleChange(event) {
-        this.props.handleSeekCallback(parseFloat(event.target.value) * 30);
+        this.props.handleSeekCallback({ time: parseFloat(event.target.value) * 30 });
     }
 
     handleMouseUp() {
@@ -48,7 +48,7 @@ export default class SeekInput extends React.Component {
           <div>
             <input
               type="range" min={0} max={this.props.duration} step="any"
-              value={this.props.frame / 30}
+              value={this.props.time}
               onMouseDown={this.handleMouseDown}
               onChange={this.handleChange}
               onMouseUp={this.handleMouseUp}

@@ -11,7 +11,6 @@ export default class Canvas extends React.Component {
     static defaultProps = {
         draw: () => {},
         onClick: () => {},
-        step: 33.367,
         width: 600,
         height: 600,
     };
@@ -27,8 +26,6 @@ export default class Canvas extends React.Component {
     constructor(props) {
         super(props);
         this.requestAnimationFrameCallback = this.requestAnimationFrameCallback.bind(this);
-        this.state = { progress: 0 };
-
         this.style = {
             width: `${props.width}px`,
             height: `${props.height}px`,
@@ -37,6 +34,7 @@ export default class Canvas extends React.Component {
 
     componentDidMount() {
         this.forceUpdate();
+        this.canvas.getContext('2d').imageSmoothingEnabled = false;
     }
 
     requestAnimationFrameCallback(time) {
@@ -57,15 +55,7 @@ export default class Canvas extends React.Component {
                 this.previousFrameTime = time;
             }
 
-            if (this.state.progress + delta > this.props.step) {
-                this.props.draw({ time, delta, ctx });
-            }
-
-            this.setState(prevState => ({
-                progress: (prevState.progress + delta > this.props.step)
-                        ? 0
-                        : prevState.progress + delta,
-            }));
+            this.props.draw({ time, delta, ctx });
         }
     }
 
