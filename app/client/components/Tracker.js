@@ -4,11 +4,15 @@ import Canvas from './Canvas'
 export default class Tracker extends React.Component {
 
     constructor(props) {
-        super(prosp);
+        super(props);
     }
 
     render() {
-        return <h1>Hello World!</h1>
+        return (
+            <div>
+                <h1>Hello World!</h1>
+            </div>
+        )
     }
 
 }
