@@ -13,9 +13,9 @@ export default class VideoControls extends React.Component {
         paused: false,
         frame: 0,
         duration: 1.0,
-        getVideo: function() {},
-        playPauseCallback: function() {},
-        seekCallback: function() {},
+        getVideo: () => {},
+        playPauseCallback: () => {},
+        seekCallback: () => {},
     };
 
     static propTypes = {
@@ -42,37 +42,15 @@ export default class VideoControls extends React.Component {
 
         this.playPause = this.playPause.bind(this);
         this.seek = this.seek.bind(this);
+        this.jumpBackward = this.seek.bind(this, -10);
+        this.stepBackward = this.seek.bind(this, -1);
+        this.stepForward = this.seek.bind(this, 1);
+        this.jumpForward = this.seek.bind(this, 10);
         this.handleSeekInput = this.handleSeekInput.bind(this);
     }
 
-    render() {
-        return (
-            <div className='videoControls'>
-                <SeekInput
-                        frame={ this.props.frame }
-                        duration={ this.props.duration }
-                        handleSeekCallback={ this.handleSeekInput }
-                        playPauseCallback={ this.props.playPauseCallback }
-                />
-                <ul className='videoControls-list'>
-                    <li><Button handler={ this.seek.bind(this, -10) } text='<<' /></li>
-                    <li><Button handler={ this.seek.bind(this, -1) } text='<' /></li>
-                    <li><Button handler={ this.playPause } text={ (this.props.paused) ? '|>' : '||' } /></li>
-                    <li><Button handler={ this.seek.bind(this, 1) } text='>' /></li>
-                    <li><Button handler={ this.seek.bind(this, 10) } text='>>' /></li>
-                </ul>
-
-                <JumpInput
-                        handleJumpCallback={ this.handleSeekInput }
-                />
-
-                <h6>{ this.props.frame } { this.props.frame * 30 }</h6>
-            </div>
-        );
-    }
-
     playPause() {
-        if ( this.props.paused ) {
+        if (this.props.paused) {
             this.props.getVideo().play();
         } else {
             this.props.getVideo().pause();
@@ -83,7 +61,7 @@ export default class VideoControls extends React.Component {
 
     seek(frames) {
         const newFrame = (this.props.frame + frames);
-        const newTime = newFrame / 30 + .00001;
+        const newTime = (newFrame / 30) + 0.00001;
 
         if (newTime > this.props.getVideo().duration) {
             return;
@@ -100,4 +78,27 @@ export default class VideoControls extends React.Component {
         this.seek(frame - this.props.frame);
     }
 
+    render() {
+        return (
+          <div className="videoControls">
+            <SeekInput
+              frame={this.props.frame}
+              duration={this.props.duration}
+              handleSeekCallback={this.handleSeekInput}
+              playPauseCallback={this.props.playPauseCallback}
+            />
+            <ul className="videoControls-list">
+              <li><Button handler={this.jumpBackward} text="<<" /></li>
+              <li><Button handler={this.stepBackward} text="<" /></li>
+              <li><Button handler={this.playPause} text={(this.props.paused) ? '|>' : '||'} /></li>
+              <li><Button handler={this.stepForward} text=">" /></li>
+              <li><Button handler={this.jumpForward} text=">>" /></li>
+            </ul>
+            <JumpInput
+              handleJumpCallback={this.handleSeekInput}
+            />
+            <h6>{this.props.frame} {this.props.frame * 30}</h6>
+          </div>
+        );
+    }
 }
