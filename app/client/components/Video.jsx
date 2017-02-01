@@ -9,7 +9,7 @@ export default class Video extends React.Component {
 
     static defaultProps = {
         src: '',
-        onReady: function() {},
+        onReady: () => {},
     };
 
     static propTypes = {
@@ -38,14 +38,14 @@ export default class Video extends React.Component {
 
     render() {
         return (
-            <video className='video'
-                    src={ this.props.src }
-                    style={ this.style }
-                    type='video/mp4'
-                    ref={(video) => { this.rawVideo = video; }}
-            >
-                    onReady={ this.onReady }
-            </video>
+          <video
+            className="video"
+            src={this.props.src}
+            style={this.style}
+            type="video/mp4"
+            ref={(video) => { this.rawVideo = video; }}
+            onReady={this.onReady}
+          />
         );
     }
 
