@@ -28,12 +28,15 @@ export default class Video extends React.Component {
     }
 
     /**
-    * We dont know the duration of the video until it loads,
-    * so we send the duration back up through a callback to be
-    * updated elsewhere
+    * We dont know the duration, width, or height of the video until it loads,
+    * so we send the duration back up through a callback to be updated elsewhere
     */
     onReady() {
-        this.props.onReady(this.rawVideo.duration);
+        this.props.onReady({
+            duration: this.rawVideo.duration,
+            width: this.rawVideo.width,
+            height: this.rawVideo.height,
+        });
     }
 
     render() {

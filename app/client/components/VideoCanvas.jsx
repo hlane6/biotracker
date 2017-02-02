@@ -14,7 +14,6 @@ export default class VideoCanvas extends React.Component {
         src: '',
         playPauseCallback: () => {},
         seekCallback: () => {},
-        drawCallback: () => {},
         onClick: () => {},
     };
 
@@ -24,16 +23,21 @@ export default class VideoCanvas extends React.Component {
         src: React.PropTypes.string,
         playPauseCallback: React.PropTypes.func,
         seekCallback: React.PropTypes.func,
-        drawCallback: React.PropTypes.func,
         onClick: React.PropTypes.func,
     };
 
     constructor(props) {
         super(props);
-        this.state = { duration: 1.0 };
+
+        this.state = {
+            duration: 1.0,
+            width: 720,
+            height: 420,
+        };
+
         this.draw = this.draw.bind(this);
         this.getVideo = this.getVideo.bind(this);
-        this.updateDuration = this.updateDuration.bind(this);
+        this.updateState = this.updateState.bind(this);
     }
 
     getVideo() {
@@ -43,17 +47,14 @@ export default class VideoCanvas extends React.Component {
     draw({ ctx }) {
         const { width, height } = ctx.canvas;
 
-        ctx.save();
-        ctx.clearRect(0, 0, width, height);
         ctx.drawImage(this.getVideo(), 0, 0, width, height);
-        ctx.restore();
 
         if (this.props.paused || this.getVideo().ended) { return; }
-        this.props.drawCallback(this.getVideo().currentTime);
+        this.props.seekCallback(this.getVideo().currentTime);
     }
 
-    updateDuration(duration) {
-        this.setState({ duration });
+    updateState({ duration, width, height }) {
+        this.setState({ duration, width, height });
     }
 
     render() {
@@ -62,13 +63,12 @@ export default class VideoCanvas extends React.Component {
             <Video
               src={this.props.src}
               ref={(video) => { this.video = video; }}
-              onReady={this.updateDuration}
+              onReady={this.updateState}
             />
             <Canvas
               draw={this.draw}
-              width={720}
-              height={480}
-              step={30}
+              width={this.state.width}
+              height={this.state.height}
               onClick={this.props.onClick}
             />
             <VideoControls

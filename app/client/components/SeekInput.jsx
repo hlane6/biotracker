@@ -36,7 +36,7 @@ export default class SeekInput extends React.Component {
     }
 
     handleChange(event) {
-        this.props.handleSeekCallback({ time: parseFloat(event.target.value) * 30 });
+        this.props.handleSeekCallback({ time: parseFloat(event.target.value) });
     }
 
     handleMouseUp() {

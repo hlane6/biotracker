@@ -12,8 +12,6 @@ export default class Tracker extends React.Component {
         };
         this.handlePlayPause = this.handlePlayPause.bind(this);
         this.handleSeek = this.handleSeek.bind(this);
-        this.handleDraw = this.handleDraw.bind(this);
-        this.handleClick = this.handleClick.bind(this);
     }
 
     handlePlayPause(paused) {
@@ -24,17 +22,6 @@ export default class Tracker extends React.Component {
         this.setState({ time });
     }
 
-    handleDraw(time) {
-        this.setState({ time });
-    }
-
-    /* eslint-disable */
-    // FIXME: implement clicking and remove eslint
-    handleClick(event) {
-        console.log(event);
-    }
-    /* eslint-enable */
-
     render() {
         return (
           <div>
@@ -44,7 +31,6 @@ export default class Tracker extends React.Component {
               src={'/video'}
               playPauseCallback={this.handlePlayPause}
               seekCallback={this.handleSeek}
-              drawCallback={this.handleDraw}
               onClick={this.handleClick}
             />
           </div>
