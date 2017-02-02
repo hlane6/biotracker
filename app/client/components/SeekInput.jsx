@@ -8,6 +8,7 @@ export default class SeekInput extends React.Component {
     static defaultProps = {
         time: 0,
         duration: 1,
+        width: 720,
         handleSeekCallback: () => {},
         playPauseCallback: () => {},
     };
@@ -15,6 +16,7 @@ export default class SeekInput extends React.Component {
     static propTypes = {
         time: React.PropTypes.number,
         duration: React.PropTypes.number,
+        width: React.PropTypes.number,
         /**
          * A callback function to handle the change of input higher up in
          * the app. Takes in one argument, a frame as a number
@@ -25,7 +27,7 @@ export default class SeekInput extends React.Component {
     constructor(props) {
         super(props);
         // FIXME: Be able to adjust to width of video
-        this.style = { width: '720px' };
+        this.style = { width: `${this.props.width}px` };
         this.handleMouseDown = this.handleMouseDown.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleMouseUp = this.handleMouseUp.bind(this);

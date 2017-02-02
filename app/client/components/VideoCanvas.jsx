@@ -75,6 +75,7 @@ export default class VideoCanvas extends React.Component {
               paused={this.props.paused}
               time={this.props.time}
               duration={this.state.duration}
+              width={this.state.width}
               getVideo={this.getVideo}
               playPauseCallback={this.props.playPauseCallback}
               seekCallback={this.props.seekCallback}

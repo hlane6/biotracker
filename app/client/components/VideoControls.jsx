@@ -13,6 +13,7 @@ export default class VideoControls extends React.Component {
         paused: false,
         time: 0,
         duration: 1.0,
+        width: 720,
         getVideo: () => {},
         playPauseCallback: () => {},
         seekCallback: () => {},
@@ -22,6 +23,7 @@ export default class VideoControls extends React.Component {
         paused: React.PropTypes.bool,
         time: React.PropTypes.number,
         duration: React.PropTypes.number,
+        width: React.PropTypes.number,
 
         /** This is a function that returns an html video element
         * that the controls operate on. Using this allows for the
@@ -84,6 +86,7 @@ export default class VideoControls extends React.Component {
             <SeekInput
               time={this.props.time}
               duration={this.props.duration}
+              width={this.props.width}
               handleSeekCallback={this.handleSeekInput}
               playPauseCallback={this.props.playPauseCallback}
             />

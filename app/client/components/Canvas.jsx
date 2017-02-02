@@ -26,8 +26,8 @@ export default class Canvas extends React.Component {
         super(props);
         this.requestAnimationFrameCallback = this.requestAnimationFrameCallback.bind(this);
         this.style = {
-            width: `${props.width}px`,
-            height: `${props.height}px`,
+            width: `${this.props.width}px`,
+            height: `${this.props.height}px`,
         };
     }
 
@@ -39,7 +39,6 @@ export default class Canvas extends React.Component {
     requestAnimationFrameCallback(time) {
         if (this.previousFrameTime !== time) {
             const ctx = (this.canvas && this.canvas.getContext('2d'));
-
             let delta = 0;
 
             if (this.props.draw && ctx) {
