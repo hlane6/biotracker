@@ -4,6 +4,9 @@ from werkzeug.utils import secure_filename
 from werkzeug.datastructures import FileStorage
 from datetime import datetime
 
+# Here is the basic import
+from tracker import Tracker
+
 import os
 
 
@@ -83,11 +86,15 @@ def fetch_csvData():
     """
     Endpoint to serve the save csv data
     """
-    file = app.send_static_file(os.path.join(app.config['DATA_FOLDER_SHORT'],
-                                os.listdir(app.config['DATA_FOLDER'])[0]))
-    file.headers['Content-disposition'] = \
-        'attachment; filename=' + os.listdir(app.config['DATA_FOLDER'])[0]
-    return file
+
+    vid = Tracker()
+    return 0
+
+    # file = app.send_static_file(os.path.join(app.config['DATA_FOLDER_SHORT'],
+    #                             os.listdir(app.config['DATA_FOLDER'])[0]))
+    # file.headers['Content-disposition'] = \
+    #     'attachment; filename=' + os.listdir(app.config['DATA_FOLDER'])[0]
+    # return file
 
 
 def is_match(video, csv):
