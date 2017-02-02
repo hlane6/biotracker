@@ -1,6 +1,3 @@
-# This may be incorrect
-__all__ = ['tracker', 'track', 'utils', 'fileIO']
-
 import flask as fl
 import os
 
