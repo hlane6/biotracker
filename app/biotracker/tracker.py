@@ -27,12 +27,12 @@ class Tracker(object):
 
         video = cv2.VideoCapture(full_path)
 
-        if video.isOpened():
+        while video.isOpened():
             ret, frame = video.read()
-            print(video.isOpened())
-            print(len(frame))
-        else:
-            print('Video is not opened')
+            if not ret:
+                break
+
+            print(frame)
 
         self.background = self.get_background(video)
         self.tracklets = self.process_video(video)
