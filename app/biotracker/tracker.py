@@ -18,12 +18,21 @@ class Tracker(object):
         ''' filename -- name of the video file which can be found in
                     the video folder of the server
         '''
-        full_path = '{}/{}'.format(
+        full_path = './{}/{}'.format(
             app.config['VIDEO_FOLDER'],
             filename
         )
 
+        print('Tracker path: {}'.format(full_path))
+
         video = cv2.VideoCapture(full_path)
+
+        if video.isOpened():
+            ret, frame = video.read()
+            print(video.isOpened())
+            print(len(frame))
+        else:
+            print('Video is not opened')
 
         self.background = self.get_background(video)
         self.tracklets = self.process_video(video)
@@ -32,11 +41,11 @@ class Tracker(object):
 
     def get_background(self, video):
         ''' Computes the background image of a given video '''
-        pass
+        return None
 
     def process_video(self, video):
         ''' Generates tracklets frame by frame for a given video '''
-        pass
+        return None
 
     def process_frame(self, frame):
         ''' Generates tracklets for an individual frame '''

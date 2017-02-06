@@ -1,5 +1,6 @@
 from flask import Flask, Response, flash, redirect, render_template, request
 from biotracker import app
+from biotracker.tracker import Tracker
 from werkzeug.utils import secure_filename
 from werkzeug.datastructures import FileStorage
 from datetime import datetime
@@ -19,6 +20,7 @@ def root():
 
 @app.route('/home')
 def home_view():
+    Tracker('test.mp4')
     return render_template('home.html')
 
 
@@ -40,7 +42,7 @@ def handle_data():
         name = video.filename.split('.')[0]
         file = None
 
-        # While the following looks silly, it is a work around for 
+        # While the following looks silly, it is a work around for
         # permissions when we save the file as FileStorage() object
         with open(name + '.csv', 'w') as f:
             with open(name + '.csv', 'r+') as fr:
