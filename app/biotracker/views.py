@@ -21,6 +21,7 @@ def root():
 
 @app.route('/home')
 def home_view():
+    vid = Tracker()
     return render_template('home.html')
 
 
@@ -85,15 +86,12 @@ def fetch_csvData():
     """
     Endpoint to serve the save csv data
     """
+    file = app.send_static_file(os.path.join(app.config['DATA_FOLDER_SHORT'],
+                                os.listdir(app.config['DATA_FOLDER'])[0]))
+    file.headers['Content-disposition'] = \
+        'attachment; filename=' + os.listdir(app.config['DATA_FOLDER'])[0]
 
-    vid = Tracker()
-    return 0
-
-    # file = app.send_static_file(os.path.join(app.config['DATA_FOLDER_SHORT'],
-    #                             os.listdir(app.config['DATA_FOLDER'])[0]))
-    # file.headers['Content-disposition'] = \
-    #     'attachment; filename=' + os.listdir(app.config['DATA_FOLDER'])[0]
-    # return file
+    return file
 
 
 def is_match(video, csv):

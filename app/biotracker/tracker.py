@@ -1,10 +1,9 @@
 from biotracker import app
 from biotracker.fileIO import TrackerManager
 from biotracker.track import Track
-# from scipy.stats.mstats import mode
+from scipy.stats.mstats import mode
 from biotracker.utils import ShowVidFrame
 
-import skvideo.io
 import numpy as np
 import cv2
 import os
@@ -26,17 +25,15 @@ class Tracker(object):
         ''' filename -- name of the video file which can be found in
                     the video folder of the server
         '''
+
+        fname = os.listdir(app.config['VIDEO_FOLDER'])[0]  
         full_path = '{}/{}'.format(
             app.config['VIDEO_FOLDER'],
-            os.listdir(app.config['VIDEO_FOLDER'])[0])
-        full_path2 = "Encounters_Xvid.mp4"
+            fname)
 
-        # TODO Get this working
-        # video = skvideo.io.vreader(full_path2)
-        video = cv2.VideoCapture(full_path2)
-        if not video.isOpened():
-            raise Exception("Failed to Open video at " + full_path2)
+        video = cv2.VideoCapture(full_path)
 
+        self.vid_name = fname.split(".")[0]
         self.background = self.get_background(video)
         self.tracklets = self.process_video(video)
 
@@ -46,33 +43,39 @@ class Tracker(object):
     def get_background(self, video, numframes=120):
         ''' Computes the background image of a given video '''
 
-        if os.path.exists('background.png'):
-            return cv2.imread('background.png', 0)
+        background_path = '{}/bk_{}.png'.format(
+            app.config['BKGRND_FOLDER'],
+            self.vid_name)
+
+        if os.path.exists(background_path):
+            return cv2.imread(background_path, 0)
 
         if not video.isOpened():
             print("Error opening input video")
 
         frames = []
         count = 0
-        while(video.grab()):
+        while(video.grab() and video.isOpened()):
             ret, inFrame = video.retrieve()
-            grayframe = cv2.cvtColor(inFrame, cv2.COLOR_BGR2GRAY)
-            frames.append(grayframe)
-            count += 1
-            if count >= numframes:
-                break
+            if ret:
+                grayframe = cv2.cvtColor(inFrame, cv2.COLOR_BGR2GRAY)
+                frames.append(grayframe)
+                count += 1
+                if count >= numframes:
+                    break
 
         # Stack all the frames into a single 3D array.
         frames = np.stack(frames)
         background = np.zeros(frames[0, :, :].shape)
 
-        # Get the mode of the set of frames to make targets disappear.
+        # Get the mode of the set of frames to make targets disappear.count
+        # Note: This function call may take a while for sophisticated backgrounds
         background, count = mode(frames, axis=0)
 
         # Drop the third dimension.
         background = background[0, :, :]
-        cv2.imwrite('background.png', background)
-        return cv2.imread('background.png', 0)
+        cv2.imwrite(background_path, background)
+        return cv2.imread(background_path, 0)
 
 
     def process_video(self, video, videoOut=None, background=None):
