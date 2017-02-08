@@ -21,6 +21,7 @@ def GetBBoxPos(bbox):
     x = int((max_x + min_x)/2)
     return x, y
 
+# Carden used this for debugging. May be useless though for webapp debugging
 def ShowVidFrame(win_name, frame):
     cv2.imshow(win_name, frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):

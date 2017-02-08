@@ -9,6 +9,7 @@ import copy
 def CreateTrackFromDetection(detection):
     d_tgt_id = None if detection.tgt_id == 0 else detection.tgt_id
     track = Track(pos=(detection.x, detection.y),
+                  corners=(detection.corner1, detection.corner2, detection.corner3, detection.corner4),
                   tgt_id=d_tgt_id,
                   theta=detection.theta,
                   frame_num=detection.frame_num)
@@ -17,7 +18,7 @@ def CreateTrackFromDetection(detection):
 
 # Keep track of current location.
 class Track:
-    def __init__(self, init_box=None, pos=None, tgt_id=None, theta=None,
+    def __init__(self, init_box=None, corners=None, pos=None, tgt_id=None, theta=None,
                  frame_num=None):
             
 
@@ -29,6 +30,7 @@ class Track:
         self.tgt_id = tgt_id
         self.theta = theta
         self.frame_num = frame_num
+        self.corners = corners
 
     def UpdatePosition(self, new_pos, frame_num):
         # Calculate Theta = arctan(dy/dx).
@@ -51,7 +53,9 @@ class Track:
     def DumpAsDetection(self, track_mgr):
         theta = 0.0 if self.theta is None else self.theta
         track_mgr.add_target(self.frame_num, self.tgt_id, self.pos[0],
-                             self.pos[1], theta, 'ant', self.tgt_id)
+                             self.pos[1], theta, self.corners[0], 
+                             self.corners[1], self.corners[2], 
+                             self.corners[3], 'ant', self.tgt_id)
 
     def __eq__(self, other):
         return (isinstance(other, self.__class__)

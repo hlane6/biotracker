@@ -21,7 +21,6 @@ def root():
 
 @app.route('/home')
 def home_view():
-    vid = Tracker()
     return render_template('home.html')
 
 
@@ -36,39 +35,37 @@ def handle_data():
     video = request.files['video']
     csvData = request.files['csvData']
     remove_files(app.config['DATA_FOLDER'])
-    remove_files(app.config['VIDEO_FOLDER'])
+    remove_files(app.config['VID_ORG_FOLDER'])
+    remove_files(app.config['VID_MRK_FOLDER'])
 
-    # If no csv file provided, then create one
+    video.save(os.path.join(app.config['VID_ORG_FOLDER'],
+               secure_filename(video.filename)))
+
+    # If no csv file provided, then create one from video
     if csvData.filename == '':
-        name = video.filename.split('.')[0]
-        file = None
+        tracker = Tracker(False)
+        tracker.generate_video_with_markup()
+        tracker.generate_csv()
 
-        # While the following looks silly, it is a work around for 
-        # permissions when we save the file as FileStorage() object
-        with open(name + '.csv', 'w') as f:
-            with open(name + '.csv', 'r+') as fr:
-                file = FileStorage(fr)
-                file.save(
-                    os.path.join(app.config['DATA_FOLDER'], file.filename))
-                os.remove(name + '.csv')  # Clean up the aux file we created
+    # Otherwise create the video from csv data
     else:
         csvData.save(os.path.join(app.config['DATA_FOLDER'],
                      secure_filename(csvData.filename)))
+        tracker = Tracker(True)
+        tracker.generate_video_with_markup()
 
-    # Save video and go to the home page
-    video.save(os.path.join(app.config['VIDEO_FOLDER'],
-               secure_filename(video.filename)))
     return redirect('/home')
 
 
 @app.route('/video', methods=['GET'])
 def fetch_video():
     """
-    Endpoint to serve the save mp4 video
+    Endpoint to serve the saved video file
     Prevents Caching to ensure that the newest upload is what always return
     """
-    resp = app.send_static_file(os.path.join(app.config['VIDEO_FOLDER_SHORT'],
-                                os.listdir(app.config['VIDEO_FOLDER'])[0]))
+
+    resp = app.send_static_file(os.path.join(app.config['VID_MRK_FOLDER_SHORT'],
+                                os.listdir(app.config['VID_MRK_FOLDER'])[0]))
 
     # Add these to prevent the browser from caching the video
     resp.cache_control.no_cache = True
@@ -86,6 +83,7 @@ def fetch_csvData():
     """
     Endpoint to serve the save csv data
     """
+
     file = app.send_static_file(os.path.join(app.config['DATA_FOLDER_SHORT'],
                                 os.listdir(app.config['DATA_FOLDER'])[0]))
     file.headers['Content-disposition'] = \
@@ -99,6 +97,7 @@ def is_match(video, csv):
     Checks if a csv file matches a given mp4 file.
     If the names are the same return true
     """
+
     return video.filename.split('.')[0] == csv.filename.split('.')[0]
 
 
@@ -107,5 +106,6 @@ def remove_files(directory):
     Removes all the files in a given directory
     Useful for clearing old mp4/csv data
     """
+
     for f in os.listdir(directory):
         os.remove(os.path.join(directory, f))

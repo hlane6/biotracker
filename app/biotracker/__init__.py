@@ -10,16 +10,21 @@ import os
 app = fl.Flask(__name__, static_url_path='')
 
 # Set up constants
-app.config['VIDEO_FOLDER'] = 'biotracker/static/video'
+app.config['VID_ORG_FOLDER'] = 'biotracker/static/video/original'
+app.config['VID_MRK_FOLDER'] = 'biotracker/static/video/markup'
 app.config['DATA_FOLDER'] = 'biotracker/static/data'
 app.config['BKGRND_FOLDER'] = 'biotracker/static/backgrounds'
-app.config['VIDEO_FOLDER_SHORT'] = 'video'
+
+app.config['VID_ORG_FOLDER_SHORT'] = 'video/original'
+app.config['VID_MRK_FOLDER_SHORT'] = 'video/markup'
 app.config['DATA_FOLDER_SHORT'] = 'data'
-app.config['BKGRND_FOLDER_SHORT'] = 'backgrounds'
 
 # Create directories to hold the video/data/backgrounds
-if not os.path.exists(app.config['VIDEO_FOLDER']):
-    os.makedirs(app.config['VIDEO_FOLDER'])
+if not os.path.exists(app.config['VID_ORG_FOLDER']):
+    os.makedirs(app.config['VID_ORG_FOLDER'])
+
+if not os.path.exists(app.config['VID_MRK_FOLDER']):
+    os.makedirs(app.config['VID_MRK_FOLDER'])
 
 if not os.path.exists(app.config['DATA_FOLDER']):
     os.makedirs(app.config['DATA_FOLDER'])
