@@ -1,5 +1,6 @@
 import React from 'react';
 import VideoCanvas from './VideoCanvas';
+import Parser from '../models/Parser';
 
 export default class Tracker extends React.Component {
 
@@ -10,6 +11,8 @@ export default class Tracker extends React.Component {
             frame: 0,
             time: 0.0,
         };
+        this.parser = new Parser('/csvData');
+        console.log(this.parser.getFrame(1));
         this.handlePlayPause = this.handlePlayPause.bind(this);
         this.handleSeek = this.handleSeek.bind(this);
     }
