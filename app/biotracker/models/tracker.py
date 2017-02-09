@@ -17,10 +17,6 @@ class Tracker(object):
     '''
 
     def __init__(self):
-        ''' filename -- name of the video file which can be found in
-                    the video folder of the server
-        '''
-
         fname = os.listdir(app.config['VID_FOLDER'])[0]
         video_path = '{}/{}'.format(app.config['VID_FOLDER'], fname)
         video = cv2.VideoCapture(video_path)
