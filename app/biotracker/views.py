@@ -1,10 +1,9 @@
 from flask import Flask, Response, flash, redirect, render_template, request
-from biotracker import app
 from werkzeug.utils import secure_filename
 from werkzeug.datastructures import FileStorage
 from datetime import datetime
-
-from biotracker.tracker import Tracker
+from biotracker import app
+from biotracker.models.tracker import Tracker
 
 import os
 
@@ -35,24 +34,20 @@ def handle_data():
     video = request.files['video']
     csvData = request.files['csvData']
     remove_files(app.config['DATA_FOLDER'])
-    remove_files(app.config['VID_ORG_FOLDER'])
-    remove_files(app.config['VID_MRK_FOLDER'])
+    remove_files(app.config['VID_FOLDER'])
 
-    video.save(os.path.join(app.config['VID_ORG_FOLDER'],
+    video.save(os.path.join(app.config['VID_FOLDER'],
                secure_filename(video.filename)))
 
     # If no csv file provided, then create one from video
     if csvData.filename == '':
-        tracker = Tracker(False)
-        tracker.generate_video_with_markup()
+        tracker = Tracker()
         tracker.generate_csv()
 
     # Otherwise create the video from csv data
     else:
         csvData.save(os.path.join(app.config['DATA_FOLDER'],
                      secure_filename(csvData.filename)))
-        tracker = Tracker(True)
-        tracker.generate_video_with_markup()
 
     return redirect('/home')
 
@@ -64,8 +59,8 @@ def fetch_video():
     Prevents Caching to ensure that the newest upload is what always return
     """
 
-    resp = app.send_static_file(os.path.join(app.config['VID_MRK_FOLDER_SHORT'],
-                                os.listdir(app.config['VID_MRK_FOLDER'])[0]))
+    resp = app.send_static_file(os.path.join(app.config['VID_FOLDER_RELATIVE'],
+                                os.listdir(app.config['VID_FOLDER'])[0]))
 
     # Add these to prevent the browser from caching the video
     resp.cache_control.no_cache = True
@@ -84,8 +79,9 @@ def fetch_csvData():
     Endpoint to serve the save csv data
     """
 
-    file = app.send_static_file(os.path.join(app.config['DATA_FOLDER_SHORT'],
-                                os.listdir(app.config['DATA_FOLDER'])[0]))
+    file = app.send_static_file(
+        os.path.join(app.config['DATA_FOLDER_RELATIVE'],
+                     os.listdir(app.config['DATA_FOLDER'])[0]))
     file.headers['Content-disposition'] = \
         'attachment; filename=' + os.listdir(app.config['DATA_FOLDER'])[0]
 
