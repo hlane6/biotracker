@@ -1,0 +1,55 @@
+import React from 'react';
+
+/**
+* Foundation component to handle rendering a Video
+* Video should not actually be rendered, but will be
+* used by the Canvas to draw its content
+*/
+export default class Video extends React.Component {
+
+    static defaultProps = {
+        src: '',
+        onReady: () => {},
+    };
+
+    static propTypes = {
+        src: React.PropTypes.string,
+        onReady: React.PropTypes.func,
+    };
+
+    constructor(props) {
+        super(props);
+        this.onReady = this.onReady.bind(this);
+        this.style = { display: 'none' };
+    }
+
+    componentDidMount() {
+        this.rawVideo.addEventListener('canplay', this.onReady);
+    }
+
+    /**
+    * We dont know the duration, width, or height of the video until it loads,
+    * so we send the duration back up through a callback to be updated elsewhere
+    */
+    onReady() {
+        this.props.onReady({
+            duration: this.rawVideo.duration,
+            width: this.rawVideo.width,
+            height: this.rawVideo.height,
+        });
+    }
+
+    render() {
+        return (
+          <video
+            className="video"
+            src={this.props.src}
+            style={this.style}
+            type="video/mp4"
+            ref={(video) => { this.rawVideo = video; }}
+            controls
+          />
+        );
+    }
+
+}
