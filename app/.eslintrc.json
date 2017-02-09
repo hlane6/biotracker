@@ -2,7 +2,12 @@
     "extends": "airbnb",
     "plugins": [
         "react",
-        "jsx-a11y",
         "import"
-    ]
+    ],
+    "rules": {
+        "indent": ["error", 4],
+        "keywords-space": 0,
+        "jsx-a11y/no-static-element-interactions": 0
+    },
+    "parser": "babel-eslint"
 }

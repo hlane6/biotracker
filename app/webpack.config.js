@@ -2,7 +2,7 @@ var webpack = require('webpack');
 
 module.exports = {
   entry: [
-    "./client/app.js"
+    "./client/app.jsx"
   ],
   output: {
     path: __dirname + '/biotracker/static',
@@ -18,7 +18,18 @@ module.exports = {
         },
         exclude: /node_modules/
       },
+      {
+        test: /\.jsx$/,
+        loader: 'babel-loader',
+        query: {
+          presets: ['es2015', 'react', 'stage-2']
+        },
+        exclude: /node_modules/
+      },
     ]
+  },
+  resolve: {
+    extensions: ['', '.js', '.jsx']
   },
   plugins: [
   ]
