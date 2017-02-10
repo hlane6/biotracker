@@ -3,6 +3,7 @@ env
 biotracker.egg-info
 video
 data
+backgrounds
 
 .DS_Store
 *.pyc
