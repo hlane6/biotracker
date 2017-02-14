@@ -11,8 +11,9 @@ export default class Tracker extends React.Component {
             frame: 0,
             time: 0.0,
         };
-        this.parser = new Parser('/csvData');
-        console.log(this.parser.getFrame(1));
+        this.parser = new Parser('../data/test');
+        // console.log(this.parser.data);
+        console.log(this.parser.getBoundingBox(1, 0));
         this.handlePlayPause = this.handlePlayPause.bind(this);
         this.handleSeek = this.handleSeek.bind(this);
     }
