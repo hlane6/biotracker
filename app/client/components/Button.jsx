@@ -19,8 +19,7 @@ export default class Button extends React.Component {
         return (
           <button
             className="button"
-            onClick={this.props.handler}
-          >
+            onClick={this.props.handler}>
             {this.props.text}
           </button>
         );

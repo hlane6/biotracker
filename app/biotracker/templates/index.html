@@ -22,14 +22,19 @@
 {% endblock %}
 
 {% block content %}
-	<h1>Biotracker - Analyzing Movement Patterns</h1>
-    <div class="container">
-    	<form name="fileForm" enctype="multipart/form-data" action="/uploadFiles" method="post" onsubmit="return validateForm()">
-			<p>Upload a video to analyze (.mp4)</p>
-			<input type="file" name="video" id="video" accept=".mp4" required>
-			<p>If you have associated data, add it here (.csv)</p>
-			<input type="file" name="csvData" id="csvData" accept=".csv">
-			<input type="submit" value="Start" >
-		</form>
-    </div>
+	<body>
+		<h1>Biotracker</h1>
+		<h2>ANALYZING MOVEMENT PATTERNS</h2>
+	    <div class="container-index">
+	    	<form name="fileForm" enctype="multipart/form-data" action="/uploadFiles" method="post" onsubmit="return validateForm()">
+				<p>upload a video to analyze (.mp4)</p>
+				<input type="file" name="video" id="input-index" accept=".mp4" required>
+				<label for="file">choose a file</label>
+				<p>add any associated data here (.csv)</p>
+				<input type="file" name="csvData" id="input-index" accept=".csv">
+				<label for="file">choose a file</label>
+				<input class="start" type="submit" value="START" >
+			</form>
+	    </div>
+	</body>
 {% endblock %}

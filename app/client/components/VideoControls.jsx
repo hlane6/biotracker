@@ -2,6 +2,7 @@ import React from 'react';
 import Button from './Button';
 import JumpInput from './JumpInput';
 import SeekInput from './SeekInput';
+import Styles from './style.css';
 
 /**
  * Separates out rendering the video and controlling the video
@@ -82,7 +83,7 @@ export default class VideoControls extends React.Component {
 
     render() {
         return (
-          <div className="videoControls">
+          <div className="videoControls" className={Styles.container-home}>
             <SeekInput
               time={this.props.time}
               duration={this.props.duration}
@@ -90,12 +91,12 @@ export default class VideoControls extends React.Component {
               handleSeekCallback={this.handleSeekInput}
               playPauseCallback={this.props.playPauseCallback}
             />
-            <ul className="videoControls-list">
-              <li><Button handler={this.jumpBackward} text="<<" /></li>
-              <li><Button handler={this.stepBackward} text="<" /></li>
-              <li><Button handler={this.playPause} text={(this.props.paused) ? '|>' : '||'} /></li>
-              <li><Button handler={this.stepForward} text=">" /></li>
-              <li><Button handler={this.jumpForward} text=">>" /></li>
+            <ul className="videoControls-list" className={Styles.video-controls}>
+              <li><Button className={Styles.vid-nav} handler={this.jumpBackward} text="<<" /></li>
+              <li><Button className={Styles.vid-nav} handler={this.stepBackward} text="<" /></li>
+              <li><Button className={Styles.vid-nav} handler={this.playPause} text={(this.props.paused) ? '|>' : '||'} /></li>
+              <li><Button className={Styles.vid-nav} handler={this.stepForward} text=">" /></li>
+              <li><Button className={Styles.vid-nav} handler={this.jumpForward} text=">>" /></li>
             </ul>
             <JumpInput
               handleJumpCallback={this.handleSeekInput}
