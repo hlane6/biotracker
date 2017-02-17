@@ -55,12 +55,11 @@ export default class VideoCanvas extends React.Component {
           ctx.strokeRect(box.x, box.y, box.width, box.height);
         }
 
-        if (this.props.paused || this.getVideo().ended) { return; }
-
         this.setState({
           boxes: this.props.parser.getFrame(Math.floor(this.props.time * 30))
         });
 
+        if (this.props.paused || this.getVideo().ended) { return; }
         this.props.seekCallback(this.getVideo().currentTime);
     }
 
