@@ -34,8 +34,8 @@ export default class Video extends React.Component {
     onReady() {
         this.props.onReady({
             duration: this.rawVideo.duration,
-            width: this.rawVideo.width,
-            height: this.rawVideo.height,
+            width: this.rawVideo.videoWidth,
+            height: this.rawVideo.videoHeight,
         });
     }
 

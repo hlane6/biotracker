@@ -57,15 +57,21 @@ export default class Canvas extends React.Component {
         }
     }
 
+    componentDidMount() {
+        this.forceUpdate();
+    }
+
     render() {
+        const { ...other } = this.props;
         requestAnimationFrame(this.requestAnimationFrameCallback);
         return (
           <canvas
             style={this.style}
             className="canvas"
+            width={this.props.width}
+            height={this.props.height}
             ref={(input) => { this.canvas = input; }}
-            onClick={this.props.onClick}
-          />
+            onClick={this.props.onClick} />
         );
     }
 }

@@ -109,4 +109,3 @@ def handle_csv(csvData):
     else:
         csvData.save(os.path.join(app.config['DATA_FOLDER'],
                     secure_filename(csvData.filename)))
-
