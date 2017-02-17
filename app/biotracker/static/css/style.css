@@ -1,133 +1,7 @@
-.container {
-    max-width: 500px;
-    padding-top: 20px;
-}
-
-@font-face { font-family: Montserrat; src: url('Montserrat.otf');}
-
-/* remove margins and padding from list, add background color */
-ul.topnavbar {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #333;
-}
-
-/* float list items side by side */
-ul.topnavbar li {
-    float: left;
-}
-
-/* links inside list items */
-ul.topnavbar li a {
-    display: inline-block;
-    color: #f2f2f2;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 17px;
-    font-family: sans-serif;
-}
-
-/* change background color when mouse hovers over */
-ul.topnavbar li a:hover {
-    background-color: #555;
-}
-
-/* remove margins and padding from list, add background color */
-ul.botnavbar {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #333;
-    bottom: 0px;
-}
-
-/* float list items side by side */
-ul.botnavbar li {
-    float: left;
-}
-
-/* links inside list items */
-ul.botnavbar li a {
-    display: inline-block;
-    color: #f2f2f2;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 17px;
-    font-family: sans-serif;
-}
-
-/* change background color when mouse hovers over */
-ul.botnavbar li a:hover {
-    background-color: #555;
-}
-
-
 /************************************************************/
 /* HOME SCREEN */
 
 /* video navigation buttons style */
-/*button primary for colors
-button med / large for size*/
-
-button:hover {
-    background-color: #144C42;
-    color: white;
-}
-/*
-button.primary-med {
-    background-color: #217F6E;
-    color: white;
-    border: none;
-    padding: 15px 30px;
-    text-align: center;
-    font-size: 16px;
-    border-radius: 4px;
-    margin: 5px;
-    margin-top: 20px;
-    cursor: pointer;
-    font-family: "Montserrat";
-}
-
-button.primary-large {
-    font-family: "Montserrat";
-    font-size: 16px;
-    border-radius: 4px;
-    border: none;
-    background-color: #217F6E;
-    color: white;
-    text-align: center;
-    cursor: pointer;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 40px;
-    padding-bottom: 20px;
-    padding-top: 20px;
-    padding-left: 50px;
-    padding-right: 50px;
-    width: 50%;
-}
-
-button.secondary-med {
-
-}
-
-button.secondary-large {
-
-}*/
-
-@font-face { font-family: Montserrat; src: url('Montserrat.otf');}
-
-/* FOR HOME.HTML */
-
-/* video navigation buttons style */
-/*button primary for colors
-button med / large for size*/
 button.vid-nav {
     background-color: white;
     color: #3b3b3b;
@@ -141,17 +15,24 @@ button.vid-nav {
     cursor: pointer;
     font-family: "Montserrat";
     display: inline-block;
-    width: 145px;
+    width: 113px;
 }
 
 .video-controls {
     width: 640px;
 }
 
-div.container-home {
-    width: 640px;
+.container-home {
+    width: 720px;
     text-align: center;
     margin: auto;
+    display: block;
+}
+
+.scrubber {
+    width: 720px;
+    margin: auto;
+    display: block;
 }
 
 body.home {
@@ -159,7 +40,7 @@ body.home {
 }
 
 /* frame input */
-#frame {
+.frame {
     width: 60%;
     margin: 5px;
     padding: 10px;
@@ -197,7 +78,7 @@ form.home {
 }
 
 /* download data file and change video buttons */
-input.bottom-buttons {
+.bottom-buttons {
     background-color: #217F6E;
     color: white;
     border: none;
@@ -224,6 +105,7 @@ h1 {
     text-align: center;
     color: #217F6E;
     font-size: 60px;
+    margin-bottom: 2px;
 }
 
 /* analyzing movement patterns */
@@ -256,17 +138,13 @@ div.container-index {
     background-color: #D9EFEB;
 }
 
-/*.input-index {
-    width: 0.1px;
+.input-index {
+    /*width: 0.1px;
     height: 0.1px;
     opacity: 0;
     overflow: hidden;
     position: absolute;
-    z-index: -1;
-}*/
-
-/* choose a file buttons */
-label {
+    z-index: -1;*/
     font-size: 16px;
     color: #3b3b3b;
     background-color: white;
@@ -276,6 +154,7 @@ label {
     cursor: pointer;
     border-radius: 4px;
     border: 2px solid #3b3b3b;
+    margin-bottom: 10px;
 }
 
 /* Start button */
@@ -310,6 +189,6 @@ label:hover {
     color: white;
 }
 
-input:hover {
+input.start:hover {
     background-color: #144C42;
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import VideoCanvas from './VideoCanvas';
+import Button from './Button';
 
 export default class Tracker extends React.Component {
 
@@ -33,6 +34,8 @@ export default class Tracker extends React.Component {
               seekCallback={this.handleSeek}
               onClick={this.handleClick}
             />
+            <Button className="bottom-buttons" text="download data file" />
+            <Button className="bottom-buttons" text="change video" />
           </div>
         );
     }
