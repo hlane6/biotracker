@@ -3,7 +3,7 @@ from collections import namedtuple
 
 # Data structure for target. Works like a dictionary without as much overhead.
 Detection = namedtuple('Detection', ['frame_num', 'target_id', 'x', 'y',
-                                     'theta'])
+                                     'width', 'height', 'theta'])
 
 
 class TargetManager:
@@ -11,7 +11,9 @@ class TargetManager:
     TARGET_ID = 1
     POS_X = 2
     POX_Y = 3
-    THETA = 4
+    WIDTH = 4
+    HEIGHT = 5
+    THETA = 6
 
     def __init__(self):
         self.detections = []
@@ -24,7 +26,7 @@ class TargetManager:
             writer.writerow(Detection._fields)
             for detection in self.detections:
                 row = []
-                for x in range(0, 5):
+                for x in range(0, 7):
                     row.append(detection[x])
                 writer.writerow(row)
 
@@ -48,6 +50,8 @@ class TargetManager:
                          target_id=int(row[TARGET_ID]),
                          x=int(row[POX_X]),
                          y=int(row[POX_Y]),
+                         width=int(row[WIDTH]),
+                         height=int(row[HEIGHT]),
                          theta=float(row[THETA]))
 
     def add_target(self, target):
@@ -59,6 +63,8 @@ class TargetManager:
                                          target.target_id,
                                          target.pos[0],
                                          target.pos[1],
+                                         target.dimensions[0],
+                                         target.dimensions[1],
                                          theta))
 
     def detection_to_target(detection):
@@ -68,5 +74,6 @@ class TargetManager:
         target = Target(pos=(detection.x, detection.y),
                         target_id=d_target_id,
                         theta=detection.theta,
-                        frame_num=detection.frame_num)
+                        frame_num=detection.frame_num,
+                        dimensions=(detection.width, detection.height))
         return target
