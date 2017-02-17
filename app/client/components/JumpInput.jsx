@@ -48,6 +48,7 @@ export default class JumpInput extends React.Component {
         return (
           <div>
             <input
+              className="frame"
               type="number"
               value={this.state.value}
               onChange={this.handleChange}

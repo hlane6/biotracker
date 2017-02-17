@@ -90,17 +90,14 @@ export default class VideoControls extends React.Component {
               handleSeekCallback={this.handleSeekInput}
               playPauseCallback={this.props.playPauseCallback}
             />
-            <ul className="videoControls-list video-controls">
-              <li><Button className="vid-nav" handler={this.jumpBackward} text="<<" /></li>
-              <li><Button className="vid-nav" handler={this.stepBackward} text="<" /></li>
-              <li><Button className="vid-nav" handler={this.playPause} text={(this.props.paused) ? '|>' : '||'} /></li>
-              <li><Button className="vid-nav" handler={this.stepForward} text=">" /></li>
-              <li><Button className="vid-nav" handler={this.jumpForward} text=">>" /></li>
-            </ul>
+            <Button className="vid-nav" handler={this.jumpBackward} text="<<" />
+            <Button className="vid-nav" handler={this.stepBackward} text="<" />
+            <Button className="vid-nav" handler={this.playPause} text={(this.props.paused) ? '|>' : '||'} />
+            <Button className="vid-nav" handler={this.stepForward} text=">" />
+            <Button className="vid-nav" handler={this.jumpForward} text=">>" />
             <JumpInput
               handleJumpCallback={this.handleSeekInput}
             />
-            <h6>{this.props.time} {this.props.time * 30}</h6>
           </div>
         );
     }
