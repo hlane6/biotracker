@@ -2,63 +2,6 @@
 /* HOME SCREEN */
 
 /* video navigation buttons style */
-/*button primary for colors
-button med / large for size*/
-
-button:hover {
-    background-color: #144C42;
-    color: white;
-}
-/*
-button.primary-med {
-    background-color: #217F6E;
-    color: white;
-    border: none;
-    padding: 15px 30px;
-    text-align: center;
-    font-size: 16px;
-    border-radius: 4px;
-    margin: 5px;
-    margin-top: 20px;
-    cursor: pointer;
-    font-family: "Montserrat";
-}
-
-button.primary-large {
-    font-family: "Montserrat";
-    font-size: 16px;
-    border-radius: 4px;
-    border: none;
-    background-color: #217F6E;
-    color: white;
-    text-align: center;
-    cursor: pointer;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 40px;
-    padding-bottom: 20px;
-    padding-top: 20px;
-    padding-left: 50px;
-    padding-right: 50px;
-    width: 50%;
-}
-
-button.secondary-med {
-
-}
-
-button.secondary-large {
-
-}*/
-
-@font-face { font-family: Montserrat; src: url('Montserrat.otf');}
-
-/* FOR HOME.HTML */
-
-/* video navigation buttons style */
-/*button primary for colors
-button med / large for size*/
 button.vid-nav {
     background-color: white;
     color: #3b3b3b;
@@ -72,7 +15,7 @@ button.vid-nav {
     cursor: pointer;
     font-family: "Montserrat";
     display: inline-block;
-    width: 145px;
+    width: 113px;
 }
 
 .video-controls {

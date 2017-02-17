@@ -46,9 +46,9 @@ export default class JumpInput extends React.Component {
 
     render() {
         return (
-          <div>
+          <div className="frameFinder">
             <input
-              className="frame"
+              className="frame" "seek-frame"
               type="number"
               value={this.state.value}
               onChange={this.handleChange}
