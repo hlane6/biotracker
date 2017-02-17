@@ -36,8 +36,8 @@ export default class Parser {
         boundingBoxes.push(new BoundingBox(
                     data[0].x,
                     data[0].y,
-                    10,
-                    10,
+                    data[0].width,
+                    data[0].height,
                     data[0].theta,
         ));
 
@@ -45,8 +45,8 @@ export default class Parser {
             let box = new BoundingBox(
                 data[i].x,
                 data[i].y,
-                10,
-                10,
+                data[i].width,
+                data[i].height,
                 data[i].theta,
             );
             if (data[i].frame_num === data[i - 1].frame_num) {
