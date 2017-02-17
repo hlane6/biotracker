@@ -1,12 +1,13 @@
 class Target:
     def __init__(self, init_box=None, pos=None, target_id=None, theta=None,
-                 frame_num=None):
+                 frame_num=None, dimensions=None):
 
         if init_box is not None:
             self.pos = self.get_bbox_pos(init_box)
         else:
             self.pos = pos
 
+        self.dimensions = dimensions
         self.pos_arr = [self.pos]
         self.target_id = target_id
         self.theta = theta
