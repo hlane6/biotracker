@@ -42,47 +42,34 @@ export default class Parser {
         ));
 
         for (let i = 1; i < results.data.length; i += 1) {
+            let box = new BoundingBox(
+                data[i].x,
+                data[i].y,
+                10,
+                10,
+                data[i].theta,
+            );
             if (data[i].frame_num === data[i - 1].frame_num) {
-                boundingBoxes.push(new BoundingBox(
-                    data[i].x,
-                    data[i].y,
-                    10,
-                    10,
-                    data[i].theta,
-                ));
+                boundingBoxes.push(box);
             } else {
                 this.data.push(boundingBoxes);
                 boundingBoxes = [];
-                boundingBoxes.push(new BoundingBox(
-                    data[i].x,
-                    data[i].y,
-                    10,
-                    10,
-                    data[i].theta,
-                ));
+                boundingBoxes.push(box);
             }
         }
 
         this.callback();
     }
 
-    getBoundingBoxes(frame, offset) {
-        if ((frame + offset) < 0 || (frame + offset) > this.data.length) {
+    getBoundingBoxes(frame) {
+        if (frame < 0 || frame > this.data.length) {
             return null;
         }
 
-        return this.data[frame + offset];
+        return this.data[frame];
     }
 
     getFrame(frame) {
         return this.getBoundingBoxes(frame, 0);
-    }
-
-    nextFrame(frame) {
-        return this.getBoundingBoxes(frame, 1);
-    }
-
-    prevFrame(frame) {
-        return this.getBoundingBoxes(frame, -1);
     }
 }

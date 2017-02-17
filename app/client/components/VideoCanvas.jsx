@@ -50,7 +50,6 @@ export default class VideoCanvas extends React.Component {
 
         ctx.drawImage(this.getVideo(), 0, 0, width, height);
         ctx.strokeStyle = "red";
-        ctx.fillStyle = "green";
 
         for (let box of this.state.boxes) {
           ctx.strokeRect(box.x, box.y, box.width, box.height);
