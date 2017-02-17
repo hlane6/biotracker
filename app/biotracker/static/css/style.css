@@ -22,10 +22,17 @@ button.vid-nav {
     width: 640px;
 }
 
-div.container-home {
-    width: 640px;
+.container-home {
+    width: 720px;
     text-align: center;
     margin: auto;
+    display: block;
+}
+
+.scrubber {
+    width: 720px;
+    margin: auto;
+    display: block;
 }
 
 body.home {
@@ -71,7 +78,7 @@ form.home {
 }
 
 /* download data file and change video buttons */
-input.bottom-buttons {
+.bottom-buttons {
     background-color: #217F6E;
     color: white;
     border: none;
@@ -98,6 +105,7 @@ h1 {
     text-align: center;
     color: #217F6E;
     font-size: 60px;
+    margin-bottom: 2px;
 }
 
 /* analyzing movement patterns */
@@ -146,11 +154,7 @@ div.container-index {
     cursor: pointer;
     border-radius: 4px;
     border: 2px solid #3b3b3b;
-}
-
-/* choose a file buttons */
-label {
-
+    margin-bottom: 10px;
 }
 
 /* Start button */
@@ -185,6 +189,6 @@ label:hover {
     color: white;
 }
 
-input:hover {
+input.start:hover {
     background-color: #144C42;
 }

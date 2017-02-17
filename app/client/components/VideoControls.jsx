@@ -92,7 +92,7 @@ export default class VideoControls extends React.Component {
             />
             <Button className="vid-nav" handler={this.jumpBackward} text="<<" />
             <Button className="vid-nav" handler={this.stepBackward} text="<" />
-            <Button className="vid-nav" handler={this.playPause} text={(this.props.paused) ? '|>' : '||'} />
+            <Button className="vid-nav" handler={this.playPause} text={(this.props.paused) ? 'play' : 'pause'} />
             <Button className="vid-nav" handler={this.stepForward} text=">" />
             <Button className="vid-nav" handler={this.jumpForward} text=">>" />
             <JumpInput

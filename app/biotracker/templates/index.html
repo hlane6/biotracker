@@ -2,7 +2,7 @@
 {% block head %}
     <title>Biotracker</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
 	<script>
 	/*
 	 * Check if the csv data file matches the video file before proceeding
@@ -30,10 +30,8 @@
 	    	<form name="fileForm" enctype="multipart/form-data" action="/uploadFiles" method="post" onsubmit="return validateForm()">
 				<p>upload a video to analyze (.mp4)</p>
 				<input type="file" name="video" class="input-index" accept=".mp4" required>
-				<label for="file">choose a file</label>
 				<p>add any associated data here (.csv)</p>
 				<input type="file" name="csvData" class="input-index" accept=".csv">
-				<label for="file">choose a file</label>
 				<input class="start" type="submit" value="START" >
 			</form>
 	    </div>
