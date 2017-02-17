@@ -9,7 +9,7 @@ class BoundingBox {
         this.y = y;
         this.width = width;
         this.height = height;
-        this.theta= theta;
+        this.theta = theta;
     }
 }
 
@@ -17,68 +17,61 @@ export default class Parser {
 
     constructor(url, completedCallback) {
         this.finish = this.finish.bind(this);
-        this.__data = [];
+        this.data = [];
         this.callback = completedCallback;
 
         Papa.parse(url, {
             header: true,
             download: true,
-            complete: this.finish
+            complete: this.finish,
         });
 
         this.getBoundingBoxes = this.getBoundingBoxes.bind(this);
-
     }
 
-    finish(results, file) {
-        console.log("Complete");
+    finish(results) {
         let boundingBoxes = [];
-        let data = results.data;
+        const data = results.data;
 
         boundingBoxes.push(new BoundingBox(
                     data[0].x,
                     data[0].y,
                     10,
                     10,
-                    data[0].theta
+                    data[0].theta,
         ));
 
-        for (let i = 1; i < results.data.length; i++) {
-            if (data[i].frame_num == data[i-1].frame_num) {
+        for (let i = 1; i < results.data.length; i += 1) {
+            if (data[i].frame_num === data[i - 1].frame_num) {
                 boundingBoxes.push(new BoundingBox(
                     data[i].x,
                     data[i].y,
                     10,
                     10,
-                    data[i].theta
+                    data[i].theta,
                 ));
             } else {
-                this.__data.push(boundingBoxes);
+                this.data.push(boundingBoxes);
                 boundingBoxes = [];
                 boundingBoxes.push(new BoundingBox(
                     data[i].x,
                     data[i].y,
                     10,
                     10,
-                    data[i].theta
+                    data[i].theta,
                 ));
             }
         }
 
         this.callback();
-        console.log(this.__data);
-    }
-
-    get data() {
-        return this.__data;
     }
 
     getBoundingBoxes(frame, offset) {
-        if ((frame + offset) < 0 || (frame + offset) > this.__data.length) {
-            throw 'Invalid frame number.';
+        if ((frame + offset) < 0 || (frame + offset) > this.data.length) {
+            return null;
         }
 
-        return this.__data[frame + offset];
+        return this.data[frame + offset];
     }
 
     getFrame(frame) {

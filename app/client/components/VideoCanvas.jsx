@@ -46,7 +46,6 @@ export default class VideoCanvas extends React.Component {
     }
 
     draw({ ctx }) {
-        if (this.props.paused || this.getVideo().ended) { return; }
         const { width, height } = ctx.canvas;
 
         ctx.drawImage(this.getVideo(), 0, 0, width, height);
@@ -57,6 +56,7 @@ export default class VideoCanvas extends React.Component {
           ctx.strokeRect(box.x, box.y, box.width, box.height);
         }
 
+        if (this.props.paused || this.getVideo().ended) { return; }
 
         this.setState({
           boxes: this.props.parser.getFrame(Math.floor(this.props.time * 30))
