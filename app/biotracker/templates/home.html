@@ -3,9 +3,14 @@
 {% block head %}
     <title>Biotracker</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
-    <div id="root"></div>
-    <script type='text/javascript' src={{ url_for('static', filename='bundle.js') }}></script>
+    <body class="home">
+        <h1>biotracker</h1>
+        <h2 class="h2-home">ANALYZING MOVEMENT PATTERNS</h2>
+        <div id="root" class="container-home"></div>
+        <script type='text/javascript' src={{ url_for('static', filename='bundle.js') }}></script>
+    </body>
 {% endblock %}

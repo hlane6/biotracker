@@ -39,15 +39,7 @@ def handle_data():
     video.save(os.path.join(app.config['VID_FOLDER'],
                secure_filename(video.filename)))
 
-    # If no csv file provided, then create one from video
-    if csvData.filename == '':
-        tracker = Tracker()
-        tracker.generate_csv()
-
-    # # Otherwise create the video from csv data
-    else:
-        csvData.save(os.path.join(app.config['DATA_FOLDER'],
-                secure_filename(csvData.filename)))
+    handle_csv(csvData)
 
     return redirect('/home')
 
@@ -105,3 +97,15 @@ def remove_files(directory):
 
     for f in os.listdir(directory):
         os.remove(os.path.join(directory, f))
+
+
+def handle_csv(csvData):
+    # If no csv file provided, then create one from video
+    if csvData.filename == '':
+        tracker = Tracker()
+        tracker.generate_csv()
+
+    # Otherwise create the video from csv data
+    else:
+        csvData.save(os.path.join(app.config['DATA_FOLDER'],
+                    secure_filename(csvData.filename)))

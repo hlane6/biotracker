@@ -116,7 +116,8 @@ class Tracker(object):
                 target = Target(init_box=box,
                                 target_id=unlabeledAntID,
                                 frame_num=frameNum,
-                                theta=theta)
+                                theta=theta,
+                                dimensions=dimensions)
                 self.targetManager.add_target(target)
                 cv2.drawContours(inFrame, [box], 0, (0, 0, 255), 2)
 

@@ -48,7 +48,7 @@ export default class SeekInput extends React.Component {
     render() {
         return (
           <div>
-            <input
+            <input className="scrubber"
               type="range" min={0} max={this.props.duration} step="any"
               value={this.props.time}
               onMouseDown={this.handleMouseDown}
