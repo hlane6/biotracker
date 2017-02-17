@@ -2,7 +2,6 @@ import React from 'react';
 import Canvas from './Canvas';
 import Video from './Video';
 import VideoControls from './VideoControls';
-import Styles from './style.css';
 
 /**
  * Combines a video and a canvas and provides the controls
@@ -60,7 +59,7 @@ export default class VideoCanvas extends React.Component {
 
     render() {
         return (
-          <div className="videoCanvas" className={Styles.container-home}>
+          <div className="videoCanvas container-home">
             <Video
               src={this.props.src}
               ref={(video) => { this.video = video; }}

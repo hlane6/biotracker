@@ -1,6 +1,6 @@
 .container {
-            max-width: 500px;
-            padding-top: 20px;
+    max-width: 500px;
+    padding-top: 20px;
 }
 
 @font-face { font-family: Montserrat; src: url('Montserrat.otf');}
@@ -256,14 +256,14 @@ div.container-index {
     background-color: #D9EFEB;
 }
 
-#input-index {
+/*.input-index {
     width: 0.1px;
     height: 0.1px;
     opacity: 0;
     overflow: hidden;
     position: absolute;
     z-index: -1;
-}
+}*/
 
 /* choose a file buttons */
 label {
