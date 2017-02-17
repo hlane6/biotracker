@@ -3,7 +3,7 @@ from werkzeug.utils import secure_filename
 from werkzeug.datastructures import FileStorage
 from datetime import datetime
 from biotracker import app
-#from biotracker.models.tracker import Tracker
+from biotracker.models.tracker import Tracker
 
 import os
 
@@ -40,14 +40,14 @@ def handle_data():
                secure_filename(video.filename)))
 
     # If no csv file provided, then create one from video
-    # if csvData.filename == '':
-    #     tracker = Tracker()
-    #     tracker.generate_csv()
+    if csvData.filename == '':
+        tracker = Tracker()
+        tracker.generate_csv()
 
     # # Otherwise create the video from csv data
-    # else:
-    csvData.save(os.path.join(app.config['DATA_FOLDER'],
-            secure_filename(csvData.filename)))
+    else:
+        csvData.save(os.path.join(app.config['DATA_FOLDER'],
+                secure_filename(csvData.filename)))
 
     return redirect('/home')
 

@@ -71,10 +71,7 @@ export default class Canvas extends React.Component {
             width={this.props.width}
             height={this.props.height}
             ref={(input) => { this.canvas = input; }}
-            onClick={this.props.onClick}
-          >
-            {this.props.children}
-          </canvas>
+            onClick={this.props.onClick} />
         );
     }
 }
