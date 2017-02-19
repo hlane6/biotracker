@@ -44,8 +44,12 @@ export default class Tracker extends React.Component {
               seekCallback={this.handleSeek}
               onClick={this.handleClick}
             />
-            <Button className="bottom-buttons" text="download data file" />
-            <Button className="bottom-buttons" text="change video" />
+            <a href="/csvData">
+              <Button className="bottom-buttons" text="download data file" />
+            </a>
+            <a href="/">
+              <Button className="bottom-buttons" text="change video" />
+            </a>
           </div>
         );
     }
