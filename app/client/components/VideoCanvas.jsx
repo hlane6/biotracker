@@ -54,7 +54,10 @@ export default class VideoCanvas extends React.Component {
         if (!this.props.ready) { return; }
         const { width, height } = ctx.canvas;
 
-        ctx.clearRect(0, 0, width, height);
+        if (!this.props.paused) {
+            ctx.clearRect(0, 0, width, height);
+        }
+        
         ctx.drawImage(this.getVideo(), 0, 0, width, height);
         ctx.strokeStyle = 'red';
 
