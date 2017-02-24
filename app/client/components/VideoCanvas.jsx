@@ -12,6 +12,7 @@ export default class VideoCanvas extends React.Component {
         paused: false,
         time: 0,
         src: '',
+        ready: false,
         playPauseCallback: () => {},
         seekCallback: () => {},
         onClick: () => {},
@@ -21,6 +22,7 @@ export default class VideoCanvas extends React.Component {
         paused: React.PropTypes.bool,
         time: React.PropTypes.number,
         src: React.PropTypes.string,
+        ready: React.PropTypes.bool,
         playPauseCallback: React.PropTypes.func,
         seekCallback: React.PropTypes.func,
         onClick: React.PropTypes.func,
@@ -46,17 +48,32 @@ export default class VideoCanvas extends React.Component {
     }
 
     draw({ ctx }) {
+        /*  This line makes it so that we don't render the video until the
+            parser has finished loading all the data. We should add a loading
+            animation to make it look prettier. */
+        if (!this.props.ready) { return; }
         const { width, height } = ctx.canvas;
 
+        ctx.clearRect(0, 0, width, height);
         ctx.drawImage(this.getVideo(), 0, 0, width, height);
-        ctx.strokeStyle = "red";
+        ctx.strokeStyle = 'red';
 
         for (let box of this.state.boxes) {
-          ctx.strokeRect(box.x, box.y, box.width, box.height);
-        }
+            ctx.translate(box.x, box.y);
+            ctx.rotate(box.theta * Math.PI / 180);
 
+            ctx.strokeRect(
+                -box.width / 2,
+                -box.height / 2,
+                box.width,
+                box.height
+            );
+
+            ctx.rotate(-box.theta * Math.PI / 180);
+            ctx.translate(-box.x, -box.y);
+        }
         this.setState({
-          boxes: this.props.parser.getFrame(Math.floor(this.props.time * 30))
+            boxes: this.props.parser.getFrame(Math.floor(this.props.time * 30))
         });
 
         if (this.props.paused || this.getVideo().ended) { return; }
