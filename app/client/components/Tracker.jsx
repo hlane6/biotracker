@@ -10,12 +10,11 @@ export default class Tracker extends React.Component {
         this.state = {
             ready: false,
             paused: true,
-            frame: 0,
             time: 0.0,
         };
 
         this.parser = new Parser('/csvData', () => {
-          this.setState({ ready: true });
+            this.setState({ ready: true });
         });
 
         this.handlePlayPause = this.handlePlayPause.bind(this);
@@ -39,6 +38,7 @@ export default class Tracker extends React.Component {
               parser={this.parser}
               paused={this.state.paused}
               time={this.state.time}
+              ready={this.state.ready}
               src={'/video'}
               playPauseCallback={this.handlePlayPause}
               seekCallback={this.handleSeek}
