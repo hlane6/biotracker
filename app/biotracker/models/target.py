@@ -3,7 +3,7 @@ class Target:
                  frame_num=None, dimensions=None):
 
         if init_box is not None:
-            self.pos = self.get_bbox_pos(init_box)
+            self.pos = self.__get_bbox_pos(init_box)
         else:
             self.pos = pos
 
@@ -13,7 +13,7 @@ class Target:
         self.theta = theta
         self.frame_num = frame_num
 
-    def get_bbox_pos(self, bbox):
+    def __get_bbox_pos(self, bbox):
         """ Get center coordinate of a bounding box """
         x_arr = [coord[0] for coord in bbox]
         y_arr = [coord[1] for coord in bbox]
