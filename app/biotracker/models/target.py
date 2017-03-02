@@ -27,6 +27,24 @@ class Target:
         x = int((max_x + min_x)/2)
         return x, y
 
+    def update_position(self, new_pos, frame_num):
+        # Calculate Theta = arctan(dy/dx).
+        dy = new_pos[1]-self.pos[1]
+        dx = new_pos[0]-self.pos[0]
+        if dx == 0 and dy > 0:
+            self.theta = 90.0
+        elif dx == 0 and dy == 0:
+            if self.theta is None:
+                self.theta = 0
+            else:
+                self.theta = self.theta
+        else:
+            self.theta = np.degrees(np.arctan2(dy, dx))
+                                
+        self.pos_arr.append(new_pos)
+        self.pos = new_pos
+        self.frame_num = frame_num
+
     def __eq__(self, other):
         return (isinstance(other, self.__class__) and
                 self.__dict__ == other.__dict__)

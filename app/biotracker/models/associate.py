@@ -51,15 +51,15 @@ class Associate:
 	    # true cost to all else.
 	    for i in range(len(tracks)):
 	        track = tracks[i]
-	        match_key = next((key_tgt for key_tgt in keyframe_tgts if track.tgt_id == key_tgt.tgt_id), None)
-	        if match_key is not None:
-	            matrix.append([max_dist for i in range(len(new_tracks))])
+	        #match_key = next((key_tgt for key_tgt in keyframe_tgts if track.tgt_id == key_tgt.tgt_id), None)
+	        #if match_key is not None:
+	            #matrix.append([max_dist for i in range(len(new_tracks))])
 	            # TODO(carden): Update to add in theta from key frame.
-	            track.UpdatePosition(match_key.pos, match_key.frame_num)
+	            #track.UpdatePosition(match_key.pos, match_key.frame_num)
 
-	        else:
-	            matrix.append([CalcDistance(tracks[i].pos, new_track.pos)
-	                                for new_track in new_tracks])
+	        #else:
+	        matrix.append([CalcDistance(tracks[i].pos, new_track.pos)
+	                            for new_track in new_tracks])
 	    # Compute the lowest cost path through the cost matrix.
 	    indices = m.compute(matrix)
 	    # Collect columns to delete from new tracks array.
