@@ -1,5 +1,6 @@
 import csv
 import cv2
+import associate
 from collections import namedtuple
 from biotracker.models.tracker import Tracker
 
@@ -32,8 +33,8 @@ class TargetManager:
     def post_process_targets(self):
         pass
 
-    def associate_targets(self):
-        pass
+    def associate_targets(self, csv_file_name):
+        associate.load_tracks(csv_file_name)
 
     def write_csv_file(self, csv_file_name):
         ''' Converts data to a csv file '''
