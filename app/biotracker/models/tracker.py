@@ -1,3 +1,6 @@
+""" Module containing the Tracker model
+"""
+
 from biotracker import app
 from biotracker.models.targetManager import TargetManager
 from biotracker.models.target import Target
@@ -9,14 +12,16 @@ import os
 
 
 class Tracker(object):
-    ''' Handles the generation of targets for a given video.
+    """ Handles the generation of targets for a given video.
         Does not associate the targets with ids. Initial generated targets
         may contain errors.
         self.background -- the computed background image of the video
         self.targetManager -- the targets for the entire video
-    '''
+    """
 
     def __init__(self):
+        """
+        """
         fname = os.listdir(app.config['VID_FOLDER'])[0]
         video_path = '{}/{}'.format(app.config['VID_FOLDER'], fname)
         video = cv2.VideoCapture(video_path)
@@ -29,14 +34,16 @@ class Tracker(object):
         video.release()
 
     def generate_csv(self):
-        ''' Generates the csv data file '''
+        """
+        """
 
         csv_path = os.path.join(app.config['DATA_FOLDER'],
                                 self.vid_name + ".csv")
         self.targetManager.write_csv_file(csv_path)
 
     def get_background(self, video, numframes=120):
-        ''' Computes the background image of a given video '''
+        """
+        """
 
         background_path = '{}/bk_{}.png'.format(
             app.config['BKGRND_FOLDER'],
@@ -73,7 +80,8 @@ class Tracker(object):
         return cv2.imread(background_path, 0)
 
     def process_video(self, video):
-        ''' Generates targets frame by frame for a given video '''
+        """
+        """
 
         frameNum = 0
         currentDataRow = 1  # First row in the csv is a header
@@ -83,7 +91,8 @@ class Tracker(object):
             outFrame = self.process_frame(inFrame, frameNum)
 
     def process_frame(self, inFrame, frameNum):
-        ''' Generates targets for an individual frame '''
+        """
+        """
 
         grayframe = cv2.cvtColor(inFrame, cv2.COLOR_BGR2GRAY)
         grayframe = cv2.absdiff(grayframe, self.background)
@@ -96,7 +105,8 @@ class Tracker(object):
         return inFrame
 
     def detect_targets(self, thresh_img, inFrame, frameNum):
-        ''' Detects targets from the contour image of a frame '''
+        """
+        """
 
         # No ground truth means no known label, 0 is a sentinal value for an
         # unlabled ant

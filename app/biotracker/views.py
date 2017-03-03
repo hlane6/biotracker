@@ -1,3 +1,6 @@
+""" Module containing all views for the flask applicatation.
+"""
+
 from flask import Flask, Response, flash, redirect, render_template, request
 from werkzeug.utils import secure_filename
 from werkzeug.datastructures import FileStorage
@@ -7,48 +10,48 @@ from biotracker.models.tracker import Tracker
 
 import os
 
-
 @app.errorhandler(404)
 def page_not_found(e):
     return redirect('/')
 
-
 @app.route('/')
 def root():
+    """ Routes users to the welcome / upload page of the applicatation. From
+    here the user can upload files and will be directed towards the home page.
+    """
     return render_template('index.html')
-
 
 @app.route('/home')
 def home_view():
+    """ Routes users to the homepage of the application which includes the
+    tracker web applicatation.
+    """
     return render_template('home.html')
-
 
 @app.route('/uploadFiles', methods=['POST'])
 def handle_data():
-    """
-    Handles POST requests given an mp4.
-    If a csv file is not provided then one will be generated
+    """ Handles POST requests given an mp4. If a csv file is not provided
+    then one will be generated.
     """
 
     # Fetch files and remove old ones if they exist
     video = request.files['video']
     csvData = request.files['csvData']
-    remove_files(app.config['DATA_FOLDER'])
-    remove_files(app.config['VID_FOLDER'])
+    __remove_files(app.config['DATA_FOLDER'])
+    __remove_files(app.config['VID_FOLDER'])
 
     video.save(os.path.join(app.config['VID_FOLDER'],
                secure_filename(video.filename)))
 
-    handle_csv(csvData)
+    __handle_csv(csvData)
 
     return redirect('/home')
 
 
 @app.route('/video', methods=['GET'])
 def fetch_video():
-    """
-    Endpoint to serve the saved video file
-    Prevents Caching to ensure that the newest upload is what always return
+    """ Endpoint to serve the saved video file. Prevents Caching to ensure
+    that the newest upload is what always return.
     """
 
     resp = app.send_static_file(os.path.join(app.config['VID_FOLDER_RELATIVE'],
@@ -79,28 +82,13 @@ def fetch_csvData():
 
     return file
 
-
-def is_match(video, csv):
-    """
-    Checks if a csv file matches a given mp4 file.
-    If the names are the same return true
-    """
-
-    return video.filename.split('.')[0] == csv.filename.split('.')[0]
-
-
-def remove_files(directory):
-    """
-    Removes all the files in a given directory
-    Useful for clearing old mp4/csv data
-    """
-
+def __remove_files(directory):
     for f in os.listdir(directory):
         os.remove(os.path.join(directory, f))
 
-
-def handle_csv(csvData):
+def __handle_csv(csvData: File):
     # If no csv file provided, then create one from video
+    print(type(csvData))
     if csvData.filename == '':
         tracker = Tracker()
         tracker.generate_csv()

@@ -1,9 +1,21 @@
+""" Module containing the Target model.
+"""
+
+
 class Target:
+    """ A Target represents a single object being tracked in a single frame.
+    A sequence of Targets for a single Target id is called a tracklet and
+    represents a unique object being tracked over multiple frames.
+    """
+
     def __init__(self, init_box=None, pos=None, target_id=None, theta=None,
                  frame_num=None, dimensions=None):
-
+        """ Initializes a target given parameters. A Target has the following
+        instance variables:
+            TODO: finish me
+        """
         if init_box is not None:
-            self.pos = self.get_bbox_pos(init_box)
+            self.pos = self.__get_bbox_pos(init_box)
         else:
             self.pos = pos
 
@@ -13,7 +25,7 @@ class Target:
         self.theta = theta
         self.frame_num = frame_num
 
-    def get_bbox_pos(self, bbox):
+    def __get_bbox_pos(self, bbox):
         """ Get center coordinate of a bounding box """
         x_arr = [coord[0] for coord in bbox]
         y_arr = [coord[1] for coord in bbox]
