@@ -6,7 +6,7 @@ from werkzeug.utils import secure_filename
 from werkzeug.datastructures import FileStorage
 from datetime import datetime
 from biotracker import app
-from biotracker.models.tracker import Tracker
+from biotracker.models.targetManager import TargetManager
 
 import os
 
@@ -33,17 +33,16 @@ def handle_data():
     """ Handles POST requests given an mp4. If a csv file is not provided
     then one will be generated.
     """
-
     # Fetch files and remove old ones if they exist
     video = request.files['video']
     csvData = request.files['csvData']
-    __remove_files(app.config['DATA_FOLDER'])
-    __remove_files(app.config['VID_FOLDER'])
+    _remove_files(app.config['DATA_FOLDER'])
+    _remove_files(app.config['VID_FOLDER'])
 
     video.save(os.path.join(app.config['VID_FOLDER'],
                secure_filename(video.filename)))
 
-    __handle_csv(csvData)
+    _handle_csv(csvData)
 
     return redirect('/home')
 
@@ -53,7 +52,6 @@ def fetch_video():
     """ Endpoint to serve the saved video file. Prevents Caching to ensure
     that the newest upload is what always return.
     """
-
     resp = app.send_static_file(os.path.join(app.config['VID_FOLDER_RELATIVE'],
                                 os.listdir(app.config['VID_FOLDER'])[0]))
 
@@ -70,8 +68,7 @@ def fetch_video():
 
 @app.route('/csvData', methods=['GET'])
 def fetch_csvData():
-    """
-    Endpoint to serve the save csv data
+    """ Endpoint that serves the csv data.
     """
 
     file = app.send_static_file(
@@ -82,16 +79,23 @@ def fetch_csvData():
 
     return file
 
-def __remove_files(directory):
+def _remove_files(directory):
     for f in os.listdir(directory):
         os.remove(os.path.join(directory, f))
 
-def __handle_csv(csvData: File):
+def _handle_csv(csvData):
     # If no csv file provided, then create one from video
-    print(type(csvData))
     if csvData.filename == '':
-        tracker = Tracker()
-        tracker.generate_csv()
+        fname = os.listdir(app.config['VID_FOLDER'])[0]
+        mgr = TargetManager('{}/{}'.format(app.config['VID_FOLDER'], fname))
+
+        mgr.identify_targets()
+        mgr.post_process_targets()
+        mgr.associate_targets()
+
+        csv_path = os.path.join(app.config['DATA_FOLDER'],
+                                fname.split('.')[0] + ".csv")
+        mgr.write_csv_file(csv_path)
 
     # Otherwise create the video from csv data
     else:
