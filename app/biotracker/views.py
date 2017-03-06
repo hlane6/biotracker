@@ -10,26 +10,32 @@ from biotracker.models.targetManager import TargetManager
 
 import os
 
+
 @app.errorhandler(404)
-def page_not_found(e):
+def page_not_found(e) -> Response:
+    """ Routes users to root whenever there is an error
+    """
     return redirect('/')
 
+
 @app.route('/')
-def root():
+def root() -> Response:
     """ Routes users to the welcome / upload page of the applicatation. From
     here the user can upload files and will be directed towards the home page.
     """
     return render_template('index.html')
 
+
 @app.route('/home')
-def home_view():
+def home_view() -> Response:
     """ Routes users to the homepage of the application which includes the
     tracker web applicatation.
     """
     return render_template('home.html')
 
+
 @app.route('/uploadFiles', methods=['POST'])
-def handle_data():
+def handle_data() -> Response:
     """ Handles POST requests given an mp4. If a csv file is not provided
     then one will be generated.
     """
@@ -48,7 +54,7 @@ def handle_data():
 
 
 @app.route('/video', methods=['GET'])
-def fetch_video():
+def fetch_video() -> Response:
     """ Endpoint to serve the saved video file. Prevents Caching to ensure
     that the newest upload is what always return.
     """
@@ -67,10 +73,11 @@ def fetch_video():
 
 
 @app.route('/csvData', methods=['GET'])
-def fetch_csvData():
-    """ Endpoint that serves the csv data.
+def fetch_csvData() -> Response:
+    """ Endpoint that serves the csv data. The csv file will always be in
+    the DATA_FOLDER found in the configuration of the app. Currently, that
+    folder will only ever contain one file.
     """
-
     file = app.send_static_file(
         os.path.join(app.config['DATA_FOLDER_RELATIVE'],
                      os.listdir(app.config['DATA_FOLDER'])[0]))
@@ -79,11 +86,13 @@ def fetch_csvData():
 
     return file
 
-def _remove_files(directory):
+
+def _remove_files(directory: str) -> None:
     for f in os.listdir(directory):
         os.remove(os.path.join(directory, f))
 
-def _handle_csv(csvData):
+
+def _handle_csv(csvData) -> None:
     # If no csv file provided, then create one from video
     if csvData.filename == '':
         fname = os.listdir(app.config['VID_FOLDER'])[0]
@@ -99,5 +108,7 @@ def _handle_csv(csvData):
 
     # Otherwise create the video from csv data
     else:
-        csvData.save(os.path.join(app.config['DATA_FOLDER'],
-                    secure_filename(csvData.filename)))
+        csvData.save(os.path.join(
+            app.config['DATA_FOLDER'],
+            secure_filename(csvData.filename)
+        ))

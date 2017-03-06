@@ -34,9 +34,10 @@ def after_request(response):
     return response
 
 
-def send_file_partial(path):
+def send_file_partial(path: str):
     """ Simple wrapper around send_file which handles HTTP 206 Partial Content
     (byte ranges)
+
     TODO: handle all send_file args, mirror send_file's error handling
     (if it has any)
     """
