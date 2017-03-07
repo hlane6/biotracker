@@ -1,4 +1,4 @@
-""" Module containing all views for the flask applicatation.
+""" Module containing all views, routes for the flask applicatation.
 """
 
 from flask import Flask, Response, flash, redirect, render_template, request

@@ -43,23 +43,31 @@ class TargetManager:
         self.video = cv2.VideoCapture(video_path)
 
     def identify_targets(self) -> None:
-        """
+        """ Using a Tracker, will perform an initial pass of the video.
+        self.targets will now contain Targets with valid frame_num, x, y,
+        width, height, and theta, but they will have invalid ids and there
+        can be mistakes between consequtive frames of Targets disappearing.
         """
         tracker = Tracker(self.video)
         self.targets = tracker.process_video()
 
     def post_process_targets(self) -> None:
-        """
+        """ Using a Tracker, will perform a second pass through the targets in
+        an attempt to remove inconsistances between consequtive frames.
+        self.targest should now contain Targets with valid frame_num, x, y,
+        width, height, and theta and are ready to be associated to unique ids.
         """
         pass
 
     def associate_targets(self):
-        """
+        """ Using an associator, will perform a final pass through the
+        targets an attempt to assign unique ids to targets throughout the
+        video.
         """
         pass
 
     def write_csv_file(self, csv_file_name: str) -> None:
-        """ Converts data to a csv file. Targest will be ordered by
+        """ Converts data to a csv file. Targets will be ordered by
         ascending frame number.
         """
         with open(csv_file_name, 'w') as csv_file:

@@ -4,6 +4,7 @@
 from biotracker import app
 from biotracker.models.target import Target
 from scipy.stats.mstats import mode
+from typing import List
 
 import numpy as np
 import cv2
@@ -64,8 +65,13 @@ class Tracker(object):
         cv2.imwrite(background_path, background)
         return cv2.imread(background_path, 0)
 
-    def process_video(self) -> list[list[Target]]:
-        """ Generates targets frame by frame for a given video
+    def process_video(self) -> List[List[Target]]:
+        """ Generates targets frame by frame for a given video. For every
+        frame of the video, performs background subtraction on the frame
+        using the previously generated background. The subtracted image is
+        then thresholded to remove some noise, and finally the contours
+        of the image are found in the thresholded image. A list of Targets
+        are created based on those contours.
         """
         all_targets = []
 
@@ -79,7 +85,7 @@ class Tracker(object):
         return all_targets
 
     def __process_frame(self, inFrame: np.array,
-                        frameNum: int) -> list[Target]:
+                        frameNum: int) -> List[Target]:
         grayframe = cv2.cvtColor(inFrame, cv2.COLOR_BGR2GRAY)
         grayframe = cv2.absdiff(grayframe, self.background)
 
@@ -89,7 +95,7 @@ class Tracker(object):
         return self.__detect_targets(thresh_img, inFrame, frameNum)
 
     def __detect_targets(self, thresh_img: np.array,
-                         in_frame: np.array, frame_num: int) -> list[Target]:
+                         in_frame: np.array, frame_num: int) -> List[Target]:
         # No ground truth means no known label, 0 is a sentinal value for an
         # unlabled ant
         unlabeled_ant_id = 0
@@ -106,12 +112,13 @@ class Tracker(object):
 
             # Create a target and add it to the target manager
             if cv2.contourArea(contour) > CONTOUR_THRESH:
-                target = Target(init_box=box,
-                                target_id=unlabeled_ant_id,
-                                frame_num=frame_num,
-                                theta=theta,
-                                dimensions=dimensions)
+                target = Target(
+                    frame_num=frame_num,
+                    width=dimensions[0],
+                    height=dimensions[1],
+                    theta=theta,
+                    box=box,
+                )
                 targets.append(target)
-                cv2.drawContours(in_frame, [box], 0, (0, 0, 255), 2)
 
         return targets
