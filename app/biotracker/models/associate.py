@@ -1,5 +1,6 @@
 from biotracker.models.munkres.munkres import Munkres
 from biotracker.utils import *
+import copy
 
 # Loads all detections into an array of frames for association
 def load_tracks(target_manager):
@@ -22,20 +23,14 @@ def load_tracks(target_manager):
         # Keep track of the highest target number.
         cur_target_id = update_tracks(targets, frame_targets, cur_target_id)
 
-    #     for target in targets:
-    #         words = line.split(',')
-    #         words[1] = target.target_id
-    #         f_new.write(','.join(words))
-
     #     # Update targets with detections from frame.
     #     # Do a deep copy to avoid updating all the previous frames with the
     #     # target array.
     #     frames.append(copy.deepcopy(targets))
-
+        frames.append(copy.deepcopy(targets))
     # f_orig.close()
     # f_new.close()
-    # return frames
-    return None
+    return frames
 
 # Generator that loads all the targets in a frame.
 # If none exist, returns an empty array and increments frame.

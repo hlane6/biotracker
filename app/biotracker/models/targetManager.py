@@ -35,8 +35,9 @@ class TargetManager:
 
     def associate_targets(self):
         #self.targets = all this below
-        load_tracks(self)
         print ("in associate_targets")
+        self.targets = load_tracks(self)
+        #print ("in associate_targets")
 
     def write_csv_file(self, csv_file_name):
         ''' Converts data to a csv file '''
