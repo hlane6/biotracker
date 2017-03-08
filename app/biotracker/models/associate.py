@@ -43,15 +43,20 @@ def load_next_frame_targets(target_mgr):
     print ("in load_next_frame_targets")
     cur_idx = 0
     cur_frame = 1
-    while cur_idx < len(target_mgr.detections):
+    while cur_idx < len(target_mgr.targets):
         new_targets = []
-        if target_mgr.detections[cur_idx].frame_num == cur_frame:
-            while cur_idx < len(target_mgr.detections) and \
-                target_mgr.detections[cur_idx].frame_num == cur_frame:
-                    detection = target_mgr.detections[cur_idx]
-                    new_targets.append(target_mgr.detection_to_target(detection))
+        # All [0]s added in order to access individual targets within "targets", since it is in a 2D array, while "detection", which used to be used, was a 1D array.
+        if target_mgr.targets[cur_idx][0].frame_num == cur_frame:
+            # This "i" will iterate through the targets within each frame. It assists in accessing the physical target within the 2D targets array.
+            i = 0
+            while cur_idx < len(target_mgr.targets) and \
+                target_mgr.targets[cur_idx][0].frame_num == cur_frame and i < len(target_mgr.targets[cur_idx]):
+                    target = target_mgr.targets[cur_idx][i]
+                    new_targets.append(target)
                     # Increment to next detection.
                     cur_idx += 1
+                    i += 1
+                    # NEXT, CHECK IF THE FORMAT OF "new_targets" WAS CHANGED. IT COULD POSSIBLY BE MESSING UP INPUT TO "find_closest"
         cur_frame += 1
         # Return all the targets in the new frame.
         yield new_targets
