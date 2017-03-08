@@ -47,6 +47,7 @@ class TargetManager:
                 for target in frame_targets:
                     row = []
 
+                    #TODO(apalm3): Why is this created here? Rework.
                     detection = Detection(
                         target.frame_num,
                         target.target_id,

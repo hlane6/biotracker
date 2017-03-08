@@ -1,4 +1,5 @@
 from biotracker.models.munkres.munkres import Munkres
+from biotracker.utils import *
 
 # Loads all detections into an array of frames for association
 def load_tracks(target_manager):
@@ -41,25 +42,31 @@ def load_tracks(target_manager):
 # Check for keyframe status to continue yielding empty arrays.
 def load_next_frame_targets(target_mgr):
     print ("in load_next_frame_targets")
-    cur_idx = 0
-    cur_frame = 1
-    while cur_idx < len(target_mgr.targets):
-        new_targets = []
-        # All [0]s added in order to access individual targets within "targets", since it is in a 2D array, while "detection", which used to be used, was a 1D array.
-        if target_mgr.targets[cur_idx][0].frame_num == cur_frame:
-            # This "i" will iterate through the targets within each frame. It assists in accessing the physical target within the 2D targets array.
-            i = 0
-            while cur_idx < len(target_mgr.targets) and \
-                target_mgr.targets[cur_idx][0].frame_num == cur_frame and i < len(target_mgr.targets[cur_idx]):
-                    target = target_mgr.targets[cur_idx][i]
-                    new_targets.append(target)
-                    # Increment to next detection.
-                    cur_idx += 1
-                    i += 1
-                    # NEXT, CHECK IF THE FORMAT OF "new_targets" WAS CHANGED. IT COULD POSSIBLY BE MESSING UP INPUT TO "find_closest"
-        cur_frame += 1
-        # Return all the targets in the new frame.
-        yield new_targets
+    # cur_idx = 0
+    cur_frame = 0
+    for frame_targets in target_mgr.targets:
+    #     new_targets = []
+    # #     # All [0]s added in order to access individual targets within "targets", since it is in a 2D array, while "detection", which used to be used, was a 1D array.
+    # #     if target_mgr.targets[cur_idx][0].frame_num == cur_frame:
+    # #         # This "i" will iterate through the targets within each frame. It assists in accessing the physical target within the 2D targets array.
+    # #         i = 0
+    # #         while cur_idx < len(target_mgr.targets) and \
+    # #             target_mgr.targets[cur_idx][0].frame_num == cur_frame and i < len(target_mgr.targets[cur_idx]):
+    # #                 target = target_mgr.targets[cur_idx][i]
+    # #                 new_targets.append(target)
+    # #                 # Increment to next detection.
+    # #                 cur_idx += 1
+    # #                 i += 1
+    # #                 # NEXT, CHECK IF THE FORMAT OF "new_targets" WAS CHANGED. IT COULD POSSIBLY BE MESSING UP INPUT TO "find_closest"
+    # #     # Return all the targets in the new frame.
+        yield frame_targets
+
+    #     for frame_targets in target_mgr.targets:
+    #         for target in frame_targets:
+    #             if target.frame_num == cur_frame:
+
+    #     cur_frame += 1
+
 
 # Update target position to new position with greedy search.
 # Add any unmatched new targets to the target array
@@ -118,10 +125,10 @@ def find_closest(tracks, new_tracks):
         #if match_key is not None:
             #matrix.append([max_dist for i in range(len(new_tracks))])
             # TODO(carden): Update to add in theta from key frame.
-            #track.UpdatePosition(match_key.pos, match_key.frame_num)
+            #track.update_position(match_key.pos, match_key.frame_num)
 
         #else:
-        matrix.append([CalcDistance(tracks[i].pos, new_track.pos)
+        matrix.append([calc_distance(tracks[i].pos, new_track.pos)
                             for new_track in new_tracks])
     # Compute the lowest cost path through the cost matrix.
     indices = m.compute(matrix)
@@ -129,7 +136,7 @@ def find_closest(tracks, new_tracks):
     cols = []
     for row, col in indices:
         if matrix[row][col] < max_dist:
-            tracks[row].UpdatePosition(new_tracks[col].pos,
+            tracks[row].update_position(new_tracks[col].pos,
                                        new_tracks[col].frame_num)
             cols.append(col)
     cols.sort(reverse=True)
