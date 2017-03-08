@@ -2,6 +2,7 @@ import csv
 import cv2
 from collections import namedtuple
 from biotracker.models.tracker import Tracker
+from biotracker.models.associate import load_tracks
 
 import pdb
 
@@ -33,7 +34,9 @@ class TargetManager:
         pass
 
     def associate_targets(self):
-        pass
+        #self.targets = all this below
+        load_tracks(self)
+        print ("in associate_targets")
 
     def write_csv_file(self, csv_file_name):
         ''' Converts data to a csv file '''
