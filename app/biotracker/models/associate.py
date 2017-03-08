@@ -1,4 +1,4 @@
-# from munkres import Munkres, print_matrix
+from biotracker.models.munkres.munkres import Munkres
 
 # Loads all detections into an array of frames for association
 def load_tracks(target_manager):
