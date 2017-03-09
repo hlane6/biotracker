@@ -1,46 +1,73 @@
+""" Module containing the Target model.
+"""
+
+from typing import Any
+from collections import namedtuple
+
+
 class Target:
-    def __init__(self, init_box=None, pos=None, target_id=None, theta=None,
-                 frame_num=None, dimensions=None):
+    """ A Target represents a single object being tracked in a single frame.
+    A sequence of Targets for a single Target id is called a tracklet and
+    represents a unique object being tracked over multiple frames.
+    """
 
-        if init_box is not None:
-            self.pos = self.__get_bbox_pos(init_box)
-        else:
-            self.pos = pos
+    FIELDS = (
+        'frame_num',
+        'target_id',
+        'x',
+        'y',
+        'width',
+        'height',
+        'theta'
+    )
 
-        self.dimensions = dimensions
-        self.pos_arr = [self.pos]
+    def __init__(self, target_id=0, frame_num=0, x=None, y=None,
+                 width=0, height=0, theta=0.0, box=None):
+        """ Initializes a target given parameters. A Target has the following
+        instance variables:
+            pos - a tuple containing the x, y coordinates of the Target
+            dimensions - a tuple containing the width, height of the Target
+            target_id - an int representing the unique id of the Target
+            theta - a float representing the angle of rotation of the Target
+            frame_num - an int representing what frame number of the
+            corresponding video the Target belongs to
+        """
         self.target_id = target_id
-        self.theta = theta
         self.frame_num = frame_num
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+        self.theta = theta
 
-    def __get_bbox_pos(self, bbox):
-        """ Get center coordinate of a bounding box """
-        x_arr = [coord[0] for coord in bbox]
-        y_arr = [coord[1] for coord in bbox]
+        if box is not None and (x is None and y is None):
+            self.x, self.y = self.__get_xy_from_box(box)
 
-        min_x = min(x_arr)
-        min_y = min(y_arr)
-        max_x = max(x_arr)
-        max_y = max(y_arr)
+    def __get_xy_from_box(self, box):
+        xs = [coor[0] for coor in box]
+        ys = [coor[1] for coor in box]
+        return int((min(xs) + max(xs)) / 2), int((min(ys) + (max(ys))) / 2)
 
-        y = int((max_y + min_y)/2)
-        x = int((max_x + min_x)/2)
-        return x, y
-
-    def __eq__(self, other):
+    def __eq__(self, other: Any):
         return (isinstance(other, self.__class__) and
                 self.__dict__ == other.__dict__)
 
-    def __ne__(self, other):
+    def __ne__(self, other: Any):
         return not self.__eq__(other)
 
+    def __iter__(self):
+        attributes = (
+            self.frame_num,
+            self.target_id,
+            self.x,
+            self.y,
+            self.width,
+            self.height,
+            self.theta
+        )
+
+        for attr in attributes:
+            yield attr
+
     def __repr__(self):
-        return ("pos:{pos}\n"
-                "pos_arr:{pos_arr}\n"
-                "target_id:{target_id}\n"
-                "theta:{theta}\n"
-                "frame_num:{frame_num}\n").format(pos=self.pos,
-                                                  pos_arr=self.pos_arr,
-                                                  target_id=self.target_id,
-                                                  theta=self.theta,
-                                                  frame_num=self.frame_num)
+        return ','.join(list(self))
