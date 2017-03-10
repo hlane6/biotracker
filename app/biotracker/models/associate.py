@@ -1,4 +1,4 @@
-from biotracker.models.munkres.munkres import Munkres
+from munkres import Munkres
 from biotracker.utils import *
 import copy
 

@@ -109,8 +109,6 @@ def handle_csv(csvData):
         mgr.post_process_targets()
         mgr.associate_targets()
 
-        print(mgr.targets[0])
-
         csv_path = os.path.join(app.config['DATA_FOLDER'],
                                 fname.split('.')[0] + ".csv")
         mgr.write_csv_file(csv_path)
