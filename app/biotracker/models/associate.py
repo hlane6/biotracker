@@ -19,7 +19,7 @@ def associate(targets: List[List[Target]]) -> List[List[Target]]:
 
     # based on previousframe, update next frame with ids
     for next_frame in targets[1:]:
-        cur_associated_targets = associate_sequential_targets(
+        cur_associated_targets = __associate_sequential_targets(
             associated_targets[-1],
             next_frame
         )
@@ -28,7 +28,7 @@ def associate(targets: List[List[Target]]) -> List[List[Target]]:
     return associated_targets
 
 
-def associate_sequential_targets(current_frame: List[Target],
+def __associate_sequential_targets(current_frame: List[Target],
                                  next_frame: List[Target]) -> List[Target]:
     """ Takes in two sequential frames of targets. The first frame is
     labeled with ids while the second frame is unlabeled. Using the first
