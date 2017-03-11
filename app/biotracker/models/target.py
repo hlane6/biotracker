@@ -50,7 +50,7 @@ class Target:
         return int((min(xs) + max(xs)) / 2), int((min(ys) + (max(ys))) / 2)
 
     def to_target(self, target_id=None, frame_num=None, x=None, y=None,
-            width=None, height=None, theta=None):
+                  width=None, height=None, theta=None):
         """ Converts the current target to a different target changing
         only the paramteres that are passed in.
         """

@@ -29,13 +29,12 @@ def associate(targets: List[List[Target]]) -> List[List[Target]]:
 
 
 def associate_sequential_targets(current_frame: List[Target],
-        next_frame: List[Target]) -> List[Target]:
+                                 next_frame: List[Target]) -> List[Target]:
     """ Takes in two sequential frames of targets. The first frame is
     labeled with ids while the second frame is unlabeled. Using the first
     frames ids, the second frame will be associated using a distance
     cost matrix
     """
-    max_distance = 50
     munk = Munkres()
 
     distance_matrix = [
@@ -57,6 +56,10 @@ def associate_sequential_targets(current_frame: List[Target],
     matched_targets = [col for row, col in indicies]
 
     if len(matched_targets) < len(next_frame):
+        # There were unmatched targets. This occurs when either a new ant
+        # appears in the new frame or an ant disappeared from the old frame.
+        # When this happens, we just start assigning ids from the previous
+        # frames max id and upward
         next_id = max([target.target_id for target in current_frame]) + 1
 
         for index, target in enumerate(next_frame):

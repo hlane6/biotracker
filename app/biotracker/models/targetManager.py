@@ -4,6 +4,7 @@ from biotracker.models.tracker import Tracker, Target
 import csv
 import cv2
 
+
 class TargetManager:
     """ A TargetManager is responsible for generating Targets for a given
     video. This is a three step process:
@@ -64,9 +65,7 @@ class TargetManager:
         targets an attempt to assign unique ids to targets throughout the
         video.
         """
-        #self.targets = all this below
         self.targets = associate(self.targets)
-        #print ("in associate_targets")
 
     def write_csv_file(self, csv_file_name: str) -> None:
         """ Converts data to a csv file. Targets will be ordered by
