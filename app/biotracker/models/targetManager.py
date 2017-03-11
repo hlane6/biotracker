@@ -1,5 +1,5 @@
 from collections import namedtuple
-from biotracker.models.associate import load_tracks
+from biotracker.models.associate import associate
 from biotracker.models.tracker import Tracker, Target
 import csv
 import cv2
@@ -65,8 +65,7 @@ class TargetManager:
         video.
         """
         #self.targets = all this below
-        print ("in associate_targets")
-        self.targets = load_tracks(self)
+        self.targets = associate(self.targets)
         #print ("in associate_targets")
 
     def write_csv_file(self, csv_file_name: str) -> None:
