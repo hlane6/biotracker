@@ -39,6 +39,9 @@ class TargetManager:
         self.targets = load_tracks(self)
         #print ("in associate_targets")
 
+    def sort_by_frame_num(self):
+        self.targets.sort(key=lambda x:x.frame_num)
+
     def write_csv_file(self, csv_file_name):
         ''' Converts data to a csv file '''
         with open(csv_file_name, 'w') as csv_file:

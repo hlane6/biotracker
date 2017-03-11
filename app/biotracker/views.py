@@ -108,6 +108,7 @@ def handle_csv(csvData):
         mgr.identify_targets()
         mgr.post_process_targets()
         mgr.associate_targets()
+        #mgr.sort_by_frame_num()
 
         csv_path = os.path.join(app.config['DATA_FOLDER'],
                                 fname.split('.')[0] + ".csv")
