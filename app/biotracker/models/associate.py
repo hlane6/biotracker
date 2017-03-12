@@ -29,7 +29,7 @@ def associate(targets: List[List[Target]]) -> List[List[Target]]:
 
 
 def __associate_sequential_targets(current_frame: List[Target],
-                                 next_frame: List[Target]) -> List[Target]:
+                                   next_frame: List[Target]) -> List[Target]:
     """ Takes in two sequential frames of targets. The first frame is
     labeled with ids while the second frame is unlabeled. Using the first
     frames ids, the second frame will be associated using a distance
@@ -47,11 +47,10 @@ def __associate_sequential_targets(current_frame: List[Target],
 
     indicies = munk.compute(distance_matrix)
 
-    targets = []
-    for row, col in indicies:
-        targets.append(next_frame[col].to_target(
-            target_id=current_frame[row].target_id
-        ))
+    targets = [
+        next_frame[col].to_target(target_id=current_frame[row].target_id)
+        for row, col in indicies
+    ]
 
     matched_targets = [col for row, col in indicies]
 
