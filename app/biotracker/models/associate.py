@@ -64,5 +64,6 @@ def __associate_sequential_targets(current_frame: List[Target],
         for index, target in enumerate(next_frame):
             if index not in matched_targets:
                 targets.append(target.to_target(target_id=next_id))
+                next_id += 1
 
     return targets
