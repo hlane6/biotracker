@@ -1,7 +1,8 @@
+from collections import namedtuple
+from biotracker.models.associate import associate
+from biotracker.models.tracker import Tracker, Target
 import csv
 import cv2
-from collections import namedtuple
-from biotracker.models.tracker import Tracker, Target
 
 
 class TargetManager:
@@ -64,7 +65,7 @@ class TargetManager:
         targets an attempt to assign unique ids to targets throughout the
         video.
         """
-        pass
+        self.targets = associate(self.targets)
 
     def write_csv_file(self, csv_file_name: str) -> None:
         """ Converts data to a csv file. Targets will be ordered by
@@ -72,7 +73,6 @@ class TargetManager:
         """
         with open(csv_file_name, 'w') as csv_file:
             writer = csv.writer(csv_file)
-
             writer.writerow(Target.FIELDS)
 
             for frame_targets in self.targets:
@@ -95,9 +95,11 @@ class TargetManager:
         """ Reads in a row from csv file into a Target
         """
         return Target(
-            pos=(int(row[POS_X]), int(row[POS_Y])),
             target_id=int(row[TARGET_ID]),
-            theta=float(row[THETA]),
             frame_num=int(row[FRAME_NUM]),
-            dimensions=(int(row[WIDTH]), int(row[HEIGHT]))
+            x=int(row[POS_X]),
+            y=int(row[POS_Y]),
+            width=int(row[WIDTH]),
+            height=int(row[HEIGHT]),
+            theta=float(row[THETA])
         )

@@ -3,6 +3,7 @@
 
 from typing import Any
 from collections import namedtuple
+import numpy as np
 
 
 class Target:
@@ -48,6 +49,21 @@ class Target:
         ys = [coor[1] for coor in box]
         return int((min(xs) + max(xs)) / 2), int((min(ys) + (max(ys))) / 2)
 
+    def to_target(self, target_id=None, frame_num=None, x=None, y=None,
+                  width=None, height=None, theta=None):
+        """ Converts the current target to a different target changing
+        only the paramteres that are passed in.
+        """
+        return Target(
+            target_id=self.target_id if target_id is None else target_id,
+            frame_num=self.frame_num if frame_num is None else frame_num,
+            x=self.x if x is None else x,
+            y=self.y if y is None else y,
+            width=self.width if width is None else width,
+            height=self.height if height is None else height,
+            theta=self.theta if theta is None else theta
+        )
+
     def __eq__(self, other: Any):
         return (isinstance(other, self.__class__) and
                 self.__dict__ == other.__dict__)
@@ -70,4 +86,6 @@ class Target:
             yield attr
 
     def __repr__(self):
-        return ','.join(list(self))
+        return 'Target({:s})'.format(
+            ','.join([str(item) for item in list(self)])
+        )

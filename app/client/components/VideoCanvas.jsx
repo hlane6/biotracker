@@ -57,11 +57,12 @@ export default class VideoCanvas extends React.Component {
         if (!this.props.paused) {
             ctx.clearRect(0, 0, width, height);
         }
-        
+
         ctx.drawImage(this.getVideo(), 0, 0, width, height);
-        ctx.strokeStyle = 'red';
 
         for (let box of this.state.boxes) {
+            ctx.strokeStyle = box.color;
+            
             ctx.translate(box.x, box.y);
             ctx.rotate(box.theta * Math.PI / 180);
 
