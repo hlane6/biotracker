@@ -16,6 +16,7 @@ export default class Composer {
     constructor() {
         this.corrections = [];
         this.correct = this.correct.bind(this);
+        this.addCorrection = this.addCorrection.bind(this);
     }
 
     /**
@@ -29,6 +30,13 @@ export default class Composer {
     */
     correct(frame, oldBoxes) {
         return oldBoxes;
+    }
+
+    addCorrection(frame, oldId, newId) {
+        if (oldId === newId) return;
+        if (frame < 0) return;
+
+        this.corrections.push(Correction(frame, oldId, newId));
     }
 
 }

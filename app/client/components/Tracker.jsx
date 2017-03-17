@@ -50,6 +50,7 @@ export default class Tracker extends React.Component {
       this.setState({
           time: time,
           boxes: this.parser.getFrame(Math.floor(time * 30)),
+          pick: null,
       });
     }
 
@@ -90,6 +91,8 @@ export default class Tracker extends React.Component {
 
             <CorrectionsPanel
               pick={this.state.pick}
+              time={this.state.time}
+              composer={this.composer}
               handleCorrection={this.handleCorrection}
             />
 
