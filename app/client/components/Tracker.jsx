@@ -2,6 +2,7 @@ import React from 'react';
 import VideoCanvas from './VideoCanvas';
 import Parser from '../models/Parser';
 import Button from './Button';
+import CorrectionsPanel from './Corrections';
 
 export default class Tracker extends React.Component {
 
@@ -44,6 +45,7 @@ export default class Tracker extends React.Component {
               seekCallback={this.handleSeek}
               onClick={this.handleClick}
             />
+            <CorrectionsPanel />
             <a href="/csvData">
               <Button className="bottom-buttons" text="download data file" />
             </a>
