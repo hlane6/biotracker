@@ -1,7 +1,5 @@
 import Papa from 'papaparse';
-// import BoundingBox from './BoundingBox';
 
-// IMPLEMENT MATH OPERATIONS FOR WIDTH AND HEIGHT!
 const COLORS = {
     0: 'green',
     1: 'red',
@@ -59,12 +57,42 @@ const COLORS = {
 class BoundingBox {
     constructor(id, x, y, width, height, theta) {
         this.color = COLORS[id];
+        this.id = id;
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         this.theta = theta;
+        this.theta_in_radians = theta * (Math.PI / 180);
+
+        this.rotatePoint = this.rotatePoint.bind(this);
+        this.collidesWith = this.collidesWith.bind(this);
     }
+
+    collidesWith(otherX, otherY) {
+        //Convert to boxes reference frame
+        const { rotatedX, rotatedY } = this.rotatePoint(
+            otherX - this.x,
+            otherY - this.y
+        );
+
+        return (rotatedX < (this.width / 2))
+            && (rotatedX > -(this.width / 2))
+            && (rotatedY < (this.height / 2))
+            && (rotatedY > -(this.height / 2));
+        //console.log(otherX, otherY, this.x + 10, this.y);
+
+        //return (otherX < (this.x + 10)) && (otherX > (this.x - 10)) && (otherY < (this.y + 10)) && (otherY > (this.y - 10));
+    }
+
+    rotatePoint(x, y) {
+        const rotatedX = (x * Math.cos(this.theta_in_radians))
+            + (y * -Math.sin(this.theta_in_radians));
+        const rotatedY = (x * Math.sin(this.theta_in_radians))
+            + (y * Math.cos(this.theta_in_radians));
+        return { rotatedX, rotatedY };
+    }
+
 }
 
 export default class Parser {
@@ -78,6 +106,7 @@ export default class Parser {
             header: true,
             download: true,
             complete: this.finish,
+            dynamicTyping: true,
         });
 
         this.getBoundingBoxes = this.getBoundingBoxes.bind(this);

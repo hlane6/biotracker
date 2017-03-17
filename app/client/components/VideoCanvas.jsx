@@ -13,6 +13,10 @@ export default class VideoCanvas extends React.Component {
         time: 0,
         src: '',
         ready: false,
+        boxes: [],
+        duration: 0.0,
+        width: 720,
+        height: 480,
         playPauseCallback: () => {},
         seekCallback: () => {},
         onClick: () => {},
@@ -23,6 +27,10 @@ export default class VideoCanvas extends React.Component {
         time: React.PropTypes.number,
         src: React.PropTypes.string,
         ready: React.PropTypes.bool,
+        boxes: React.PropTypes.array,
+        duration: React.PropTypes.number,
+        width: React.PropTypes.number,
+        height: React.PropTypes.number,
         playPauseCallback: React.PropTypes.func,
         seekCallback: React.PropTypes.func,
         onClick: React.PropTypes.func,
@@ -31,16 +39,8 @@ export default class VideoCanvas extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            duration: 1.0,
-            width: 720,
-            height: 420,
-            boxes: [],
-        };
-
         this.draw = this.draw.bind(this);
         this.getVideo = this.getVideo.bind(this);
-        this.updateState = this.updateState.bind(this);
     }
 
     getVideo() {
@@ -60,9 +60,9 @@ export default class VideoCanvas extends React.Component {
 
         ctx.drawImage(this.getVideo(), 0, 0, width, height);
 
-        for (let box of this.state.boxes) {
+        for (let box of this.props.boxes) {
             ctx.strokeStyle = box.color;
-            
+
             ctx.translate(box.x, box.y);
             ctx.rotate(box.theta * Math.PI / 180);
 
@@ -76,16 +76,9 @@ export default class VideoCanvas extends React.Component {
             ctx.rotate(-box.theta * Math.PI / 180);
             ctx.translate(-box.x, -box.y);
         }
-        this.setState({
-            boxes: this.props.parser.getFrame(Math.floor(this.props.time * 30))
-        });
 
         if (this.props.paused || this.getVideo().ended) { return; }
         this.props.seekCallback(this.getVideo().currentTime);
-    }
-
-    updateState({ duration, width, height }) {
-        this.setState({ duration, width, height });
     }
 
     render() {
@@ -94,19 +87,19 @@ export default class VideoCanvas extends React.Component {
             <Video
               src={this.props.src}
               ref={(video) => { this.video = video; }}
-              onReady={this.updateState}
+              onReady={this.props.onReady}
             />
             <Canvas
               draw={this.draw}
-              width={this.state.width}
-              height={this.state.height}
+              width={this.props.width}
+              height={this.props.height}
               onClick={this.props.onClick}
             />
             <VideoControls
               paused={this.props.paused}
               time={this.props.time}
-              duration={this.state.duration}
-              width={this.state.width}
+              duration={this.props.duration}
+              width={this.props.width}
               getVideo={this.getVideo}
               playPauseCallback={this.props.playPauseCallback}
               seekCallback={this.props.seekCallback}

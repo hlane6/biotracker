@@ -3,20 +3,23 @@ import React from 'react';
 
 export default class CorrectionsPanel extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            corrections: [],
+        }
+    }
+
     render() {
         return (
             <div className="sidebar">
                 <h2 className="h2-corrections">make corrections</h2>
-                <div className="tab">
-                    <a className="tab-links">add</a>
-                </div>
-                <p className="corrections-content-1">1. click on the object <br/> you need a box for</p>
-                <p className="corrections-content-2">2. create box id:</p>
-                <form className="corrections-input">
-                    <input className="box-id" type="number" placeholder="box id" />
-                </form>
-                <button className="finish-button">finish</button>
+                <p className="corrections-content-1">1. click on the object you need to correct</p>
+                <p className="corrections-content-2">2. new box id:</p>
+                <input className="box-id" type="number" placeholder="box id" />
+                <button className="finish-button">correct</button>
             </div>
         );
     }
+
 }

@@ -3,6 +3,7 @@ import VideoCanvas from './VideoCanvas';
 import Parser from '../models/Parser';
 import Button from './Button';
 import CorrectionsPanel from './Corrections';
+import Composer from '../models/Composer';
 
 export default class Tracker extends React.Component {
 
@@ -12,14 +13,29 @@ export default class Tracker extends React.Component {
             ready: false,
             paused: true,
             time: 0.0,
+            duration: 0.0,
+            width: 720,
+            height: 480,
+            boxes: [],
         };
 
         this.parser = new Parser('/csvData', () => {
-            this.setState({ ready: true });
+            this.setState({
+                ready: true,
+                boxes: this.parser.getFrame(0),
+            });
         });
 
+        this.composer = new Composer();
+
+        this.onReady = this.onReady.bind(this);
         this.handlePlayPause = this.handlePlayPause.bind(this);
         this.handleSeek = this.handleSeek.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    onReady({ duration, width, height }) {
+        this.setState({ duration, width, height });
     }
 
     handlePlayPause(paused) {
@@ -29,23 +45,45 @@ export default class Tracker extends React.Component {
 
     handleSeek(time) {
       if (!this.state.ready) return;
-      this.setState({ time });
+      this.setState({
+          time: time,
+          boxes: this.parser.getFrame(Math.floor(time * 30)),
+      });
+    }
+
+    handleClick(event) {
+        const {offsetX, offsetY} = event.nativeEvent;
+        console.log(event);
+
+        for (let box of this.state.boxes) {
+            if (box.collidesWith(offsetX, offsetY)) {
+                console.log(box.id);
+            }
+        }
     }
 
     render() {
         return (
           <div>
+            <h1>{this.state.time}</h1>
             <VideoCanvas
               parser={this.parser}
               paused={this.state.paused}
               time={this.state.time}
               ready={this.state.ready}
+              boxes={this.state.boxes}
+              duration={this.state.duration}
+              width={this.state.width}
+              height={this.state.height}
               src={'/video'}
               playPauseCallback={this.handlePlayPause}
               seekCallback={this.handleSeek}
+              onReady={this.onReady}
               onClick={this.handleClick}
             />
+
             <CorrectionsPanel />
+
             <a href="/csvData">
               <Button className="bottom-buttons" text="download data file" />
             </a>
