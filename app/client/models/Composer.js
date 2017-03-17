@@ -36,7 +36,7 @@ export default class Composer {
         if (oldId === newId) return;
         if (frame < 0) return;
 
-        this.corrections.push(Correction(frame, oldId, newId));
+        this.corrections.push(new Correction(frame, oldId, newId));
     }
 
 }
