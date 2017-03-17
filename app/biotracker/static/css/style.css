@@ -1,6 +1,89 @@
 /************************************************************/
 /* HOME SCREEN */
 
+
+/*corrections panel*/
+.sidebar {
+    /* rounded edge box */
+    border-radius: 4px;
+    border: 2px solid #144C42;
+    width: 300px;
+}
+
+.h2-corrections {
+    font-family: "Montserrat", Arial Narrow, Helvetica Neue, Helvetica, sans-serif;
+    text-align: center;
+    font-size: 25px;
+    padding-bottom: 0px;
+    color: #3b3b3b;
+}
+
+.tab {
+    border-radius: 4px;
+    border: 2px solid #144C42;
+    width: 250px;
+    display: block;
+    margin: 0 auto;
+    padding: 5px;
+}
+
+.tab-links {
+    border: 2px solid #144C42;
+    border-radius: 4px;
+    padding: 5px;
+    font-family: "Montserrat", Arial Narrow, Helvetica Neue, Helvetica, sans-serif;
+    text-align: center;
+    font-size: 12px;
+    /*width: 60px;*/
+}
+
+.corrections-content-1 {
+    font-family: "Montserrat", Arial Narrow, Helvetica Neue, Helvetica, sans-serif;
+    text-align: center;
+    font-size: 16px;
+    padding: 0px 20px 10px 20px;
+    color: #3b3b3b;
+}
+
+.corrections-content-2 {
+    font-family: "Montserrat", Arial Narrow, Helvetica Neue, Helvetica, sans-serif;
+    text-align: center;
+    font-size: 16px;
+    padding: 0px 20px 0px 20px;
+    color: #3b3b3b;
+}
+
+.box-id {
+    width: 120px;
+    margin: 0 auto;
+    padding: 5px;
+    border-color: #217F6E;
+    border-radius: 4px;
+    display: block;
+    height: 15px;
+    font-size: 16px;
+}
+
+.finish-button {
+    background-color: #217F6E;
+    color: white;
+    border: none;
+    padding: 15px 70px;
+    text-align: center;
+    font-size: 16px;
+    border-radius: 4px;
+    margin: 0 auto;
+    margin-top: 60px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    font-family: "Montserrat"; 
+    display: block;
+}
+
+.finish-button:hover {
+    background-color: #144C42;
+}
+
 /* video navigation buttons style */
 button.vid-nav {
     background-color: white;
