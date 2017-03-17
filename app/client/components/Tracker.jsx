@@ -17,6 +17,7 @@ export default class Tracker extends React.Component {
             width: 720,
             height: 480,
             boxes: [],
+            pick: null,
         };
 
         this.parser = new Parser('/csvData', () => {
@@ -32,6 +33,7 @@ export default class Tracker extends React.Component {
         this.handlePlayPause = this.handlePlayPause.bind(this);
         this.handleSeek = this.handleSeek.bind(this);
         this.handleClick = this.handleClick.bind(this);
+        this.handleCorrection = this.handleCorrection.bind(this);
     }
 
     onReady({ duration, width, height }) {
@@ -57,9 +59,13 @@ export default class Tracker extends React.Component {
 
         for (let box of this.state.boxes) {
             if (box.collidesWith(offsetX, offsetY)) {
-                console.log(box.id);
+                this.setState({ pick: box });
             }
         }
+    }
+
+    handleCorrection(correction) {
+
     }
 
     render() {
@@ -82,7 +88,10 @@ export default class Tracker extends React.Component {
               onClick={this.handleClick}
             />
 
-            <CorrectionsPanel />
+            <CorrectionsPanel
+              pick={this.state.pick}
+              handleCorrection={this.handleCorrection}
+            />
 
             <a href="/csvData">
               <Button className="bottom-buttons" text="download data file" />
