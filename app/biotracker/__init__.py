@@ -1,11 +1,10 @@
+""" Module handling the initial setup of the flask application. Here the Flask
+object is created and configured and the directory structure of the server
+is set up.
+"""
+
 import flask as fl
 import os
-
-""" Consider using these flask extensions:
-    Flask-Uploads -
-    http://pythonhosted.org/Flask-Uploads/#flaskext.uploads.UploadSet.save
-    Flask-RESTful - https://flask-restful.readthedocs.io/en/0.3.5/
-"""
 
 app = fl.Flask(__name__, static_url_path='')
 
@@ -35,12 +34,12 @@ def after_request(response):
     return response
 
 
-def send_file_partial(path):
-    """
-        Simple wrapper around send_file which handles HTTP 206 Partial Content
-        (byte ranges)
-        TODO: handle all send_file args, mirror send_file's error handling
-        (if it has any)
+def send_file_partial(path: str):
+    """ Simple wrapper around send_file which handles HTTP 206 Partial Content
+    (byte ranges)
+
+    TODO: handle all send_file args, mirror send_file's error handling
+    (if it has any)
     """
     range_header = request.headers.get('Range', None)
     if not range_header:

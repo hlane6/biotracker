@@ -1,6 +1,10 @@
+""" Module containing the Tracker model
+"""
+
 from biotracker import app
 from biotracker.models.target import Target
 from scipy.stats.mstats import mode
+from typing import List
 
 import numpy as np
 import cv2
@@ -8,19 +12,23 @@ import os
 
 
 class Tracker(object):
-    ''' Handles the generation of targets for a given video.
+    """ Handles the generation of targets for a given video.
         Does not associate the targets with ids. Initial generated targets
         may contain errors.
         self.background -- the computed background image of the video
-    '''
+    """
 
-    def __init__(self, video):
+    def __init__(self, video: cv2.VideoCapture) -> None:
         self.video = video
-        self.background = self.get_background()
+        self.background = self.__get_background()
 
-    def get_background(self, numframes=120):
-        ''' Computes the background image of a given video '''
-
+    def __get_background(self, numframes=120) -> np.array:
+        """ Computes the background image of a given video by taking a
+        specified number of frames from the video and taking the mode of
+        those frames. For a stationary camera, the mode represents what is
+        stationary in those frames aka the background. Saves the background
+        so this doesn't have to be computed every time.
+        """
         vid_name = os.listdir(app.config['VID_FOLDER'])[0].split(".")[0]
 
         background_path = '{}/bk_{}.png'.format(
@@ -57,9 +65,14 @@ class Tracker(object):
         cv2.imwrite(background_path, background)
         return cv2.imread(background_path, 0)
 
-    def process_video(self):
-        ''' Generates targets frame by frame for a given video '''
-        self.background = self.get_background()
+    def process_video(self) -> List[List[Target]]:
+        """ Generates targets frame by frame for a given video. For every
+        frame of the video, performs background subtraction on the frame
+        using the previously generated background. The subtracted image is
+        then thresholded to remove some noise, and finally the contours
+        of the image are found in the thresholded image. A list of Targets
+        are created based on those contours.
+        """
         all_targets = []
 
         frameNum = 0
@@ -67,27 +80,25 @@ class Tracker(object):
         while(self.video.grab() and self.video.isOpened()):
             ret, inFrame = self.video.retrieve()
             frameNum += 1
-            all_targets.append(self.process_frame(inFrame, frameNum))
+            all_targets.append(self.__process_frame(inFrame, frameNum))
 
         return all_targets
 
-    def process_frame(self, inFrame, frameNum):
-        ''' Generates targets for an individual frame '''
-
+    def __process_frame(self, inFrame: np.array,
+                        frameNum: int) -> List[Target]:
         grayframe = cv2.cvtColor(inFrame, cv2.COLOR_BGR2GRAY)
         grayframe = cv2.absdiff(grayframe, self.background)
 
         ret, thresh_img = cv2.threshold(grayframe, 30, 255, cv2.THRESH_BINARY)
 
         # Detect targets and draw contours on the image.
-        return self.detect_targets(thresh_img, inFrame, frameNum)
+        return self.__detect_targets(thresh_img, inFrame, frameNum)
 
-    def detect_targets(self, thresh_img, inFrame, frameNum):
-        ''' Detects targets from the contour image of a frame '''
-
+    def __detect_targets(self, thresh_img: np.array,
+                         in_frame: np.array, frame_num: int) -> List[Target]:
         # No ground truth means no known label, 0 is a sentinal value for an
         # unlabled ant
-        unlabeledAntID = 0
+        unlabeled_ant_id = 0
         CONTOUR_THRESH = 100
         targets = []
 
@@ -101,15 +112,13 @@ class Tracker(object):
 
             # Create a target and add it to the target manager
             if cv2.contourArea(contour) > CONTOUR_THRESH:
-                target = Target(init_box=box,
-                                target_id=unlabeledAntID,
-                                frame_num=frameNum,
-                                theta=theta,
-                                dimensions=dimensions)
+                target = Target(
+                    frame_num=frame_num,
+                    width=dimensions[0],
+                    height=dimensions[1],
+                    theta=theta,
+                    box=box,
+                )
                 targets.append(target)
-                cv2.drawContours(inFrame, [box], 0, (0, 0, 255), 2)
 
         return targets
-
-    def clean_up(self):
-        self.video.release()
