@@ -1,6 +1,6 @@
 import Papa from 'papaparse';
 
-const COLORS = {
+export const COLORS = {
     0: 'green',
     1: 'red',
     2: 'blue',

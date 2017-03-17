@@ -33,7 +33,6 @@ export default class Tracker extends React.Component {
         this.handlePlayPause = this.handlePlayPause.bind(this);
         this.handleSeek = this.handleSeek.bind(this);
         this.handleClick = this.handleClick.bind(this);
-        this.handleCorrection = this.handleCorrection.bind(this);
     }
 
     onReady({ duration, width, height }) {
@@ -47,9 +46,14 @@ export default class Tracker extends React.Component {
 
     handleSeek(time) {
       if (!this.state.ready) return;
+      const newBoxes = this.composer.correct(
+        Math.floor(time * 30),
+        this.parser.getFrame(Math.floor(time * 30))
+      );
+
       this.setState({
           time: time,
-          boxes: this.parser.getFrame(Math.floor(time * 30)),
+          boxes: newBoxes,
           pick: null,
       });
     }
@@ -65,14 +69,10 @@ export default class Tracker extends React.Component {
         }
     }
 
-    handleCorrection(correction) {
-
-    }
-
     render() {
         return (
           <div>
-            <h1>{this.state.time}</h1>
+            <h1>{Math.floor(30 * this.state.time)}</h1>
             <VideoCanvas
               parser={this.parser}
               paused={this.state.paused}
