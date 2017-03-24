@@ -110,6 +110,7 @@ export default class Parser {
         });
 
         this.getBoundingBoxes = this.getBoundingBoxes.bind(this);
+        this.update = this.update.bind(this);
     }
 
     finish(results) {
@@ -154,7 +155,19 @@ export default class Parser {
         return this.data[frame];
     }
 
+    update(correction) {
+        for (let i = correction.frame; i < this.data.length; i++) {
+            for (let j = 0; j < this.data[i].length; j++) {
+                if (correction.oldId == this.data[i][j].id) {
+                    this.data[i][j].id = correction.newId;
+                    this.data[i][j].color = COLORS[correction.newId];
+                }
+            }
+        }
+    }
+
     getFrame(frame) {
         return this.getBoundingBoxes(frame, 0);
     }
+
 }

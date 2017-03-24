@@ -2,8 +2,7 @@ import React from 'react';
 import VideoCanvas from './VideoCanvas';
 import Parser from '../models/Parser';
 import Button from './Button';
-import CorrectionsPanel from './Corrections';
-import Composer from '../models/Composer';
+import CorrectionsPanel from './CorrectionsPanel';
 
 export default class Tracker extends React.Component {
 
@@ -26,8 +25,6 @@ export default class Tracker extends React.Component {
                 boxes: this.parser.getFrame(0),
             });
         });
-
-        this.composer = new Composer();
 
         this.onReady = this.onReady.bind(this);
         this.handlePlayPause = this.handlePlayPause.bind(this);
@@ -90,19 +87,12 @@ export default class Tracker extends React.Component {
             />
           </div>
           <div className="three columns">
-            <h1>{Math.floor(30 * this.state.time)}</h1>
             <CorrectionsPanel
               pick={this.state.pick}
               time={this.state.time}
-              composer={this.composer}
+              parser={this.parser}
               handleCorrection={this.handleCorrection}
             />
-            <a href="/csvData">
-              <Button className="bottom-buttons" text="download data file" />
-            </a>
-            <a href="/">
-              <Button className="bottom-buttons" text="change video" />
-            </a>
           </div>
           </div>
           </div>
