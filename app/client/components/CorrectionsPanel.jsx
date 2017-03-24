@@ -24,7 +24,6 @@ export default class CorrectionsPanel extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            corrections: [],
             updating: false,
             downloadURL: '/csvData',
         }
@@ -80,7 +79,7 @@ export default class CorrectionsPanel extends React.Component {
         let link = document.createElement('a');
         link.setAttribute('href', encodedCsv);
         link.setAttribute('download', filename);
-        
+
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
