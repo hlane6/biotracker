@@ -83,7 +83,7 @@ export default class VideoCanvas extends React.Component {
 
     render() {
         return (
-          <div className="videoCanvas container-home">
+          <div className="videoCanvas">
             <Video
               src={this.props.src}
               ref={(video) => { this.video = video; }}

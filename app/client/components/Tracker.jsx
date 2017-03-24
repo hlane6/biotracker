@@ -60,7 +60,6 @@ export default class Tracker extends React.Component {
 
     handleClick(event) {
         const {offsetX, offsetY} = event.nativeEvent;
-        console.log(event);
 
         for (let box of this.state.boxes) {
             if (box.collidesWith(offsetX, offsetY)) {
@@ -71,8 +70,9 @@ export default class Tracker extends React.Component {
 
     render() {
         return (
-          <div>
-            <h1>{Math.floor(30 * this.state.time)}</h1>
+          <div className="container-home">
+          <div className="row">
+          <div className="nine columns">
             <VideoCanvas
               parser={this.parser}
               paused={this.state.paused}
@@ -88,20 +88,23 @@ export default class Tracker extends React.Component {
               onReady={this.onReady}
               onClick={this.handleClick}
             />
-
+          </div>
+          <div className="three columns">
+            <h1>{Math.floor(30 * this.state.time)}</h1>
             <CorrectionsPanel
               pick={this.state.pick}
               time={this.state.time}
               composer={this.composer}
               handleCorrection={this.handleCorrection}
             />
-
             <a href="/csvData">
               <Button className="bottom-buttons" text="download data file" />
             </a>
             <a href="/">
               <Button className="bottom-buttons" text="change video" />
             </a>
+          </div>
+          </div>
           </div>
         );
     }

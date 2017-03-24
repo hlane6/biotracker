@@ -82,7 +82,7 @@ export default class VideoControls extends React.Component {
 
     render() {
         return (
-          <div className="videoControls container-home">
+          <div className="videoControls">
             <SeekInput
               time={this.props.time}
               duration={this.props.duration}

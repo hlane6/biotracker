@@ -1,20 +1,66 @@
 /************************************************************/
 /* HOME SCREEN */
 
+/* Grid Stuff Taken from skeleton.css */
+.column,
+.columns {
+    width: 100%;
+    float: left;
+    box-sizing: border-box;
+}
+
+/* For devices larger than 550px */
+@media (min-width: 550px) {
+  .container {
+    width: 80%; }
+  .column,
+  .columns {
+    margin-left: 4%; }
+  .column:first-child,
+  .columns:first-child {
+    margin-left: 0; }
+
+  .one.column,
+  .one.columns                    { width: 4.66666666667%; }
+  .two.columns                    { width: 13.3333333333%; }
+  .three.columns                  { width: 22%;            }
+  .four.columns                   { width: 30.6666666667%; }
+  .five.columns                   { width: 39.3333333333%; }
+  .six.columns                    { width: 48%;            }
+  .seven.columns                  { width: 56.6666666667%; }
+  .eight.columns                  { width: 65.3333333333%; }
+  .nine.columns                   { width: 74.0%;          }
+  .ten.columns                    { width: 82.6666666667%; }
+  .eleven.columns                 { width: 91.3333333333%; }
+  .twelve.columns                 { width: 100%; margin-left: 0; }
+
+  .one-third.column               { width: 30.6666666667%; }
+  .two-thirds.column              { width: 65.3333333333%; }
+
+  .one-half.column                { width: 48%; }
+}
+
+.container:after,
+.row:after,
+.u-cf {
+  content: "";
+  display: table;
+  clear: both;
+}
 
 /*corrections panel*/
 .sidebar {
     /* rounded edge box */
     border-radius: 4px;
     border: 2px solid #144C42;
-    width: 300px;
+    width: 250px;
     background-color: #FFFFFF;
 }
 
 .h2-corrections {
     font-family: "Montserrat", Arial Narrow, Helvetica Neue, Helvetica, sans-serif;
     text-align: center;
-    font-size: 25px;
+    font-size: 23px;
     padding-bottom: 0px;
     color: #3b3b3b;
 }
@@ -107,9 +153,9 @@ button.vid-nav {
 }
 
 .container-home {
-    width: 720px;
+    width: 960px;
     text-align: center;
-    margin: auto;
+    margin: 25px 0px;
     display: block;
 }
 
@@ -223,12 +269,6 @@ div.container-index {
 }
 
 .input-index {
-    /*width: 0.1px;
-    height: 0.1px;
-    opacity: 0;
-    overflow: hidden;
-    position: absolute;
-    z-index: -1;*/
     font-size: 16px;
     color: #3b3b3b;
     background-color: white;

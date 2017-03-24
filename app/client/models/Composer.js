@@ -31,16 +31,13 @@ export default class Composer {
     * @return a new array of corrected boxes
     */
     correct(frame, oldBoxes) {
-        console.log(frame, typeof(frame));
         let newBoxes = [];
 
         for (let box of oldBoxes) {
             for (let correction of this.corrections) {
-                console.log(correction, correction.oldId == box.id, correction.startingFrame <= frame);
                 if (correction.oldId == box.id && correction.startingFrame <= frame) {
                     box.id = correction.newId;
                     box.color = COLORS[box.id];
-                    console.log(correction.newId);
                 }
             }
             newBoxes.push(box);
