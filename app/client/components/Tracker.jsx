@@ -4,6 +4,10 @@ import Parser from '../models/Parser';
 import Button from './Button';
 import CorrectionsPanel from './CorrectionsPanel';
 
+/**
+* Root component which keeps track of the boxes, a users pick
+* and will update the app with video metadata once it loads
+*/
 export default class Tracker extends React.Component {
 
     constructor(props) {
@@ -63,33 +67,33 @@ export default class Tracker extends React.Component {
     render() {
         return (
           <div className="container-home">
-          <div className="row">
-          <div className="nine columns">
-            <VideoCanvas
-              parser={this.parser}
-              paused={this.state.paused}
-              time={this.state.time}
-              ready={this.state.ready}
-              boxes={this.state.boxes}
-              duration={this.state.duration}
-              width={this.state.width}
-              height={this.state.height}
-              src={'/video'}
-              playPauseCallback={this.handlePlayPause}
-              seekCallback={this.handleSeek}
-              onReady={this.onReady}
-              onClick={this.handleClick}
-            />
-          </div>
-          <div className="three columns">
-            <CorrectionsPanel
-              pick={this.state.pick}
-              time={this.state.time}
-              parser={this.parser}
-              handleCorrection={this.handleCorrection}
-            />
-          </div>
-          </div>
+            <div className="row">
+              <div className="nine columns">
+                <VideoCanvas
+                  parser={this.parser}
+                  paused={this.state.paused}
+                  time={this.state.time}
+                  ready={this.state.ready}
+                  boxes={this.state.boxes}
+                  duration={this.state.duration}
+                  width={this.state.width}
+                  height={this.state.height}
+                  src={'/video'}
+                  playPauseCallback={this.handlePlayPause}
+                  seekCallback={this.handleSeek}
+                  onReady={this.onReady}
+                  onClick={this.handleClick}
+                />
+              </div>
+              <div className="three columns">
+                <CorrectionsPanel
+                  pick={this.state.pick}
+                  time={this.state.time}
+                  parser={this.parser}
+                  handleCorrection={this.handleCorrection}
+                />
+              </div>
+            </div>
           </div>
         );
     }
