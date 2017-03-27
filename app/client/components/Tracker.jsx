@@ -1,7 +1,6 @@
 import React from 'react';
 import VideoCanvas from './VideoCanvas';
 import Parser from '../models/Parser';
-import Button from './Button';
 import CorrectionsPanel from './CorrectionsPanel';
 
 /**
@@ -41,23 +40,23 @@ export default class Tracker extends React.Component {
     }
 
     handlePlayPause(paused) {
-      if (!this.state.ready) return;
-      this.setState({ paused });
+        if (!this.state.ready) return;
+        this.setState({ paused });
     }
 
     handleSeek(time) {
-      if (!this.state.ready) return;
-      this.setState({
-          time: time,
-          boxes: this.parser.getFrame(Math.floor(time * 30)),
-          pick: null,
-      });
+        if (!this.state.ready) return;
+        this.setState({
+            time,
+            boxes: this.parser.getFrame(Math.floor(time * 30)),
+            pick: null,
+        });
     }
 
     handleClick(event) {
-        const {offsetX, offsetY} = event.nativeEvent;
+        const { offsetX, offsetY } = event.nativeEvent;
 
-        for (let box of this.state.boxes) {
+        for (const box of this.state.boxes) {
             if (box.collidesWith(offsetX, offsetY)) {
                 this.setState({ pick: box });
             }

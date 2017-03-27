@@ -119,7 +119,7 @@ export default class Parser {
             dynamicTyping: true,
         });
 
-        this.getBoundingBoxes = this.getBoundingBoxes.bind(this);
+        this.getFrame = this.getFrame.bind(this);
         this.update = this.update.bind(this);
     }
 

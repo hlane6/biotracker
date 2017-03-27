@@ -1,18 +1,17 @@
 import React from 'react';
-import Button from './Button';
 
 /**
- * Form to handle jumping between frames
+ * Form to handle inputs as numbers
  */
 export default class NumberInput extends React.Component {
 
     static defaultProps = {
-        handleCallback: () => {},
-    };
+        className: '',
+    }
 
     static propTypes = {
-        handleCallback: React.PropTypes.func,
-    };
+        className: React.PropTypes.str,
+    }
 
     constructor(props) {
         super(props);
@@ -21,12 +20,12 @@ export default class NumberInput extends React.Component {
         this.getInput = this.getInput.bind(this);
     }
 
-    handleChange(event) {
-        this.setState({ value: event.target.value });
-    }
-
     getInput() {
         return Number(this.state.value);
+    }
+
+    handleChange(event) {
+        this.setState({ value: event.target.value });
     }
 
     render() {

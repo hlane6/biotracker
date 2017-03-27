@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from './Button';
-import JumpInput from './JumpInput';
+import NumberInput from './NumberInput';
 import SeekInput from './SeekInput';
 
 /**
@@ -69,14 +69,17 @@ export default class VideoControls extends React.Component {
         this.props.seekCallback(time);
     }
 
-    handleSeekInput({ time, frame, deltaFrame }) {
+    handleSeekInput({ time, deltaFrame }) {
+        const frame = this.input.getInput();
+
         if (time === undefined && frame === undefined && deltaFrame === undefined) {
             return;
+        } else if (time === undefined && deltaFrame !== undefined) {
+            this.seek(this.props.time + (deltaFrame / 30));
         } else if (time === undefined && deltaFrame === undefined && frame !== undefined) {
             this.seek(frame / 30);
-        } else if (time === undefined && frame === undefined && deltaFrame !== undefined) {
-            this.seek(this.props.time + (deltaFrame / 30));
         }
+
         this.seek(time);
     }
 
@@ -95,9 +98,11 @@ export default class VideoControls extends React.Component {
             <Button className="vid-nav" handler={this.playPause} text={(this.props.paused) ? 'play' : 'pause'} />
             <Button className="vid-nav" handler={this.stepForward} text=">" />
             <Button className="vid-nav" handler={this.jumpForward} text=">>" />
-            <JumpInput
-              handleJumpCallback={this.handleSeekInput}
+            <NumberInput
+              className="frame"
+              ref={(input) => { this.input = input; }}
             />
+            <Button className="seek-frame" handler={this.handleSeekInput} text="jump" />
           </div>
         );
     }
