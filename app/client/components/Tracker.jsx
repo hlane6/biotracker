@@ -43,14 +43,9 @@ export default class Tracker extends React.Component {
 
     handleSeek(time) {
       if (!this.state.ready) return;
-      const newBoxes = this.composer.correct(
-        Math.floor(time * 30),
-        this.parser.getFrame(Math.floor(time * 30))
-      );
-
       this.setState({
           time: time,
-          boxes: newBoxes,
+          boxes: this.parser.getFrame(Math.floor(time * 30)),
           pick: null,
       });
     }
