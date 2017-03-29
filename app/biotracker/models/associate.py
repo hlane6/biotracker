@@ -1,4 +1,5 @@
 from munkres import Munkres
+from biotracker import app
 from biotracker.utils import *
 from biotracker.models.target import Target
 from typing import List
@@ -19,10 +20,26 @@ def associate(targets: List[List[Target]]) -> List[List[Target]]:
 
     # based on previousframe, update next frame with ids
     for next_frame in targets[1:]:
-        cur_associated_targets = __associate_sequential_targets(
-            associated_targets[-1],
-            next_frame
-        )
+        i = 1
+        found = False
+
+        # Try to associate to an old frame with correct number of ants
+        while i < app.config['HISTORY_LATENCY'] and \
+               len(associated_targets) > i and \
+               len(associated_targets[-1 * i]) != len(next_frame):
+            i += 1
+            found = True
+
+        if found:
+            cur_associated_targets = __associate_sequential_targets(
+                associated_targets[-1 * i],
+                next_frame
+            )
+        else:
+            cur_associated_targets = __associate_sequential_targets(
+                associated_targets[-1],
+                next_frame
+            )
         associated_targets.append(cur_associated_targets)
 
     return associated_targets
