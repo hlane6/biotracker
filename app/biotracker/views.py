@@ -99,8 +99,9 @@ def _handle_csv(csvData) -> None:
         mgr = TargetManager('{}/{}'.format(app.config['VID_FOLDER'], fname))
 
         mgr.identify_targets()
-        mgr.post_process_targets()
         mgr.associate_targets()
+
+        mgr.post_process_targets()
 
         csv_path = os.path.join(app.config['DATA_FOLDER'],
                                 fname.split('.')[0] + ".csv")

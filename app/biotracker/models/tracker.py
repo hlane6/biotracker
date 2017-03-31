@@ -65,6 +65,10 @@ class Tracker(object):
         cv2.imwrite(background_path, background)
         return cv2.imread(background_path, 0)
 
+    def split(self, target):
+        """ Splits certain identified blobs by kmeans """
+        pass
+
     def process_video(self) -> List[List[Target]]:
         """ Generates targets frame by frame for a given video. For every
         frame of the video, performs background subtraction on the frame
@@ -107,8 +111,7 @@ class Tracker(object):
             blob_size = cv2.contourArea(contour)
 
             # Create a target and add it to the target manager
-            if blob_size > app.config['MIN_BLOB_SIZE'] and  \
-               blob_size < app.config['MAX_BLOB_SIZE']:
+            if blob_size > app.config['MIN_BLOB_SIZE']:
                 target = Target(
                     frame_num=frame_num,
                     width=dimensions[0],
