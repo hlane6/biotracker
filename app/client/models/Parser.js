@@ -1,8 +1,10 @@
 import Papa from 'papaparse';
-// import BoundingBox from './BoundingBox';
 
-// IMPLEMENT MATH OPERATIONS FOR WIDTH AND HEIGHT!
-const COLORS = {
+/**
+* Colors for bounding boxes
+* TODO: Have less similar colors / better way for choosing
+*/
+export const COLORS = {
     0: 'green',
     1: 'red',
     2: 'blue',
@@ -59,12 +61,48 @@ const COLORS = {
 class BoundingBox {
     constructor(id, x, y, width, height, theta) {
         this.color = COLORS[id];
+        this.id = id;
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         this.theta = theta;
+        this.theta_in_radians = theta * (Math.PI / 180);
+
+        this.rotatePoint = this.rotatePoint.bind(this);
+        this.collidesWith = this.collidesWith.bind(this);
     }
+
+    /**
+    * Determines whether a given point collides with this bounding box
+    * @param otherX the x coor of the point
+    * @param otherY the y coor of the point
+    * return true if it collides, false otherwise
+    */
+    collidesWith(otherX, otherY) {
+        const { rotatedX, rotatedY } = this.rotatePoint(
+            otherX - this.x,
+            otherY - this.y
+        );
+
+        return (rotatedX < (this.width / 2))
+            && (rotatedX > -(this.width / 2))
+            && (rotatedY < (this.height / 2))
+            && (rotatedY > -(this.height / 2));
+    }
+
+    /**
+    * Helper function to rotate a point to the bounding boxes
+    * reference Frame
+    */
+    rotatePoint(x, y) {
+        const rotatedX = (x * Math.cos(this.theta_in_radians))
+            + (y * -Math.sin(this.theta_in_radians));
+        const rotatedY = (x * Math.sin(this.theta_in_radians))
+            + (y * Math.cos(this.theta_in_radians));
+        return { rotatedX, rotatedY };
+    }
+
 }
 
 export default class Parser {
@@ -78,9 +116,11 @@ export default class Parser {
             header: true,
             download: true,
             complete: this.finish,
+            dynamicTyping: true,
         });
 
-        this.getBoundingBoxes = this.getBoundingBoxes.bind(this);
+        this.getFrame = this.getFrame.bind(this);
+        this.update = this.update.bind(this);
     }
 
     finish(results) {
@@ -117,15 +157,32 @@ export default class Parser {
         this.callback();
     }
 
-    getBoundingBoxes(frame) {
+    /**
+    * @param frame the frame number to get bounding boxes for
+    * @return an array of bounding boxes for the given frame
+    */
+    getFrame(frame) {
         if (frame < 0 || frame > this.data.length) {
             return null;
         }
-
         return this.data[frame];
     }
 
-    getFrame(frame) {
-        return this.getBoundingBoxes(frame, 0);
+    /**
+    * Updates all bounding boxes based on a given correction. From the
+        corrections starting frame, every box with the oldId will be
+        updated to have the newId and corresponding color
+    * @param correction, a correction contains an frame, oldId, and newId
+    */
+    update(correction) {
+        for (let i = correction.frame; i < this.data.length; i++) {
+            for (let j = 0; j < this.data[i].length; j++) {
+                if (correction.oldId == this.data[i][j].id) {
+                    this.data[i][j].id = correction.newId;
+                    this.data[i][j].color = COLORS[correction.newId];
+                }
+            }
+        }
     }
+
 }
