@@ -1,5 +1,5 @@
 // @flow
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain, dialog } from 'electron';
 import MenuBuilder from './menu';
 
 let mainWindow = null;
@@ -66,4 +66,20 @@ app.on('ready', async () => {
 
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
+});
+
+ipcMain.on('open-video-file', (event) => {
+  dialog.showOpenDialog({
+    properties: ['openFile']
+  }, (files) => {
+    if (files) mainWindow.webContents.send('selected-video-file', files[0]);
+  })
+});
+
+ipcMain.on('open-csv-file', (event) => {
+  dialog.showOpenDialog({
+    properties: ['openFile']
+  }, (files) => {
+    if (files) mainWindow.webContents.send('selected-csv-file', files[0]);
+  })
 });
