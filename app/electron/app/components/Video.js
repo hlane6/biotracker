@@ -1,4 +1,5 @@
 import React from 'react';
+import {ipcRenderer} from 'electron';
 
 /**
 * Foundation component to handle rendering a Video
@@ -21,10 +22,18 @@ export default class Video extends React.Component {
         super(props);
         this.onReady = this.onReady.bind(this);
         this.style = { display: 'none' };
+        this.handleVideoFile = this.handleVideoFile.bind(this);
+
+        // Bind the ipc call backs so we can process files
+        ipcRenderer.on('selected-video-file', this.handleVideoFile.bind(this));
     }
 
     componentDidMount() {
         this.rawVideo.addEventListener('canplay', this.onReady);
+    }
+
+    handleVideoFile(event, file) {
+        this.rawVideo.src = file;
     }
 
     /**
@@ -32,6 +41,7 @@ export default class Video extends React.Component {
     * so we send the duration back up through a callback to be updated elsewhere
     */
     onReady() {
+        console.log('duration ', this.rawVideo.duration);
         this.props.onReady({
             duration: this.rawVideo.duration,
             width: this.rawVideo.videoWidth,

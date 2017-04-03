@@ -2,6 +2,9 @@ import React from 'react';
 import Canvas from './Canvas';
 import Video from './Video';
 import VideoControls from './VideoControls';
+import Button from './Button';
+import Parser from '../models/Parser';
+import {ipcRenderer} from 'electron';
 
 /**
  * Combines a video and a canvas and provides the controls
@@ -85,7 +88,7 @@ export default class VideoCanvas extends React.Component {
         return (
           <div className="videoCanvas">
             <Video
-              src={this.props.src}
+              src=""
               ref={(video) => { this.video = video; }}
               onReady={this.props.onReady}
             />

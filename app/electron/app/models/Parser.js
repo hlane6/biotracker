@@ -1,4 +1,5 @@
-import Papa from 'papaparse';
+import Baby from 'babyparse';
+import fs from 'fs';
 
 /**
 * Colors for bounding boxes
@@ -112,11 +113,13 @@ export default class Parser {
         this.data = [];
         this.callback = completedCallback;
 
-        Papa.parse(url, {
-            header: true,
-            download: true,
-            complete: this.finish,
-            dynamicTyping: true,
+        fs.readFile(url, 'utf8', (err, data) => {
+            Baby.parse(data, {
+                delimiter: ',',
+                header: true,
+                dynamicTyping: true,
+                complete: this.finish,
+            });
         });
 
         this.getFrame = this.getFrame.bind(this);
@@ -126,6 +129,7 @@ export default class Parser {
     finish(results) {
         let boundingBoxes = [];
         const data = results.data;
+        console.log(results);
 
         boundingBoxes.push(new BoundingBox(
             data[0].target_id,
@@ -153,7 +157,7 @@ export default class Parser {
                 boundingBoxes.push(box);
             }
         }
-
+        console.log(this.data.length);
         this.callback();
     }
 

@@ -10,7 +10,7 @@ export default class NumberInput extends React.Component {
     }
 
     static propTypes = {
-        className: React.PropTypes.str,
+        className: React.PropTypes.string,
     }
 
     constructor(props) {

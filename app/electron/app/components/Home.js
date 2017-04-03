@@ -17,12 +17,7 @@ export default class Home extends React.Component {
 
     this.openVideoFile = this.openVideoFile.bind(this);
     this.handleVideoFile = this.handleVideoFile.bind(this);
-    ipcRenderer.on('selected-video-file', this.handleVideoFile.bind(this));
     ipcRenderer.on('selected-csv-file', this.handleCSVFile.bind(this));
-  }
-
-  handleVideoFile(event, file) {
-    this.setState({ videoFile: file });
   }
 
   handleCSVFile(event, file) {
