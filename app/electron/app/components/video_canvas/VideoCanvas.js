@@ -1,9 +1,9 @@
 import React from 'react';
-import Canvas from './Canvas';
-import Video from './Video';
-import VideoControls from './VideoControls';
-import Button from './Button';
-import Parser from '../models/Parser';
+import Canvas from './canvas/Canvas';
+import Video from './video/Video';
+import VideoControls from './video_controls/VideoControls';
+import Button from '../inputs/button/Button';
+import Parser from '../../models/Parser';
 import {ipcRenderer} from 'electron';
 
 /**

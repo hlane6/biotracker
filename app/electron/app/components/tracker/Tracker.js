@@ -1,9 +1,10 @@
 import React from 'react';
-import VideoCanvas from './VideoCanvas';
-import Parser from '../models/Parser';
-import CorrectionsPanel from './CorrectionsPanel';
-import Button from './Button';
+import VideoCanvas from '../video_canvas/VideoCanvas';
+import Parser from '../../models/Parser';
+import CorrectionsPanel from '../corrections_panel/CorrectionsPanel';
+import Button from '../inputs/button/Button';
 import {ipcRenderer} from 'electron';
+import styles from './Tracker.css';
 
 /**
 * Root component which keeps track of the boxes, a users pick
@@ -89,13 +90,13 @@ export default class Tracker extends React.Component {
 
     render() {
         return (
-          <div className="container-home">
-            <div className="row">
+          <div className={styles.container}>
+            <div className={styles.row}>
               <Button text="Load Video File" handler={this.openVideoFile} />
               <Button text="Load CSV File" handler={this.openCSVFile} />
             </div>
-            <div className="row">
-              <div className="nine columns">
+            <div className={styles.row}>
+              <div className={styles.nine + " " + styles.columns}>
                 <VideoCanvas
                   parser={this.parser}
                   paused={this.state.paused}
@@ -112,7 +113,7 @@ export default class Tracker extends React.Component {
                   onClick={this.handleClick}
                 />
               </div>
-              <div className="three columns">
+              <div className={styles.three + " " + styles.columns}>
                 <CorrectionsPanel
                   pick={this.state.pick}
                   time={this.state.time}

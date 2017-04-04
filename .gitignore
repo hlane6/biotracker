@@ -1,8 +1,8 @@
 node_modules
 env
 biotracker.egg-info
-video
-data
+static/video
+static/data
 backgrounds
 
 .DS_Store

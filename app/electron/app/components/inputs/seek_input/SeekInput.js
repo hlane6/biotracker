@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './SeekInput.css'
 
 /**
  * Input to handle seeking in video
@@ -49,7 +50,7 @@ export default class SeekInput extends React.Component {
         return (
           <div>
             <input
-              className="scrubber"
+              className={styles.scrubber}
               type="range" min={0} max={this.props.duration} step="any"
               value={this.props.time}
               onMouseDown={this.handleMouseDown}

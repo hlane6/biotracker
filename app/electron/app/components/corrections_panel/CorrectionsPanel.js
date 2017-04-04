@@ -1,6 +1,7 @@
 import React from 'react';
-import Button from './Button';
-import NumberInput from './NumberInput';
+import Button from '../inputs/button/Button';
+import NumberInput from '../inputs/number_input/NumberInput';
+import styles from './CorrectionsPanel.css';
 
 /**
 * Side bar component allowing user interaction to correct
@@ -91,26 +92,28 @@ export default class CorrectionsPanel extends React.Component {
         return (
           <div className="CorrectionsPanel">
             <div className="sidebar">
-              <h2 className="h2-corrections">make corrections</h2>
-              <p>{`Frame: ${Math.floor(30 * this.props.time)}`}</p>
-              <p>
+              <h2 className={styles.corrections_header}>make corrections</h2>
+              <p className={styles.corrections_label}>
+                {`Frame: ${Math.floor(30 * this.props.time)}`}
+              </p>
+              <p className={styles.corrections_label}>
                 {`Old Id: ${this.props.pick ?
                   this.props.pick.id : 'None Selected'}`}
               </p>
-              <p>{'New Id:'}</p>
+              <p className={styles.corrections_label}>{'New Id:'}</p>
               <NumberInput
-                className="box-id"
+                className={styles.box_input}
                 ref={(input) => { this.input = input; }}
                 handleCallback={this.handleCorrection}
               />
               <Button
-                className="finish-button"
+                className={styles.finish_button}
                 handler={this.handleCorrection}
                 text={this.state.updating ? 'Updating...' : 'Correct'}
               />
             </div>
             <Button
-              className="bottom-buttons"
+              className={styles.bottom_button}
               text="download data file"
               handler={this.downloadCSV}
             />
