@@ -91,7 +91,7 @@ export default class CorrectionsPanel extends React.Component {
     render() {
         return (
           <div className="CorrectionsPanel">
-            <div className="sidebar">
+            <div className={styles.sidebar}>
               <h2 className={styles.corrections_header}>make corrections</h2>
               <p className={styles.corrections_label}>
                 {`Frame: ${Math.floor(30 * this.props.time)}`}

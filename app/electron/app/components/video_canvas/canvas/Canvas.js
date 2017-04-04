@@ -13,6 +13,7 @@ export default class Canvas extends React.Component {
         onClick: () => {},
         width: 600,
         height: 600,
+        className: '',
     };
 
     static propTypes = {
@@ -20,6 +21,7 @@ export default class Canvas extends React.Component {
         onClick: React.PropTypes.func,
         width: React.PropTypes.number,
         height: React.PropTypes.number,
+        className: React.PropTypes.string,
     };
 
     constructor(props) {
@@ -62,7 +64,7 @@ export default class Canvas extends React.Component {
         return (
           <canvas
             style={this.style}
-            className="canvas"
+            className={this.props.className}
             width={this.props.width}
             height={this.props.height}
             ref={(input) => { this.canvas = input; }}

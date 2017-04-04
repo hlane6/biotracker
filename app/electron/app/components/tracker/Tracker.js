@@ -15,7 +15,8 @@ export default class Tracker extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            ready: false,
+            videoReady: false,
+            csvReady: false,
             paused: true,
             time: 0.0,
             duration: 0.0,
@@ -33,8 +34,6 @@ export default class Tracker extends React.Component {
         this.handleClick = this.handleClick.bind(this);
 
         // File handlers
-        this.openVideoFile = this.openVideoFile.bind(this);
-        this.openCSVFile = this.openCSVFile.bind(this);
         this.handleCSVFile = this.handleCSVFile.bind(this);
 
         // Bind the ipc call backs so we can process files
@@ -42,16 +41,21 @@ export default class Tracker extends React.Component {
     }
 
     onReady({ duration, width, height }) {
-        this.setState({ duration, width, height });
+        this.setState({
+            duration,
+            width,
+            height,
+            videoReady: true,
+        });
     }
 
     handlePlayPause(paused) {
-        if (!this.state.ready) return;
+        if (!(this.state.videoReady && this.state.csvReady)) return;
         this.setState({ paused });
     }
 
     handleSeek(time) {
-        if (!this.state.ready) return;
+        if (!(this.state.videoReady && this.state.csvReady)) return;
         this.setState({
             time,
             boxes: this.parser.getFrame(Math.floor(time * 30)),
@@ -59,23 +63,13 @@ export default class Tracker extends React.Component {
         });
     }
 
-    openVideoFile(event) {
-        ipcRenderer.send('open-video-file');
-    }
-
     handleCSVFile(event, file) {
-        console.log(file);
         this.parser = new Parser(file, () => {
-            console.log('csv ready');
             this.setState({
-                ready: true,
+                csvReady: true,
                 boxes: this.parser.getFrame(0),
             });
         });
-    }
-
-    openCSVFile() {
-        ipcRenderer.send('open-csv-file');
     }
 
     handleClick(event) {
@@ -92,21 +86,16 @@ export default class Tracker extends React.Component {
         return (
           <div className={styles.container}>
             <div className={styles.row}>
-              <Button text="Load Video File" handler={this.openVideoFile} />
-              <Button text="Load CSV File" handler={this.openCSVFile} />
-            </div>
-            <div className={styles.row}>
               <div className={styles.nine + " " + styles.columns}>
                 <VideoCanvas
                   parser={this.parser}
                   paused={this.state.paused}
                   time={this.state.time}
-                  ready={this.state.ready}
+                  ready={this.state.csvReady && this.state.videoReady}
                   boxes={this.state.boxes}
                   duration={this.state.duration}
                   width={this.state.width}
                   height={this.state.height}
-                  src={""}
                   playPauseCallback={this.handlePlayPause}
                   seekCallback={this.handleSeek}
                   onReady={this.onReady}

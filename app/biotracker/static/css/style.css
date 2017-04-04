@@ -1,7 +1,70 @@
 /************************************************************/
 /* HOME SCREEN */
 
+/* Grid Stuff Taken from skeleton.css */
+.column,
+.columns {
+    width: 100%;
+    float: left;
+    box-sizing: border-box;
+}
+
+/* For devices larger than 550px */
+@media (min-width: 550px) {
+  .container {
+    width: 80%; }
+  .column,
+  .columns {
+    margin-left: 4%; }
+  .column:first-child,
+  .columns:first-child {
+    margin-left: 0; }
+
+  .one.column,
+  .one.columns                    { width: 4.66666666667%; }
+  .two.columns                    { width: 13.3333333333%; }
+  .three.columns                  { width: 22%;            }
+  .four.columns                   { width: 30.6666666667%; }
+  .five.columns                   { width: 39.3333333333%; }
+  .six.columns                    { width: 48%;            }
+  .seven.columns                  { width: 56.6666666667%; }
+  .eight.columns                  { width: 65.3333333333%; }
+  .nine.columns                   { width: 74.0%;          }
+  .ten.columns                    { width: 82.6666666667%; }
+  .eleven.columns                 { width: 91.3333333333%; }
+  .twelve.columns                 { width: 100%; margin-left: 0; }
+
+  .one-third.column               { width: 30.6666666667%; }
+  .two-thirds.column              { width: 65.3333333333%; }
+
+  .one-half.column                { width: 48%; }
+}
+
+.container:after,
+.row:after,
+.u-cf {
+  content: "";
+  display: table;
+  clear: both;
+}
+
 /*corrections panel*/
+.sidebar {
+    /* rounded edge box */
+    border-radius: 4px;
+    border: 2px solid #144C42;
+    width: 250px;
+    padding: 10px 20px;
+    background-color: #FFFFFF;
+}
+
+.h2-corrections {
+    font-family: "Montserrat", Arial Narrow, Helvetica Neue, Helvetica, sans-serif;
+    text-align: center;
+    font-size: 23px;
+    padding-bottom: 0px;
+    color: #3b3b3b;
+}
 
 .tab {
     border-radius: 4px;
@@ -22,8 +85,114 @@
     /*width: 60px;*/
 }
 
+.CorrectionsPanel {
+}
+
+.CorrectionsPanel p {
+    font-family: "Montserrat", Arial Narrow, Helvetica Neue, Helvetica, sans-serif;
+    text-align: left;
+    font-size: 16px;
+    color: #3b3b3b;
+}
+
+.box-id {
+    width: 120px;
+    padding: 5px;
+    border-color: #217F6E;
+    border-radius: 4px;
+    display: block;
+    height: 15px;
+    font-size: 16px;
+}
+
+.finish-button {
+    background-color: #217F6E;
+    color: white;
+    border: none;
+    padding: 15px 70px;
+    text-align: center;
+    font-size: 16px;
+    border-radius: 4px;
+    margin: 10px auto;
+    cursor: pointer;
+    font-family: "Montserrat";
+    display: block;
+}
+
+.finish-button:hover {
+    background-color: #144C42;
+}
+
+/* video navigation buttons style */
+button.vid-nav {
+    background-color: white;
+    color: #3b3b3b;
+    border: 2px solid #144c42;
+    padding: 15px 30px;
+    text-align: center;
+    font-size: 16px;
+    border-radius: 4px;
+    margin: 5px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    font-family: "Montserrat";
+    display: inline-block;
+    width: 113px;
+}
+
+.video-controls {
+    width: 640px;
+}
+
+.container-home {
+    width: 960px;
+    text-align: center;
+    margin: 25px 0px;
+    display: block;
+}
+
+.scrubber {
+    width: 720px;
+    margin: auto;
+    display: block;
+}
+
 body.home {
     background-color: #D9EFEB;
+}
+
+/* frame input */
+.frame {
+    width: 60%;
+    margin: 5px;
+    padding: 10px;
+    border-color: #217F6E;
+    border-radius: 4px;
+    display: block;
+    position: relative;
+    float: left;
+    height: 25px;
+    font-size: 16px;
+}
+
+/* find frame button */
+button.seek-frame {
+    background-color: white;
+    color: #3b3b3b;
+    border: 2px solid #144C42;
+    padding: 13px 30px;
+    text-align: center;
+    font-size: 16px;
+    border-radius: 4px;
+    margin: 5px;
+    cursor: pointer;
+    font-family: "Montserrat";
+    width: 31%;
+    display: inline-block;
+}
+
+.frameFinder {
+    display: inline;
 }
 
 form.home {
@@ -31,7 +200,19 @@ form.home {
 }
 
 /* download data file and change video buttons */
-
+.bottom-buttons {
+    background-color: #217F6E;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    text-align: center;
+    font-size: 16px;
+    border-radius: 4px;
+    margin: 5px;
+    margin-top: 20px;
+    cursor: pointer;
+    font-family: "Montserrat";
+}
 
 h2.h2-home {
     margin-bottom: auto;
@@ -41,9 +222,30 @@ h2.h2-home {
 /* FOR INDEX.HTML */
 
 /* "biotracker" */
-
+h1 {
+    font-family: "Montserrat", Arial Narrow, Helvetica Neue, Helvetica, sans-serif;
+    text-align: center;
+    color: #217F6E;
+    font-size: 60px;
+    margin-bottom: 2px;
+}
 
 /* analyzing movement patterns */
+h2 {
+    font-family: "Montserrat", Arial Narrow, Helvetica Neue, Helvetica, sans-serif;
+    text-align: center;
+    font-size: 25px;
+    padding-bottom: 25px;
+    color: #3b3b3b;
+}
+
+/* prompts */
+p {
+    font-family: "Montserrat", Arial Narrow, Helvetica Neue, Helvetica, sans-serif;
+    font-size: 20px;
+    padding-top: 6px;
+    color: #3b3b3b;
+}
 
 /* background */
 div.container-index {

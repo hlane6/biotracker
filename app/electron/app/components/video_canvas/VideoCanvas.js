@@ -1,10 +1,12 @@
 import React from 'react';
 import Canvas from './canvas/Canvas';
+import FileUploader from './file_uploader/FileUploader';
 import Video from './video/Video';
 import VideoControls from './video_controls/VideoControls';
 import Button from '../inputs/button/Button';
 import Parser from '../../models/Parser';
 import {ipcRenderer} from 'electron';
+import styles from './VideoCanvas.css';
 
 /**
  * Combines a video and a canvas and provides the controls
@@ -65,6 +67,8 @@ export default class VideoCanvas extends React.Component {
 
         for (let box of this.props.boxes) {
             ctx.strokeStyle = box.color;
+            ctx.font = '12px sans-serif';
+            ctx.fillText(parseInt(box.id), box.x, box.y);
 
             ctx.translate(box.x, box.y);
             ctx.rotate(box.theta * Math.PI / 180);
@@ -88,15 +92,18 @@ export default class VideoCanvas extends React.Component {
         return (
           <div className="videoCanvas">
             <Video
-              src=""
               ref={(video) => { this.video = video; }}
               onReady={this.props.onReady}
             />
             <Canvas
+              className={this.props.ready ? "" : styles.hidden}
               draw={this.draw}
               width={this.props.width}
               height={this.props.height}
               onClick={this.props.onClick}
+            />
+            <FileUploader
+              className={this.props.ready ? styles.hidden : ""}
             />
             <VideoControls
               paused={this.props.paused}

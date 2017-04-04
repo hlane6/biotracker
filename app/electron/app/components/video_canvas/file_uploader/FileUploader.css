@@ -1,0 +1,22 @@
+.file_uploader {
+    background-color: white;
+    border-radius: 4px;
+    border: 2px solid #144C42;
+}
+
+.button_container {
+    margin: auto;
+    padding: 50% 0;
+}
+
+.button {
+    font-size: 16px;
+    color: #3b3b3b;
+    background-color: white;
+    padding: 10px 15px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 4px;
+    border: 2px solid #3b3b3b;
+    margin: 10px;
+}
