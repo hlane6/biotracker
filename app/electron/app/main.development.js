@@ -1,4 +1,3 @@
-// @flow
 import { app, BrowserWindow, ipcMain, dialog } from 'electron';
 import MenuBuilder from './menu';
 
