@@ -15,16 +15,19 @@ const publicPath = `http://localhost:${port}/dist`;
 export default merge(baseConfig, {
   devtool: 'inline-source-map',
 
-  entry: [
-    'react-hot-loader/patch',
-    `webpack-dev-server/client?http://localhost:${port}/`,
-    'webpack/hot/only-dev-server',
-    path.join(__dirname, 'app/index.js'),
-  ],
-
-  output: {
-    publicPath: `http://localhost:${port}/dist/`
+  entry: {
+    main: path.join(__dirname, 'app/index.js'),
+    corrections: path.join(__dirname, 'app/corrections.js'),
   },
+    // 'react-hot-loader/patch',
+    // `webpack-dev-server/client?http://localhost:${port}/`,
+    // 'webpack/hot/only-dev-server',
+  //   path.join(__dirname, 'app/index.js'),
+  // ],
+
+  // output: {
+  //   publicPath: `http://localhost:${port}/dist/`
+  // },
 
   module: {
     rules: [

@@ -23,7 +23,6 @@ export default class Tracker extends React.Component {
             width: 720,
             height: 480,
             boxes: [],
-            pick: null,
         };
 
         this.parser = null;
@@ -32,12 +31,14 @@ export default class Tracker extends React.Component {
         this.handlePlayPause = this.handlePlayPause.bind(this);
         this.handleSeek = this.handleSeek.bind(this);
         this.handleClick = this.handleClick.bind(this);
+        this.downloadCSV = this.downloadCSV.bind(this);
 
         // File handlers
         this.handleCSVFile = this.handleCSVFile.bind(this);
 
         // Bind the ipc call backs so we can process files
         ipcRenderer.on('selected-csv-file', this.handleCSVFile.bind(this));
+        ipcRenderer.on('add-correction', this.addCorrection.bind(this));
     }
 
     onReady({ duration, width, height }) {
@@ -77,16 +78,54 @@ export default class Tracker extends React.Component {
 
         for (const box of this.state.boxes) {
             if (box.collidesWith(offsetX, offsetY)) {
-                this.setState({ pick: box });
+                ipcRenderer.send('update-selection', box)
             }
         }
+    }
+
+    addCorrection(event, correction) {
+        this.parser.update({
+            frame: Math.floor(this.state.time / 30),
+            newId: correction.newId,
+            oldId: correction.oldId
+        });
+    }
+    
+    /**
+    * Download button handler which will download the updated
+    * csv file based on the parsers bounding boxes.
+    */
+    downloadCSV() {
+        const columnDelimiter = ',';
+        const lineDelimiter = '\n';
+        const keys = ['id', 'x', 'y', 'width', 'height', 'theta'];
+
+        let csv = 'data:text/csv;charset=utf-8,';
+        csv += keys.join(columnDelimiter);
+        csv += lineDelimiter;
+
+        for (let i = 0; i < this.parser.data.length; i++) {
+            for (let j = 0; j < this.parser.data[i].length; j++) {
+                const box = this.parser.data[i][j];
+                csv += (`${i},${box.id},${box.x},${box.y},`
+                    + `${box.width},${box.height},${box.theta}\n`);
+            }
+        }
+
+        const filename = 'export.csv';
+        const encodedCsv = encodeURI(csv);
+        const link = document.createElement('a');
+        link.setAttribute('href', encodedCsv);
+        link.setAttribute('download', filename);
+
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     }
 
     render() {
         return (
           <div className={styles.container}>
-            <div className={styles.row}>
-              <div className={styles.nine + " " + styles.columns}>
                 <VideoCanvas
                   parser={this.parser}
                   paused={this.state.paused}
@@ -100,17 +139,8 @@ export default class Tracker extends React.Component {
                   seekCallback={this.handleSeek}
                   onReady={this.onReady}
                   onClick={this.handleClick}
+                  downloadHandler={this.downloadCSV}
                 />
-              </div>
-              <div className={styles.three + " " + styles.columns}>
-                <CorrectionsPanel
-                  pick={this.state.pick}
-                  time={this.state.time}
-                  parser={this.parser}
-                  handleCorrection={this.handleCorrection}
-                />
-              </div>
-            </div>
           </div>
         );
     }

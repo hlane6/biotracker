@@ -49,17 +49,3 @@
 .finish_button:hover {
     background-color: #144C42;
 }
-
-.bottom_button {
-    background-color: #217F6E;
-    color: white;
-    border: none;
-    padding: 15px 30px;
-    text-align: center;
-    font-size: 16px;
-    border-radius: 4px;
-    margin: 5px;
-    margin-top: 20px;
-    cursor: pointer;
-    font-family: "Montserrat";
-}

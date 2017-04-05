@@ -18,6 +18,7 @@ export default class VideoControls extends React.Component {
         getVideo: () => {},
         playPauseCallback: () => {},
         seekCallback: () => {},
+        downloadHandler: () => {},
     };
 
     static propTypes = {
@@ -38,6 +39,7 @@ export default class VideoControls extends React.Component {
         */
         playPauseCallback: React.PropTypes.func,
         seekCallback: React.PropTypes.func,
+        downloadHandler: React.PropTypes.func,
     };
 
     constructor(props) {
@@ -127,6 +129,11 @@ export default class VideoControls extends React.Component {
               className={styles.seek_frame}
               handler={this.handleSeekInput}
               text="jump"
+            />
+            <Button
+              className={styles.bottom_button}
+              text="download data file"
+              handler={this.props.downloadHandler}
             />
           </div>
         );

@@ -1,6 +1,4 @@
-.video_controls {
-    width: 640px;
-}
+
 
 .video_navigation {
     background-color: white;
@@ -19,7 +17,7 @@
 }
 
 .frame {
-    width: 60%;
+    width: 50%;
     margin: 5px;
     padding: 10px;
     border-color: #217F6E;
@@ -42,6 +40,21 @@
     margin: 5px;
     cursor: pointer;
     font-family: "Montserrat";
-    width: 31%;
+    width: 25%;
     display: inline-block;
+}
+
+.bottom_button {
+    background-color: #217F6E;
+    width: 25%;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    text-align: center;
+    font-size: 16px;
+    border-radius: 4px;
+    margin: 5px;
+    margin-top: 20px;
+    cursor: pointer;
+    font-family: "Montserrat";
 }

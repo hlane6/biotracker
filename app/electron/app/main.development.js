@@ -2,6 +2,7 @@ import { app, BrowserWindow, ipcMain, dialog } from 'electron';
 import MenuBuilder from './menu';
 
 let mainWindow = null;
+let correctionsWindow = null;
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support'); // eslint-disable-line
@@ -45,8 +46,8 @@ app.on('ready', async () => {
 
   mainWindow = new BrowserWindow({
     show: false,
-    width: 1024,
-    height: 728
+    width: 750,
+    height: 700
   });
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
@@ -63,8 +64,31 @@ app.on('ready', async () => {
     mainWindow = null;
   });
 
+  correctionsWindow = new BrowserWindow({
+    show: false,
+    width: 250,
+    height: 400,
+    parent: mainWindow,
+  });
+
+  correctionsWindow.loadURL(`file://${__dirname}/corrections.html`);
+
+  correctionsWindow.webContents.on('did-finish-load', () => {
+    if (!correctionsWindow) {
+      throw new Error('"correctionsWindow" is not defined');
+    }
+    correctionsWindow.show();
+  });
+
+  correctionsWindow.on('closed', () => {
+    correctionsWindow = null;
+  });
+
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
+
+  const correctionsMenuBuilder = new MenuBuilder(correctionsWindow);
+  correctionsMenuBuilder.buildMenu();
 });
 
 ipcMain.on('open-video-file', (event) => {
@@ -81,4 +105,12 @@ ipcMain.on('open-csv-file', (event) => {
   }, (files) => {
     if (files) mainWindow.webContents.send('selected-csv-file', files[0]);
   })
+});
+
+ipcMain.on('add-correction', (event, correction) => {
+    mainWindow.webContents.send('add-correction', correction);
+});
+
+ipcMain.on('update-selection', (event, selection) => {
+    correctionsWindow.webContents.send('update-selection', selection);
 });

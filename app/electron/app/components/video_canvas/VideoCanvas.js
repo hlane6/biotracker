@@ -25,6 +25,7 @@ export default class VideoCanvas extends React.Component {
         playPauseCallback: () => {},
         seekCallback: () => {},
         onClick: () => {},
+        downloadHandler: () => {},
     };
 
     static propTypes = {
@@ -39,6 +40,7 @@ export default class VideoCanvas extends React.Component {
         playPauseCallback: React.PropTypes.func,
         seekCallback: React.PropTypes.func,
         onClick: React.PropTypes.func,
+        downloadHandler: React.PropTypes.func,
     };
 
     constructor(props) {
@@ -113,6 +115,7 @@ export default class VideoCanvas extends React.Component {
               getVideo={this.getVideo}
               playPauseCallback={this.props.playPauseCallback}
               seekCallback={this.props.seekCallback}
+              downloadHandler={this.props.downloadHandler}
             />
           </div>
         );

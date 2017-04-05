@@ -13,7 +13,11 @@ import baseConfig from './webpack.config.base';
 export default merge(baseConfig, {
   devtool: 'cheap-module-source-map',
 
-  entry: ['babel-polyfill', './app/index'],
+  //entry: ['babel-polyfill', './app/index'],
+  entry: {
+    main: path.join(__dirname, 'app/index.js'),
+    corrections: path.join(__dirname, 'app/corrections.js'),
+  },
 
   output: {
     path: path.join(__dirname, 'app/dist'),
@@ -44,40 +48,6 @@ export default merge(baseConfig, {
             }
           }
         }),
-      },
-      {
-        test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
-        use: {
-          loader: 'url-loader',
-          options: {
-            limit: 10000,
-            mimetype: 'application/font-woff',
-          }
-        },
-      },
-      {
-        test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
-        use: {
-          loader: 'url-loader',
-          options: {
-            limit: 10000,
-            mimetype: 'application/font-woff',
-          }
-        }
-      },
-      {
-        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-        use: {
-          loader: 'url-loader',
-          options: {
-            limit: 10000,
-            mimetype: 'application/octet-stream'
-          }
-        }
-      },
-      {
-        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-        use: 'file-loader',
       },
       {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
@@ -115,7 +85,7 @@ export default merge(baseConfig, {
      */
     new BabiliPlugin(),
 
-    new ExtractTextPlugin('style.css'),
+    new ExtractTextPlugin('[name].css'),
 
     /**
      * Dynamically generate index.html page
