@@ -6,8 +6,8 @@ import {ipcRenderer} from 'electron';
 export default class FileUploader extends React.Component {
 
     static defaultProps = {
-        width: 600,
-        height: 600,
+        width: 720,
+        height: 480,
     }
 
     static propTypes = {

@@ -89,6 +89,7 @@ export default class VideoControls extends React.Component {
     render() {
         return (
           <div className={styles.video_controls}>
+            <div className={styles.row}>
             <SeekInput
               time={this.props.time}
               duration={this.props.duration}
@@ -96,6 +97,9 @@ export default class VideoControls extends React.Component {
               handleSeekCallback={this.handleSeekInput}
               playPauseCallback={this.props.playPauseCallback}
             />
+            </div>
+
+            <div className={styles.row}>
             <Button
               className={styles.video_navigation}
               handler={this.jumpBackward}
@@ -120,7 +124,10 @@ export default class VideoControls extends React.Component {
               className={styles.video_navigation}
               handler={this.jumpForward}
               text=">>"
-             />
+            />
+            </div>
+
+            <div className={styles.row}>
             <NumberInput
               className={styles.frame}
               ref={(input) => { this.input = input; }}
@@ -135,6 +142,7 @@ export default class VideoControls extends React.Component {
               text="download data file"
               handler={this.props.downloadHandler}
             />
+            </div>
           </div>
         );
     }

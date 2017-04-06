@@ -8,23 +8,17 @@
     text-align: center;
     font-size: 16px;
     border-radius: 4px;
-    margin: 5px;
-    margin-bottom: 20px;
     cursor: pointer;
     font-family: "Montserrat";
     display: inline-block;
-    width: 113px;
 }
 
 .frame {
-    width: 50%;
-    margin: 5px;
     padding: 10px;
     border-color: #217F6E;
     border-radius: 4px;
-    display: block;
+    display: inline-block;
     position: relative;
-    float: left;
     height: 25px;
     font-size: 16px;
 }
@@ -33,28 +27,57 @@
     background-color: white;
     color: #3b3b3b;
     border: 2px solid #144C42;
-    padding: 13px 30px;
+    padding: 15px 30px;
     text-align: center;
     font-size: 16px;
     border-radius: 4px;
-    margin: 5px;
     cursor: pointer;
     font-family: "Montserrat";
-    width: 25%;
     display: inline-block;
 }
 
 .bottom_button {
     background-color: #217F6E;
-    width: 25%;
     color: white;
     border: none;
     padding: 15px 30px;
     text-align: center;
     font-size: 16px;
     border-radius: 4px;
-    margin: 5px;
-    margin-top: 20px;
     cursor: pointer;
     font-family: "Montserrat";
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+@media (min-width: 550px) {
+  .column,
+  .columns {
+    margin-left: 4%; }
+  .column:first-child,
+  .columns:first-child {
+    margin-left: 0; }
+
+  .one.column,
+  .one.columns                    { width: 4.66666666667%; }
+  .two.columns                    { width: 13.3333333333%; }
+  .three.columns                  { width: 22%;            }
+  .four.columns                   { width: 30.6666666667%; }
+  .five.columns                   { width: 39.3333333333%; }
+  .six.columns                    { width: 48%;            }
+  .seven.columns                  { width: 56.6666666667%; }
+  .eight.columns                  { width: 65.3333333333%; }
+  .nine.columns                   { width: 74.0%;          }
+  .ten.columns                    { width: 82.6666666667%; }
+  .eleven.columns                 { width: 91.3333333333%; }
+  .twelve.columns                 { width: 100%; margin-left: 0; }
+
+  .one-third.column               { width: 30.6666666667%; }
+  .two-thirds.column              { width: 65.3333333333%; }
+
+  .one-half.column                { width: 48%; }
 }

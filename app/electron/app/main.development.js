@@ -67,7 +67,7 @@ app.on('ready', async () => {
   correctionsWindow = new BrowserWindow({
     show: false,
     width: 250,
-    height: 400,
+    height: 300,
     parent: mainWindow,
   });
 
