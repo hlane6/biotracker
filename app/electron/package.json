@@ -44,6 +44,7 @@
       "dist/",
       "node_modules/",
       "app.html",
+      "corrections.html",
       "main.js",
       "main.js.map",
       "package.json"
