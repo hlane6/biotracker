@@ -94,7 +94,13 @@ export default merge(baseConfig, {
       filename: '../app.html',
       template: 'app/app.html',
       inject: false
-    })
+    }),
+
+    new HtmlWebpackPlugin({
+      filename: '../corrections.html',
+      template: 'app/corrections.html',
+      inject: false
+    }),
   ],
 
   // https://github.com/chentsulin/webpack-target-electron-renderer#how-this-module-works

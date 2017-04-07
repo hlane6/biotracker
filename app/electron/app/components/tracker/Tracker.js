@@ -90,7 +90,7 @@ export default class Tracker extends React.Component {
             oldId: correction.oldId
         });
     }
-    
+
     /**
     * Download button handler which will download the updated
     * csv file based on the parsers bounding boxes.
@@ -98,7 +98,7 @@ export default class Tracker extends React.Component {
     downloadCSV() {
         const columnDelimiter = ',';
         const lineDelimiter = '\n';
-        const keys = ['id', 'x', 'y', 'width', 'height', 'theta'];
+        const keys = ['frame_num', 'id', 'x', 'y', 'width', 'height', 'theta'];
 
         let csv = 'data:text/csv;charset=utf-8,';
         csv += keys.join(columnDelimiter);

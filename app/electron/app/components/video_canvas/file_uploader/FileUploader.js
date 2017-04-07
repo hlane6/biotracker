@@ -63,13 +63,21 @@ export default class FileUploader extends React.Component {
           >
             <div className={styles.button_container}>
               <Button
-                className={styles.button}
-                text={this.state.videoUploaded ? "Video Selected" : "Select Video"}
+                className={this.state.videoUploaded
+                  ? styles.button + " " + styles.grayed_out
+                  : styles.button}
+                text={this.state.videoUploaded
+                  ? "Video Selected"
+                  : "Select Video"}
                 handler={this.openVideoFile}
               />
               <Button
-                className={styles.button}
-                text={this.state.csvUploaded ? "CSV Selected" : "Select CSV File"}
+              className={this.state.csvUploaded
+                  ? styles.button + " " + styles.grayed_out
+                  : styles.button}
+                text={this.state.csvUploaded
+                  ? "CSV Selected"
+                  : "Select CSV File"}
                 handler={this.openCSVFile}
               />
             </div>

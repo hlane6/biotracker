@@ -68,7 +68,9 @@ app.on('ready', async () => {
     show: false,
     width: 250,
     height: 300,
+    resizeable: false,
     parent: mainWindow,
+    title: 'Corrections',
   });
 
   correctionsWindow.loadURL(`file://${__dirname}/corrections.html`);

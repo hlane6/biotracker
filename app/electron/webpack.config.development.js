@@ -19,15 +19,6 @@ export default merge(baseConfig, {
     main: path.join(__dirname, 'app/index.js'),
     corrections: path.join(__dirname, 'app/corrections.js'),
   },
-    // 'react-hot-loader/patch',
-    // `webpack-dev-server/client?http://localhost:${port}/`,
-    // 'webpack/hot/only-dev-server',
-  //   path.join(__dirname, 'app/index.js'),
-  // ],
-
-  // output: {
-  //   publicPath: `http://localhost:${port}/dist/`
-  // },
 
   module: {
     rules: [
@@ -57,40 +48,6 @@ export default merge(baseConfig, {
             }
           },
         ]
-      },
-      {
-        test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
-        use: {
-          loader: 'url-loader',
-          options: {
-            limit: 10000,
-            mimetype: 'application/font-woff',
-          }
-        },
-      },
-      {
-        test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
-        use: {
-          loader: 'url-loader',
-          options: {
-            limit: 10000,
-            mimetype: 'application/font-woff',
-          }
-        }
-      },
-      {
-        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-        use: {
-          loader: 'url-loader',
-          options: {
-            limit: 10000,
-            mimetype: 'application/octet-stream'
-          }
-        }
-      },
-      {
-        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-        use: 'file-loader',
       },
       {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
@@ -135,6 +92,7 @@ export default merge(baseConfig, {
    * https://github.com/chentsulin/webpack-target-electron-renderer#how-this-module-works
    */
   target: 'electron-renderer',
+
   devServer: {
     port,
     hot: true,
