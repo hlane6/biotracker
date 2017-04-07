@@ -86,7 +86,7 @@ export default class VideoCanvas extends React.Component {
             ctx.translate(-box.x, -box.y);
         }
 
-        if (this.props.paused || this.getVideo().ended) { return; }
+        if (this.props.paused) { return; }
         this.props.seekCallback(this.getVideo().currentTime);
     }
 
