@@ -64,12 +64,12 @@ export default class CorrectionsPanel extends React.Component {
 
     render() {
         return (
-          <div className="CorrectionsPanel">
+          <div>
             <div className={styles.sidebar}>
               <h2 className={styles.corrections_header}>make corrections</h2>
               <p className={styles.corrections_label}>
                 {`Old Id: ${this.state.pick ?
-                  this.state.pick.id : 'None Selected'}`}
+                  this.state.pick.id : 'Select a box'}`}
               </p>
               <p className={styles.corrections_label}>{'New Id:'}</p>
               <NumberInput

@@ -70,6 +70,7 @@ export default class VideoCanvas extends React.Component {
         for (let box of this.props.boxes) {
             ctx.strokeStyle = box.color;
             ctx.font = '12px sans-serif';
+            ctx.fillStyle = 'white';
             ctx.fillText(parseInt(box.id), box.x, box.y);
 
             ctx.translate(box.x, box.y);

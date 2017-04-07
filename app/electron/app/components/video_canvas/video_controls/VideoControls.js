@@ -137,11 +137,13 @@ export default class VideoControls extends React.Component {
               handler={this.handleSeekInput}
               text="jump"
             />
+            <div className={styles.row}>
             <Button
               className={styles.bottom_button}
               text="download data file"
               handler={this.props.downloadHandler}
             />
+            </div>
             </div>
           </div>
         );

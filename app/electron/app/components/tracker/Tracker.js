@@ -2,6 +2,7 @@ import React from 'react';
 import VideoCanvas from '../video_canvas/VideoCanvas';
 import Parser from '../../models/Parser';
 import CorrectionsPanel from '../corrections_panel/CorrectionsPanel';
+import Header from '../header/Header';
 import Button from '../inputs/button/Button';
 import {ipcRenderer} from 'electron';
 import styles from './Tracker.css';
@@ -126,21 +127,24 @@ export default class Tracker extends React.Component {
     render() {
         return (
           <div className={styles.container}>
-                <VideoCanvas
-                  parser={this.parser}
-                  paused={this.state.paused}
-                  time={this.state.time}
-                  ready={this.state.csvReady && this.state.videoReady}
-                  boxes={this.state.boxes}
-                  duration={this.state.duration}
-                  width={this.state.width}
-                  height={this.state.height}
-                  playPauseCallback={this.handlePlayPause}
-                  seekCallback={this.handleSeek}
-                  onReady={this.onReady}
-                  onClick={this.handleClick}
-                  downloadHandler={this.downloadCSV}
-                />
+            <Header
+              time={this.state.time}
+            />
+            <VideoCanvas
+              parser={this.parser}
+              paused={this.state.paused}
+              time={this.state.time}
+              ready={this.state.csvReady && this.state.videoReady}
+              boxes={this.state.boxes}
+              duration={this.state.duration}
+              width={this.state.width}
+              height={this.state.height}
+              playPauseCallback={this.handlePlayPause}
+              seekCallback={this.handleSeek}
+              onReady={this.onReady}
+              onClick={this.handleClick}
+              downloadHandler={this.downloadCSV}
+            />
           </div>
         );
     }
