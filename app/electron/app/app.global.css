@@ -6,7 +6,7 @@ p {
 }
 
 h1 {
-    /*font-family: "Montserrat", Arial Narrow, Helvetica Neue, Helvetica, sans-serif;*/
+    font-family: "Montserrat", Arial Narrow, Helvetica Neue, Helvetica, sans-serif;
     text-align: center;
     color: #217F6E;
     font-size: 60px;
