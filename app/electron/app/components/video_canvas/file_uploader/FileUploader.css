@@ -34,3 +34,12 @@
     background-color: #879593;
     color: #3b3b3b;
 }
+
+.checkmark {
+    width: 15px;
+    height: 15px;
+}
+
+.hidden {
+    display: none;
+}

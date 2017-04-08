@@ -10,7 +10,7 @@ export default class Header extends React.Component {
     render() {
         return (
           <div className={styles.header}>
-            <h2 className={styles.heading}>Biotracker</h2>
+            <h2 className={styles.heading}>Tracker</h2>
             <h4 className={styles.frame_counter}>
               Frame: {Math.floor(this.props.time * 30)}
             </h4>

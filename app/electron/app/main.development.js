@@ -47,7 +47,9 @@ app.on('ready', async () => {
   mainWindow = new BrowserWindow({
     show: false,
     width: 750,
-    height: 725
+    height: 735,
+    x: 100,
+    y: 50
   });
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
@@ -72,6 +74,8 @@ app.on('ready', async () => {
     parent: mainWindow,
     title: 'Corrections',
     closable: false,
+    x: 850,
+    y: 50
   });
 
   correctionsWindow.loadURL(`file://${__dirname}/corrections.html`);
@@ -96,7 +100,10 @@ app.on('ready', async () => {
 
 ipcMain.on('open-video-file', (event) => {
   dialog.showOpenDialog({
-    properties: ['openFile']
+    properties: ['openFile'],
+    filters: [
+      {name: 'Videos', extensions: ['mp4']}
+    ]
   }, (files) => {
     if (files) mainWindow.webContents.send('selected-video-file', files[0]);
   })
@@ -104,7 +111,10 @@ ipcMain.on('open-video-file', (event) => {
 
 ipcMain.on('open-csv-file', (event) => {
   dialog.showOpenDialog({
-    properties: ['openFile']
+    properties: ['openFile'],
+    filters: [
+      {name: 'Data', extensions: ['csv']}
+    ]
   }, (files) => {
     if (files) mainWindow.webContents.send('selected-csv-file', files[0]);
   })
