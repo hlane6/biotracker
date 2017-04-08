@@ -88,17 +88,7 @@ app.on('ready', async () => {
   });
 
   correctionsWindow.on('closed', () => {
-    correctionsWindow = new BrowserWindow({
-      show: false,
-      width: 250,
-      height: 325,
-      resizeable: false,
-      parent: mainWindow,
-      title: 'Corrections',
-      closable: false,
-      x: 850,
-      y: 50
-    });
+    correctionsWindow = null;
   });
 
   const menuBuilder = new MenuBuilder(mainWindow);

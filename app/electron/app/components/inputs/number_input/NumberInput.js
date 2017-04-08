@@ -5,37 +5,37 @@ import React from 'react';
  */
 export default class NumberInput extends React.Component {
 
-    static defaultProps = {
-        className: '',
-    }
+  static defaultProps = {
+    className: '',
+  }
 
-    static propTypes = {
-        className: React.PropTypes.string,
-    }
+  static propTypes = {
+    className: React.PropTypes.string,
+  }
 
-    constructor(props) {
-        super(props);
-        this.state = { value: '' };
-        this.handleChange = this.handleChange.bind(this);
-        this.getInput = this.getInput.bind(this);
-    }
+  constructor(props) {
+    super(props);
+    this.state = { value: '' };
+    this.handleChange = this.handleChange.bind(this);
+    this.getInput = this.getInput.bind(this);
+  }
 
-    getInput() {
-        return Number(this.state.value);
-    }
+  getInput() {
+    return Number(this.state.value);
+  }
 
-    handleChange(event) {
-        this.setState({ value: event.target.value });
-    }
+  handleChange(event) {
+    this.setState({ value: event.target.value });
+  }
 
-    render() {
-        return (
-          <input
-            className={this.props.className}
-            type="number"
-            value={this.state.value}
-            onChange={this.handleChange}
-          />
-        );
-    }
+  render() {
+    return (
+      <input
+        className={this.props.className}
+        type="number"
+        value={this.state.value}
+        onChange={this.handleChange}
+      />
+    );
+  }
 }

@@ -10,81 +10,81 @@ import {ipcRenderer} from 'electron';
 */
 export default class CorrectionsPanel extends React.Component {
 
-    static defaultProps = {
-        time: 0,
-        parser: null,
+  static defaultProps = {
+    time: 0,
+    parser: null,
+  };
+
+  static propTypes = {
+    time: React.PropTypes.number,
+    parser: React.PropTypes.object,
+  };
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      updating: false,
+      pick: null,
     };
 
-    static propTypes = {
-        time: React.PropTypes.number,
-        parser: React.PropTypes.object,
-    };
+    this.handleCorrection = this.handleCorrection.bind(this);
+    this.handleSelection = this.handleSelection.bind(this);
 
-    constructor(props) {
-        super(props);
+    ipcRenderer.on('update-selection', this.handleSelection.bind(this));
+  }
 
-        this.state = {
-            updating: false,
-            pick: null,
-        };
+  handleSelection(event, selection) {
+    this.setState({ pick: selection });
+  }
 
-        this.handleCorrection = this.handleCorrection.bind(this);
-        this.handleSelection = this.handleSelection.bind(this);
-
-        ipcRenderer.on('update-selection', this.handleSelection.bind(this));
+  handleCorrection() {
+    if (!this.state.pick) {
+      alert('Invalid correciton: no selection');
+      return;
     }
 
-    handleSelection(event, selection) {
-        this.setState({ pick: selection });
+    const newId = this.input.getInput();
+    if (!newId || newId < 0) {
+      alert('Invalid new id');
+      return;
     }
 
-    handleCorrection() {
-        if (!this.state.pick) {
-            alert('Invalid correciton: no selection');
-            return;
-        }
+    this.setState({ updating: true });
 
-        const newId = this.input.getInput();
-        if (!newId || newId < 0) {
-            alert('Invalid new id');
-            return;
-        }
+    ipcRenderer.send('add-correction', {
+      oldId: this.state.pick.id,
+      newId,
+    });
 
-        this.setState({ updating: true });
+    this.setState({
+      updating: false,
+    });
+  }
 
-        ipcRenderer.send('add-correction', {
-            oldId: this.state.pick.id,
-            newId,
-        });
-
-        this.setState({
-            updating: false,
-        });
-    }
-
-    render() {
-        return (
-          <div>
-            <div className={styles.sidebar}>
-              <h2 className={styles.corrections_header}>make corrections</h2>
-              <p className={styles.corrections_label}>
-                {`Old Id: ${this.state.pick ?
-                  this.state.pick.id : 'Select a box'}`}
-              </p>
-              <p className={styles.corrections_label}>{'New Id:'}</p>
-              <NumberInput
-                className={styles.box_input}
-                ref={(input) => { this.input = input; }}
-                handleCallback={this.handleCorrection}
-              />
-              <Button
-                className={styles.finish_button}
-                handler={this.handleCorrection}
-                text={this.state.updating ? 'Updating...' : 'Correct'}
-              />
-            </div>
-          </div>
-        );
-    }
+  render() {
+    return (
+      <div>
+        <div className={styles.sidebar}>
+          <h2 className={styles.corrections_header}>make corrections</h2>
+          <p className={styles.corrections_label}>
+            {`Old Id: ${this.state.pick ?
+              this.state.pick.id : 'Select a box'}`}
+          </p>
+          <p className={styles.corrections_label}>{'New Id:'}</p>
+          <NumberInput
+            className={styles.box_input}
+            ref={(input) => { this.input = input; }}
+            handleCallback={this.handleCorrection}
+          />
+          <Button
+            className={styles.finish_button}
+            handler={this.handleCorrection}
+            text={this.state.updating ? 'Updating...' : 'Correct'}
+          />
+        </div>
+      </div>
+    );
+  }
 
 }
