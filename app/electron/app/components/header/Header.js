@@ -3,6 +3,14 @@ import styles from './Header.css';
 
 export default class Header extends React.Component {
 
+  static defaultProps = {
+    time: 0,
+  };
+
+  static propTypes = {
+    time: React.PropTypes.number,
+  };
+
   render() {
     return (
       <div className={styles.header}>

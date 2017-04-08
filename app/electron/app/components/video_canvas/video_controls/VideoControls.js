@@ -90,60 +90,60 @@ export default class VideoControls extends React.Component {
     return (
       <div className={styles.video_controls}>
         <div className={styles.row}>
-        <SeekInput
-          time={this.props.time}
-          duration={this.props.duration}
-          width={this.props.width}
-          handleSeekCallback={this.handleSeekInput}
-          playPauseCallback={this.props.playPauseCallback}
-        />
+          <SeekInput
+            time={this.props.time}
+            duration={this.props.duration}
+            width={this.props.width}
+            handleSeekCallback={this.handleSeekInput}
+            playPauseCallback={this.props.playPauseCallback}
+          />
         </div>
 
         <div className={styles.row}>
-        <Button
-          className={styles.video_navigation}
-          handler={this.jumpBackward}
-          text="<<"
-        />
-        <Button
-          className={styles.video_navigation}
-          handler={this.stepBackward}
-          text="<"
-        />
-        <Button
-          className={styles.video_navigation}
-          handler={this.playPause}
-          text={(this.props.paused) ? 'play' : 'pause'}
-        />
-        <Button
-          className={styles.video_navigation}
-          handler={this.stepForward}
-          text=">"
-        />
-        <Button
-          className={styles.video_navigation}
-          handler={this.jumpForward}
-          text=">>"
-        />
+          <Button
+            className={styles.video_navigation}
+            handler={this.jumpBackward}
+            text="<<"
+          />
+          <Button
+            className={styles.video_navigation}
+            handler={this.stepBackward}
+            text="<"
+          />
+          <Button
+            className={styles.video_navigation}
+            handler={this.playPause}
+            text={(this.props.paused) ? 'play' : 'pause'}
+          />
+          <Button
+            className={styles.video_navigation}
+            handler={this.stepForward}
+            text=">"
+          />
+          <Button
+            className={styles.video_navigation}
+            handler={this.jumpForward}
+            text=">>"
+          />
         </div>
 
         <div className={styles.row}>
-        <NumberInput
-          className={styles.frame}
-          ref={(input) => { this.input = input; }}
-        />
-        <Button
-          className={styles.seek_frame}
-          handler={this.handleSeekInput}
-          text="jump"
-        />
-        <div className={styles.row}>
-        <Button
-          className={styles.bottom_button}
-          text="download data file"
-          handler={this.props.downloadHandler}
-        />
+          <NumberInput
+            className={styles.frame}
+            ref={(input) => { this.input = input; }}
+          />
+          <Button
+            className={styles.seek_frame}
+            handler={this.handleSeekInput}
+            text="jump"
+          />
         </div>
+        <div className={styles.row}>
+          <Button
+            className={styles.bottom_button}
+            text="download data file"
+            handler={this.props.downloadHandler}
+          />
         </div>
       </div>
     );

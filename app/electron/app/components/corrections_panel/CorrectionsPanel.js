@@ -1,8 +1,8 @@
 import React from 'react';
+import { ipcRenderer } from 'electron';
 import Button from '../inputs/button/Button';
 import NumberInput from '../inputs/number_input/NumberInput';
 import styles from './CorrectionsPanel.css';
-import {ipcRenderer} from 'electron';
 
 /**
 * Side bar component allowing user interaction to correct

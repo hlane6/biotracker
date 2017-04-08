@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './SeekInput.css'
+import styles from './SeekInput.css';
 
 /**
  * Input to handle seeking in video

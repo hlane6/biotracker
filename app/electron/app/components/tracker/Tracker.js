@@ -1,10 +1,9 @@
 import React from 'react';
+import { ipcRenderer } from 'electron';
 import VideoCanvas from '../video_canvas/VideoCanvas';
 import Parser from '../../models/Parser';
-import CorrectionsPanel from '../corrections_panel/CorrectionsPanel';
 import Header from '../header/Header';
 import Button from '../inputs/button/Button';
-import {ipcRenderer} from 'electron';
 import styles from './Tracker.css';
 
 /**

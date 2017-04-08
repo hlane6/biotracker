@@ -3,9 +3,7 @@ import Canvas from './canvas/Canvas';
 import FileUploader from './file_uploader/FileUploader';
 import Video from './video/Video';
 import VideoControls from './video_controls/VideoControls';
-import Button from '../inputs/button/Button';
 import Parser from '../../models/Parser';
-import {ipcRenderer} from 'electron';
 import styles from './VideoCanvas.css';
 
 /**

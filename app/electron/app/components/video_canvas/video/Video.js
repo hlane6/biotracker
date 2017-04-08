@@ -1,5 +1,5 @@
 import React from 'react';
-import {ipcRenderer} from 'electron';
+import { ipcRenderer } from 'electron';
 
 /**
 * Foundation component to handle rendering a Video
@@ -32,10 +32,6 @@ export default class Video extends React.Component {
     this.rawVideo.addEventListener('canplay', this.onReady);
   }
 
-  handleVideoFile(event, file) {
-    this.rawVideo.src = file;
-  }
-
   /**
   * We dont know the duration, width, or height of the video until it loads,
   * so we send the duration back up through a callback to be updated elsewhere
@@ -47,6 +43,10 @@ export default class Video extends React.Component {
       width: this.rawVideo.videoWidth,
       height: this.rawVideo.videoHeight,
     });
+  }
+  
+  handleVideoFile(event, file) {
+    this.rawVideo.src = file;
   }
 
   render() {

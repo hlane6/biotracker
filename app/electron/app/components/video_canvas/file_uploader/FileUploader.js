@@ -1,19 +1,19 @@
 import React from 'react';
+import { ipcRenderer } from 'electron';
 import Button from '../../inputs/button/Button';
 import styles from './FileUploader.css';
-import {ipcRenderer} from 'electron';
 
 export default class FileUploader extends React.Component {
 
   static defaultProps = {
     width: 720,
     height: 480,
-  }
+  };
 
   static propTypes = {
     width: React.PropTypes.number,
     height: React.PropTypes.number,
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -26,7 +26,7 @@ export default class FileUploader extends React.Component {
     this.state = {
       videoUploaded: false,
       csvUploaded: false,
-    }
+    };
 
     this.openVideoFile = this.openVideoFile.bind(this);
     this.handleVideoFile = this.handleVideoFile.bind(this);

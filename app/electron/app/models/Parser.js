@@ -97,11 +97,11 @@ class BoundingBox {
   * reference Frame
   */
   rotatePoint(x, y) {
-      const rotatedX = (x * Math.cos(this.theta_in_radians))
-          + (y * -Math.sin(this.theta_in_radians));
-      const rotatedY = (x * Math.sin(this.theta_in_radians))
-          + (y * Math.cos(this.theta_in_radians));
-      return { rotatedX, rotatedY };
+    const rotatedX = (x * Math.cos(this.theta_in_radians))
+        + (y * -Math.sin(this.theta_in_radians));
+    const rotatedY = (x * Math.sin(this.theta_in_radians))
+        + (y * Math.cos(this.theta_in_radians));
+    return { rotatedX, rotatedY };
   }
 
 }
@@ -182,8 +182,8 @@ export default class Parser {
     for (let i = correction.frame; i < this.data.length; i++) {
       for (let j = 0; j < this.data[i].length; j++) {
         if (correction.oldId == this.data[i][j].id) {
-            this.data[i][j].id = correction.newId;
-            this.data[i][j].color = COLORS[correction.newId];
+          this.data[i][j].id = correction.newId;
+          this.data[i][j].color = COLORS[correction.newId];
         }
       }
     }
