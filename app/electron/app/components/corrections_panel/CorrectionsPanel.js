@@ -12,12 +12,10 @@ export default class CorrectionsPanel extends React.Component {
 
   static defaultProps = {
     time: 0,
-    parser: null,
   };
 
   static propTypes = {
     time: React.PropTypes.number,
-    parser: React.PropTypes.object,
   };
 
   constructor(props) {
@@ -34,10 +32,19 @@ export default class CorrectionsPanel extends React.Component {
     ipcRenderer.on('update-selection', this.handleSelection.bind(this));
   }
 
+  /**
+   * Callback for when this component receives a trigger for
+   * an updated selection from the MainWindow
+   */
   handleSelection(event, selection) {
     this.setState({ pick: selection });
   }
 
+  /**
+   * Handler for creating a correction. Will make sure there is a valid pick
+   * and a valid new id and will then send out a message to create a new event
+   * that will be handled by the MainWindow
+   */
   handleCorrection() {
     if (!this.state.pick) {
       alert('Invalid correciton: no selection');

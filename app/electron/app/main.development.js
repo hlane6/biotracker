@@ -102,28 +102,28 @@ ipcMain.on('open-video-file', (event) => {
   dialog.showOpenDialog({
     properties: ['openFile'],
     filters: [
-      {name: 'Videos', extensions: ['mp4']}
+      { name: 'Videos', extensions: ['mp4'] }
     ]
   }, (files) => {
     if (files) mainWindow.webContents.send('selected-video-file', files[0]);
-  })
+  });
 });
 
 ipcMain.on('open-csv-file', (event) => {
   dialog.showOpenDialog({
     properties: ['openFile'],
     filters: [
-      {name: 'Data', extensions: ['csv']}
+      { name: 'Data', extensions: ['csv'] }
     ]
   }, (files) => {
     if (files) mainWindow.webContents.send('selected-csv-file', files[0]);
-  })
+  });
 });
 
 ipcMain.on('add-correction', (event, correction) => {
-    mainWindow.webContents.send('add-correction', correction);
+  mainWindow.webContents.send('add-correction', correction);
 });
 
 ipcMain.on('update-selection', (event, selection) => {
-    correctionsWindow.webContents.send('update-selection', selection);
+  correctionsWindow.webContents.send('update-selection', selection);
 });

@@ -8,11 +8,13 @@ export default class FileUploader extends React.Component {
   static defaultProps = {
     width: 720,
     height: 480,
+    className: '',
   };
 
   static propTypes = {
     width: React.PropTypes.number,
     height: React.PropTypes.number,
+    className: React.PropTypes.string,
   };
 
   constructor(props) {
@@ -39,11 +41,11 @@ export default class FileUploader extends React.Component {
     ipcRenderer.on('selected-csv-file', this.handleCSVFile.bind(this));
   }
 
-  openVideoFile(event) {
+  openVideoFile() {
     ipcRenderer.send('open-video-file');
   }
 
-  handleVideoFile(event, file) {
+  handleVideoFile() {
     this.setState({ videoUploaded: true });
   }
 
@@ -51,42 +53,44 @@ export default class FileUploader extends React.Component {
     ipcRenderer.send('open-csv-file');
   }
 
-  handleCSVFile(event, file) {
+  handleCSVFile() {
     this.setState({ csvUploaded: true });
   }
 
   render() {
     return (
       <div
-        className={styles.file_uploader + " " + this.props.className}
+        className={styles.file_uploader + ' ' + this.props.className}
         style={this.style}
       >
         <div className={styles.button_container}>
           <Button
             className={styles.button}
             text={this.state.videoUploaded
-              ? "Video Selected"
-              : "Select Video"}
+              ? 'Video Selected'
+              : 'Select Video'}
             handler={this.openVideoFile}
           />
           <img
             className={this.state.videoUploaded
               ? styles.checkmark
               : styles.hidden}
-            src={require("../../../assets/img/checkmark.png")}
+            src={require('../../../assets/img/checkmark.png')}
+            alt={''}
           />
           <Button
             className={styles.button}
             text={this.state.csvUploaded
-              ? "CSV Selected"
-              : "Select CSV File"}
+              ? 'CSV Selected'
+              : 'Select CSV File'}
             handler={this.openCSVFile}
           />
           <img
-          className={this.state.csvUploaded
+            className={this.state.csvUploaded
             ? styles.checkmark
             : styles.hidden}
-            src={require("../../../assets/img/checkmark.png")}
+            src={require('../../../assets/img/checkmark.png')}
+            alt={''}
           />
         </div>
       </div>

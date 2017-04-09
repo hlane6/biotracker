@@ -3,7 +3,6 @@ import Canvas from './canvas/Canvas';
 import FileUploader from './file_uploader/FileUploader';
 import Video from './video/Video';
 import VideoControls from './video_controls/VideoControls';
-import Parser from '../../models/Parser';
 import styles from './VideoCanvas.css';
 
 /**
@@ -14,7 +13,6 @@ export default class VideoCanvas extends React.Component {
   static defaultProps = {
     paused: false,
     time: 0,
-    src: '',
     ready: false,
     boxes: [],
     duration: 0.0,
@@ -24,12 +22,12 @@ export default class VideoCanvas extends React.Component {
     seekCallback: () => {},
     onClick: () => {},
     downloadHandler: () => {},
+    onReady: () => {},
   };
 
   static propTypes = {
     paused: React.PropTypes.bool,
     time: React.PropTypes.number,
-    src: React.PropTypes.string,
     ready: React.PropTypes.bool,
     boxes: React.PropTypes.array,
     duration: React.PropTypes.number,
@@ -39,6 +37,7 @@ export default class VideoCanvas extends React.Component {
     seekCallback: React.PropTypes.func,
     onClick: React.PropTypes.func,
     downloadHandler: React.PropTypes.func,
+    onReady: React.PropTypes.func,
   };
 
   constructor(props) {
@@ -48,6 +47,9 @@ export default class VideoCanvas extends React.Component {
     this.getVideo = this.getVideo.bind(this);
   }
 
+  /** Returns the raw video DOM regerence from the child Video
+   * component
+   */
   getVideo() {
     return this.video.rawVideo;
   }
@@ -65,14 +67,14 @@ export default class VideoCanvas extends React.Component {
 
     ctx.drawImage(this.getVideo(), 0, 0, width, height);
 
-    for (let box of this.props.boxes) {
+    for (const box of this.props.boxes) {
       ctx.strokeStyle = box.color;
       ctx.font = '12px sans-serif';
       ctx.fillStyle = 'white';
       ctx.fillText(parseInt(box.id), box.x, box.y);
 
       ctx.translate(box.x, box.y);
-      ctx.rotate(box.theta * Math.PI / 180);
+      ctx.rotate(box.theta * (Math.PI / 180));
 
       ctx.strokeRect(
         -box.width / 2,
@@ -81,7 +83,7 @@ export default class VideoCanvas extends React.Component {
         box.height
       );
 
-      ctx.rotate(-box.theta * Math.PI / 180);
+      ctx.rotate(-box.theta * (Math.PI / 180));
       ctx.translate(-box.x, -box.y);
     }
 
@@ -91,20 +93,20 @@ export default class VideoCanvas extends React.Component {
 
   render() {
     return (
-      <div className="videoCanvas">
+      <div>
         <Video
           ref={(video) => { this.video = video; }}
           onReady={this.props.onReady}
         />
         <Canvas
-          className={this.props.ready ? "" : styles.hidden}
+          className={this.props.ready ? '' : styles.hidden}
           draw={this.draw}
           width={this.props.width}
           height={this.props.height}
           onClick={this.props.onClick}
         />
         <FileUploader
-          className={this.props.ready ? styles.hidden : ""}
+          className={this.props.ready ? styles.hidden : ''}
         />
         <VideoControls
           paused={this.props.paused}

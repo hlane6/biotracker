@@ -3,7 +3,6 @@ import { ipcRenderer } from 'electron';
 import VideoCanvas from '../video_canvas/VideoCanvas';
 import Parser from '../../models/Parser';
 import Header from '../header/Header';
-import Button from '../inputs/button/Button';
 import styles from './Tracker.css';
 
 /**
@@ -41,6 +40,12 @@ export default class Tracker extends React.Component {
     ipcRenderer.on('add-correction', this.addCorrection.bind(this));
   }
 
+  /**
+   * Callback that occurs once a video has been uploaded and its metadata
+   * has been loaded. This will update the state so that the proper
+   * width, height, and duration of the video can be progated throughout
+   * the app
+   */
   onReady({ duration, width, height }) {
     this.setState({
       duration,
@@ -50,11 +55,18 @@ export default class Tracker extends React.Component {
     });
   }
 
+  /**
+   * Callback occurs when the video has been played or paused so that
+   * we can update the state.
+   */
   handlePlayPause(paused) {
     if (!(this.state.videoReady && this.state.csvReady)) return;
     this.setState({ paused });
   }
 
+  /**
+   * Callback to handle a new time for the video.
+   */
   handleSeek(time) {
     if (!(this.state.videoReady && this.state.csvReady)) return;
     this.setState({
@@ -64,6 +76,10 @@ export default class Tracker extends React.Component {
     });
   }
 
+  /**
+   * Callback occurs when a csv file has been uploaded so that we can
+   * update the proper state and start fetching the boxes.
+   */
   handleCSVFile(event, file) {
     this.parser = new Parser(file, () => {
       this.setState({
@@ -73,16 +89,24 @@ export default class Tracker extends React.Component {
     });
   }
 
+  /**
+   * Click handler for the canvas. Will detect collisions with any
+   * boxes and send out an update-selection message if a collision occurs.
+   */
   handleClick(event) {
     const { offsetX, offsetY } = event.nativeEvent;
 
     for (const box of this.state.boxes) {
       if (box.collidesWith(offsetX, offsetY)) {
-        ipcRenderer.send('update-selection', box)
+        ipcRenderer.send('update-selection', box);
       }
     }
   }
 
+  /**
+   * Callback occurs when an add-correction event is sent from the
+   * CorrectionsWindow
+   */
   addCorrection(event, correction) {
     this.parser.update({
       frame: Math.floor(this.state.time / 30),

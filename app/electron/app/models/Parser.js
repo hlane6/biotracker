@@ -126,6 +126,10 @@ export default class Parser {
     this.update = this.update.bind(this);
   }
 
+  /**
+   * Call back from babyparse that will actually parse the results
+   * into BoundingBoxes and store them into this.data
+   */
   finish(results) {
     let boundingBoxes = [];
     const data = results.data;
@@ -141,7 +145,7 @@ export default class Parser {
     ));
 
     for (let i = 1; i < results.data.length; i += 1) {
-      let box = new BoundingBox(
+      const box = new BoundingBox(
         data[i].target_id,
         data[i].x,
         data[i].y,

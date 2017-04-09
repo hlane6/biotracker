@@ -44,7 +44,7 @@ export default class Video extends React.Component {
       height: this.rawVideo.videoHeight,
     });
   }
-  
+
   handleVideoFile(event, file) {
     this.rawVideo.src = file;
   }
