@@ -1,0 +1,20 @@
+.header {
+    display: block;
+    margin: 0 0 10px 0;
+    height: 30px;
+    width: 100%;
+}
+
+.heading {
+    float: left;
+    color: #217F6E;
+    margin: 0;
+    font-family: "Montserrat";
+}
+
+.frame_counter {
+    color: #3b3b3b;
+    float: right;
+    margin: 0;
+    font-family: "Montserrat";
+}

@@ -1,0 +1,14 @@
+{
+  "name": "corrector",
+  "productName": "corrector",
+  "version": "1.0.0",
+  "description": "Corrector allows the editing of csv data by editing a video",
+  "main": "./main.js",
+  "author": {
+    "name": "C. T. Lin",
+    "email": "chentsulin@gmail.com",
+    "url": "https://github.com/chentsulin"
+  },
+  "dependencies": {
+  }
+}
