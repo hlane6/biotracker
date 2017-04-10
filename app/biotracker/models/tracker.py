@@ -81,29 +81,46 @@ class Tracker(object):
 
         frameNum = 0
         currentDataRow = 1  # First row in the csv is a header
+
+        last_len = -1
         while(self.video.grab() and self.video.isOpened()):
             ret, inFrame = self.video.retrieve()
             frameNum += 1
-            all_targets.append(self.__process_frame(inFrame, frameNum))
+
+            curr_targets = self.__process_frame(inFrame, frameNum, last_len)
+            all_targets.append(curr_targets)
+
+            last_len = len(curr_targets)
+
 
         return all_targets
 
     def __process_frame(self, inFrame: np.array,
-                        frameNum: int) -> List[Target]:
+                        frameNum: int, last_len) -> List[Target]:
         grayframe = cv2.cvtColor(inFrame, cv2.COLOR_BGR2GRAY)
         grayframe = cv2.absdiff(grayframe, self.background)
 
         ret, thresh_img = cv2.threshold(grayframe, 30, 255, cv2.THRESH_BINARY)
 
         # Detect targets and draw contours on the image.
-        return self.__detect_targets(thresh_img, inFrame, frameNum)
+        return self.__detect_targets(thresh_img, inFrame, frameNum, last_len)
+
+    def __missed_target(self):
+        pass
+
+    def __split(self):
+        pass
 
     def __detect_targets(self, thresh_img: np.array,
-                         in_frame: np.array, frame_num: int) -> List[Target]:
+                         in_frame: np.array, frame_num: int, last_len) -> List[Target]:
         targets = []
+        post = []
         im, contours, heirarchy = cv2.findContours(thresh_img,
                                                    cv2.RETR_EXTERNAL,
                                                    cv2.CHAIN_APPROX_NONE)
+
+        # Difference between number of ants in previous frame and current
+        diff = last_len - len(contours)
 
         for contour in contours:
             rect, dimensions, theta = cv2.minAreaRect(contour)
@@ -111,7 +128,8 @@ class Tracker(object):
             blob_size = cv2.contourArea(contour)
 
             # Create a target and add it to the target manager
-            if blob_size > app.config['MIN_BLOB_SIZE']:
+            if blob_size > app.config['MIN_BLOB_SIZE'] and \
+                blob_size < app.config['MAX_BLOB_SIZE']:
                 target = Target(
                     frame_num=frame_num,
                     width=dimensions[0],
@@ -120,5 +138,19 @@ class Tracker(object):
                     box=box,
                 )
                 targets.append(target)
+                post.append((target, contour, rect, dimensions, theta, box))
+
+        while diff > 0:
+            post.sort(key=lambda x: x[0].width, reverse=True)
+            print(post[0][0].frame_num)
+
+            target = post[diff][0]
+            contour = post[diff][1]
+
+            diff -= 1
+
+        for n in thresh_img:
+            print(n)
+
 
         return targets

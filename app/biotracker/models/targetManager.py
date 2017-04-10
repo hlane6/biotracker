@@ -58,7 +58,7 @@ class TargetManager:
         self.targest should now contain Targets with valid frame_num, x, y,
         width, height, and theta and are ready to be associated to unique ids.
         """
-        tracker = Tracker(self.video)
+        #tracker = Tracker(self.video)
 
         last_len = -1
         counter = 2
@@ -67,16 +67,7 @@ class TargetManager:
             diff = length - last_len
 
             if diff > 0:
-                # print ("Previous|| ")
-                # for prev in self.targets[counter - 1]:
-                #     print("ID: ", prev.target_id, " Width: ", prev.width)
-                
-                # print("S P A C E")
-                # print ("Current|| ")
-                # for curr in self.targets[counter]:
-                #     print(curr.frame_num, "ID: ", curr.target_id, " Width: ", curr.width)
 
-                # print(self.targets[counter])
                 self.targets[counter].sort(key=lambda x: x.width, reverse=True)
 
                 k = diff
