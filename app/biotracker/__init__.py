@@ -8,6 +8,13 @@ import os
 
 app = fl.Flask(__name__, static_url_path='')
 
+# Blob Size Cofiguration
+app.config['MIN_BLOB_SIZE'] = 150
+app.config['MAX_BLOB_SIZE'] = 700
+
+# This describes how many frames we should look back to find a match
+app.config['HISTORY_LATENCY'] = 15
+
 # Set up constants
 app.config['VID_FOLDER'] = 'biotracker/static/video'
 app.config['DATA_FOLDER'] = 'biotracker/static/data'

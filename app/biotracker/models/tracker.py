@@ -96,12 +96,7 @@ class Tracker(object):
 
     def __detect_targets(self, thresh_img: np.array,
                          in_frame: np.array, frame_num: int) -> List[Target]:
-        # No ground truth means no known label, 0 is a sentinal value for an
-        # unlabled ant
-        unlabeled_ant_id = 0
-        CONTOUR_THRESH = 100
         targets = []
-
         im, contours, heirarchy = cv2.findContours(thresh_img,
                                                    cv2.RETR_EXTERNAL,
                                                    cv2.CHAIN_APPROX_NONE)
@@ -109,9 +104,11 @@ class Tracker(object):
         for contour in contours:
             rect, dimensions, theta = cv2.minAreaRect(contour)
             box = np.int0(cv2.boxPoints((rect, dimensions, theta)))
+            blob_size = cv2.contourArea(contour)
 
             # Create a target and add it to the target manager
-            if cv2.contourArea(contour) > CONTOUR_THRESH:
+            if blob_size > app.config['MIN_BLOB_SIZE'] and  \
+               blob_size < app.config['MAX_BLOB_SIZE']:
                 target = Target(
                     frame_num=frame_num,
                     width=dimensions[0],
