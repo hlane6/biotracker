@@ -61,7 +61,7 @@ export const COLORS = {
 
 class BoundingBox {
   constructor(id, x, y, width, height, theta) {
-    this.color = COLORS[id % COLORS.length];
+    this.color = COLORS[id];
     this.id = id;
     this.x = x;
     this.y = y;
