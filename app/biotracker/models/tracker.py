@@ -162,8 +162,8 @@ class Tracker(object):
             width = target.width
             height = target.height
 
-            print(type(width))
-            print(type(height))
+            #print(type(width))
+            #print(type(height))
 
             criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 10, 1.0)
             flags = cv2.KMEANS_RANDOM_CENTERS
@@ -171,22 +171,28 @@ class Tracker(object):
             xWid = x + int(math.ceil(width))
             yHeight = y + int(math.ceil(height))
 
-            print("x: ", x, "x + width: ", xWid, "y: ", y, "y + height: ", yHeight)
-            img_slice = thresh_img[x:xWid, y:yHeight]
+            #print("x: ", x, "x + width: ", xWid, "y: ", y, "y + height: ", yHeight)
+            img_slice = thresh_img[y:yHeight, x:xWid]
 
             #kmeans requires np.float32 type param
             values = np.float32(img_slice)
             #print("val rows: ", len(values))
             #print("val cols: ", len(values[0]))
 
+            for i in range(len(values)):
+                for j in range(len(values[i])):
+                    print("image slice :", i, " ", j, ": ", values[i][j])
+
             #values = image.reshape((image.shape[0] * image.shape[1], 3))
 
-            print("img_slice: ", len(img_slice))
+            #print("img_slice: ", len(img_slice))
             #print("image: ", len(image))
-            print("values: ", len(values))
+            #print("values: ", len(values))
 
             if len(values) > 2:
-                cv2.kmeans(values, 2, None, criteria, 10, flags)
+                ans = cv2.kmeans(values, 2, None, criteria, 10, flags)
+                for i in range(len(ans[1])):
+                    print("i: ", ans[1][i])
 
 
             count += 1
