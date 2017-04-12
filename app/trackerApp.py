@@ -5,7 +5,7 @@ import os.path
 import argparse
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Use this app to generate tracklets for a video. NOTE: Make sure input video is located within the video folder. Input video should only be in the form "videoname.mp4".')
+    parser = argparse.ArgumentParser(description='Use this app to generate tracklets for a video. NOTE: Make sure input video is located within the video folder. Stores the output csv in the data folder.')
     parser.add_argument('video', help='video of targets in the form "videoname.mp4"')
     args = parser.parse_args()
     args.video = DEFAULT_SETTINGS['VID_FOLDER'] + args.video
@@ -16,4 +16,4 @@ if __name__ == '__main__':
         csv_path = os.path.join(DEFAULT_SETTINGS['DATA_FOLDER'], fname.split('.')[0] + '.csv')
         mgr.write_csv_file(csv_path)
     else:
-        print("Can't find video.")
+        print("Can't find video: '" + args.video + "'.")
