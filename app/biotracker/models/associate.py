@@ -3,7 +3,7 @@ from biotracker import app
 from biotracker.utils import *
 from biotracker.models.target import Target
 from typing import List
-
+from settings import DEFAULT_SETTINGS
 
 def associate(targets: List[List[Target]]) -> List[List[Target]]:
     """ Takes in a list of lists of Targets which have no associated
@@ -24,7 +24,7 @@ def associate(targets: List[List[Target]]) -> List[List[Target]]:
         found = False
 
         # Try to associate to an old frame with correct number of ants
-        while i < app.config['HISTORY_LATENCY'] and \
+        while i < DEFAULT_SETTINGS['HISTORY_LATENCY'] and \
                len(associated_targets) > i and \
                len(associated_targets[-1 * i]) != len(next_frame):
             i += 1

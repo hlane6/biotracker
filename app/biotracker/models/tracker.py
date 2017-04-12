@@ -5,11 +5,11 @@ from biotracker import app
 from biotracker.models.target import Target
 from scipy.stats.mstats import mode
 from typing import List
+from settings import DEFAULT_SETTINGS
 
 import numpy as np
 import cv2
 import os
-
 
 class Tracker(object):
     """ Handles the generation of targets for a given video.
@@ -18,7 +18,7 @@ class Tracker(object):
         self.background -- the computed background image of the video
     """
 
-    def __init__(self, video: cv2.VideoCapture) -> None:
+    def __init__(self, video: cv2.VideoCapture, storage_directory='./') -> None:
         self.video = video
         self.background = self.__get_background()
 
@@ -29,10 +29,11 @@ class Tracker(object):
         stationary in those frames aka the background. Saves the background
         so this doesn't have to be computed every time.
         """
-        vid_name = os.listdir(app.config['VID_FOLDER'])[0].split(".")[0]
+
+        vid_name = os.listdir(DEFAULT_SETTINGS['VID_FOLDER'])
 
         background_path = '{}/bk_{}.png'.format(
-            app.config['BKGRND_FOLDER'],
+            DEFAULT_SETTINGS['BKGRND_FOLDER'],
             vid_name)
 
         if os.path.exists(background_path):
@@ -107,8 +108,8 @@ class Tracker(object):
             blob_size = cv2.contourArea(contour)
 
             # Create a target and add it to the target manager
-            if blob_size > app.config['MIN_BLOB_SIZE'] and  \
-               blob_size < app.config['MAX_BLOB_SIZE']:
+            if blob_size > DEFAULT_SETTINGS['MIN_BLOB_SIZE'] and  \
+               blob_size < DEFAULT_SETTINGS['MAX_BLOB_SIZE']:
                 target = Target(
                     frame_num=frame_num,
                     width=dimensions[0],
