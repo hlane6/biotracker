@@ -13,6 +13,7 @@ if __name__ == '__main__':
         fname = os.listdir(DEFAULT_SETTINGS['VID_FOLDER'])[0]
         mgr = TargetManager('{}/{}'.format(DEFAULT_SETTINGS['VID_FOLDER'], fname))
         mgr.identify_targets()
+        mgr.associate_targets()
         csv_path = os.path.join(DEFAULT_SETTINGS['DATA_FOLDER'], fname.split('.')[0] + '.csv')
         mgr.write_csv_file(csv_path)
     else:
