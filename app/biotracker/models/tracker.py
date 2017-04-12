@@ -5,6 +5,7 @@ from biotracker import app
 from biotracker.models.target import Target
 from scipy.stats.mstats import mode
 from typing import List
+import math
 
 import numpy as np
 import cv2
@@ -82,7 +83,7 @@ class Tracker(object):
         frameNum = 0
         currentDataRow = 1  # First row in the csv is a header
 
-        last_len = -1
+        last_len = 0
         while(self.video.grab() and self.video.isOpened()):
             ret, inFrame = self.video.retrieve()
             frameNum += 1
@@ -120,37 +121,78 @@ class Tracker(object):
                                                    cv2.CHAIN_APPROX_NONE)
 
         # Difference between number of ants in previous frame and current
-        diff = last_len - len(contours)
 
+
+        curr_len = 0
         for contour in contours:
             rect, dimensions, theta = cv2.minAreaRect(contour)
             box = np.int0(cv2.boxPoints((rect, dimensions, theta)))
             blob_size = cv2.contourArea(contour)
 
             # Create a target and add it to the target manager
-            if blob_size > app.config['MIN_BLOB_SIZE'] and \
-                blob_size < app.config['MAX_BLOB_SIZE']:
-                target = Target(
+            target = Target(
                     frame_num=frame_num,
                     width=dimensions[0],
                     height=dimensions[1],
                     theta=theta,
                     box=box,
                 )
+            if blob_size > app.config['MIN_BLOB_SIZE']:
                 targets.append(target)
+            if blob_size > app.config['MIN_BLOB_SIZE'] and \
+                blob_size < app.config['MAX_BLOB_SIZE']:
                 post.append((target, contour, rect, dimensions, theta, box))
+                curr_len += 1
 
-        while diff > 0:
+        diff = last_len - curr_len
+        count = 0
+        bound = diff if (diff < len(post)) else len(post)
+
+
+        while count < bound:
+
             post.sort(key=lambda x: x[0].width, reverse=True)
-            print(post[0][0].frame_num)
 
-            target = post[diff][0]
-            contour = post[diff][1]
+            target = post[count][0]
+            contour = post[count][1]
 
-            diff -= 1
+            x = target.x
+            y = target.y
+            
+            width = target.width
+            height = target.height
 
-        for n in thresh_img:
-            print(n)
+            print(type(width))
+            print(type(height))
+
+            criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 10, 1.0)
+            flags = cv2.KMEANS_RANDOM_CENTERS
+
+            xWid = x + int(math.ceil(width))
+            yHeight = y + int(math.ceil(height))
+
+            print("x: ", x, "x + width: ", xWid, "y: ", y, "y + height: ", yHeight)
+            img_slice = thresh_img[x:xWid, y:yHeight]
+
+            #kmeans requires np.float32 type param
+            values = np.float32(img_slice)
+            #print("val rows: ", len(values))
+            #print("val cols: ", len(values[0]))
+
+            #values = image.reshape((image.shape[0] * image.shape[1], 3))
+
+            print("img_slice: ", len(img_slice))
+            #print("image: ", len(image))
+            print("values: ", len(values))
+
+            if len(values) > 2:
+                cv2.kmeans(values, 2, None, criteria, 10, flags)
+
+
+            count += 1
+
+        # for n in thresh_img:
+        #     print()
 
 
         return targets
