@@ -1,22 +1,28 @@
-#from .models.targetManager import TargetManager
-from .. import models
-from ..config import DEFAULT_SETTINGS
+""" Module containing the script to generate csv data from a given
+video file.
+"""
 
 import os.path
 import argparse
 
-#if __name__ == '__main__':
+from ..models.target_manager import TargetManager
+
+
 def tracker():
     parser = argparse.ArgumentParser(description='Use this app to generate tracklets for a video. NOTE: Make sure input video is located within the video folder. Stores the output csv in the data folder.')
+
     parser.add_argument('video', help='video of targets in the form "videoname.mp4"')
+    # parser.add_argument('background', required=False, help='Background image used to perform tracking. Providing this will considerable speed up tracking.')
+
     args = parser.parse_args()
-    args.video = DEFAULT_SETTINGS['VID_FOLDER'] + args.video
+
     if os.path.isfile(args.video):
-        fname = os.listdir(DEFAULT_SETTINGS['VID_FOLDER'])[0]
-        mgr = TargetManager('{}/{}'.format(DEFAULT_SETTINGS['VID_FOLDER'], fname))
-        mgr.identify_targets()
-        mgr.associate_targets()
-        csv_path = os.path.join(DEFAULT_SETTINGS['DATA_FOLDER'], fname.split('.')[0] + '.csv')
-        mgr.write_csv_file(csv_path)
+        manager = TargetManager(args.video)
+
+        manager.identify_targets()
+        manager.associate_targets()
+
+        csv_path = args.video.split('.mp4')[0] + '.csv'
+        manager.write_csv_file(csv_path)
     else:
         print("Can't find video: '" + args.video + "'.")

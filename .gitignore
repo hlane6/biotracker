@@ -9,3 +9,4 @@ backgrounds
 *.pyc
 .*.swp
 bundle.js
+npm-debug.log

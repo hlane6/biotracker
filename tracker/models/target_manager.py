@@ -32,7 +32,7 @@ class TargetManager:
     HEIGHT = 5
     THETA = 6
 
-    def __init__(self, video_path: str) -> None:
+    def __init__(self, video_path: str, background_path=None) -> None:
         """ Initializes the TrackerManager. A TrackerManger has the following
         instance variables:
             targets: list[list[Target]] - All of the targets for a given video.
@@ -43,13 +43,18 @@ class TargetManager:
         self.targets = []
         self.video = cv2.VideoCapture(video_path)
 
+        if background_path is None:
+            self.background_path = video_path.split('.mp4')[0] + '_background.jpg'
+        else:
+            self.background_path = background_path
+
     def identify_targets(self) -> None:
         """ Using a Tracker, will perform an initial pass of the video.
         self.targets will now contain Targets with valid frame_num, x, y,
         width, height, and theta, but they will have invalid ids and there
         can be mistakes between consequtive frames of Targets disappearing.
         """
-        tracker = Tracker(self.video)
+        tracker = Tracker(self.video, self.background_path)
         self.targets = tracker.process_video()
 
     def post_process_targets(self) -> None:
