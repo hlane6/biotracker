@@ -13,13 +13,12 @@ def genvid(video, tracks, out_name=None):
 
     vid = cv2.VideoCapture(video)
 
-    # Might need to change video format for linux, ubuntu, etc.
     if (platform.system() == 'Darwin'):
         fourcc = cv2.VideoWriter_fourcc(*'mp4v')
     elif (platform.system() == 'Linux'):
-        fourcc = cv2.VideoWriter_fourcc(*'mjpeg')
+        fourcc = cv2.VideoWriter_fourcc(*'X264')
     else:
-        fourcc = cv2.VideoWriter_fourcc(*'mrle')
+        fourcc = cv2.VideoWriter_fourcc(*'mrle') # STILL NOT SURE IF THIS WILL WORK WITH WINDOWS
 
 
     fps = vid.get(cv2.CAP_PROP_FPS)
