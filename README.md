@@ -11,6 +11,7 @@ Biotracker
 + build instructions
 + installation of actual application
 + run instructions
++ troubleshooting
 
 ### Release Notes
 
