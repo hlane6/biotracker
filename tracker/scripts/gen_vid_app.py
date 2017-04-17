@@ -17,7 +17,7 @@ def genvid(video, tracks, out_name=None):
     if (platform.system() == 'Darwin'):
         fourcc = cv2.VideoWriter_fourcc(*'mp4v')
     elif (platform.system() == 'Linux'):
-        fourcc = cv2.VideoWriter_fourcc(*'mjpeg')
+        fourcc = cv2.VideoWriter_fourcc(*'X264')
     else:
         fourcc = cv2.VideoWriter_fourcc(*'mrle')
 
