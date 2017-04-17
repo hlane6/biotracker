@@ -11,3 +11,6 @@ Biotracker
 + run instructions
 
 ### Release Notes
+
++ New features in release
++ known bugs and defects
