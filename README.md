@@ -25,7 +25,7 @@ This repo is organized in the following way:
 Install Guide (Tracker)
 -----------------------
 
-###Pre-Requisites
+### Pre-Requisites
 
 These list all of the programs you need to have installed before starting the
 installation of the tracker.
@@ -33,7 +33,7 @@ installation of the tracker.
 + python3 (>= 3.6.0)
 + pip3 (>= 9.0.1)
 
-###Dependent Libraries
+### Dependent Libraries
 
 There are several python pacakges you will need to install for tracker to
 work properly. Run the following commands to install them:
@@ -49,7 +49,7 @@ and so we have provided link below to tutorials that guide you through the proce
 + [Installing on Ubuntu](http://www.pyimagesearch.com/2016/10/24/ubuntu-16-04-how-to-install-opencv/)
 + [Installing on Mac](http://www.pyimagesearch.com/2016/12/19/install-opencv-3-on-macos-with-homebrew-the-easy-way/)
 
-###Download Instructions
+### Download Instructions
 
 With all the necessary libraries installed, you can now download and use the
 tracker. There are two main options here:
@@ -62,11 +62,11 @@ it would be simpler to just clone this repo with the following command:
 2. Otherwise, we have provided a downloadable zip file in the download section
 of this repo
 
-###Run Instructions
+### Run Instructions
 
 [ insert run instructions for scripts here ]
 
-###Troubleshooting
+### Troubleshooting
 
 [ add troubleshooting here ]
 
@@ -74,7 +74,7 @@ of this repo
 Install Guide (Corrector)
 -------------------------
 
-###Download Instructions
+### Download Instructions
 
 The corrector is a desktop application and as such, we have provided downloadable
 executable files for mac and linux for you to download without any installation or
@@ -84,14 +84,14 @@ this repo.
 + [Ubuntu Corrector Download]()
 + [Mac Corrector Download]()
 
-###Pre-Requisites
+### Pre-Requisites
 
 If you would rather download, build, and install the corrector from source, you
 will need one program before you get started.
 
 + [Node](https://nodejs.org/en/)
 
-###Dependent Libraries
+### Dependent Libraries
 
 Once you have node installed and the source code downloaded, you can install
 the required libraries by running the following command inside the corrector
@@ -103,11 +103,11 @@ Npm is a package manager for node similar to pip for python. All of the required
 libraries are specified in corrector/package.json and npm will read and install
 them for you.
 
-###Build Instructions
+### Build Instructions
 
-###Run Instructions
+### Run Instructions
 
-###Troubleshooting
+### Troubleshooting
 
 + dependent libraries
 + download instructions
