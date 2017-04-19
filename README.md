@@ -57,7 +57,7 @@ tracker. There are two main options here:
 1. If you have git installed and you will be using both the tracker and corrector,
 it would be simpler to just clone this repo with the following command:
 
-    git clone https://github.com/hlane6/biotracker.git
+    `git clone https://github.com/hlane6/biotracker.git`
 
 2. Otherwise, we have provided a downloadable zip file in the download section
 of this repo.
