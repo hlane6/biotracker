@@ -101,20 +101,31 @@ folder of the repo.
 
 Npm is a package manager for node similar to pip for python. All of the required
 libraries are specified in corrector/package.json and npm will read and install
-them for you.
+them for you by running that command. Note that npm will install them locally into
+a node_modules folder it creates for you. Deleting this folder will require you to
+rerun this installation command.
 
 ### Build Instructions
 
-### Run Instructions
+With all required libraries installed, you can now run commands to build the
+Corrector from source. To compile the source files, run the following command
+while in the corrector folder:
+
+    npm run build
+
+Once built, use the following command to run the corrector.
+
+    npm run start
+
+To generate an executable that you can do with what you please, run the following
+command:
+
+    npm run package
+
+Note that this will package the corrector for what ever system you are currently
+using. The resulting executable file will be located under corrector/release.
 
 ### Troubleshooting
-
-+ dependent libraries
-+ download instructions
-+ build instructions
-+ installation of actual application
-+ run instructions
-+ troubleshooting
 
 Release Notes
 -------------
