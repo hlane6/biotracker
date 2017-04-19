@@ -56,11 +56,13 @@ tracker. There are two main options here:
 
 1. If you have git installed and you will be using both the tracker and corrector,
 it would be simpler to just clone this repo with the following command:
-    
+
     git clone https://github.com/hlane6/biotracker.git
 
 2. Otherwise, we have provided a downloadable zip file in the download section
-of this repo
+of this repo.
+
+[Click here to download the tracker zip](https://github.com/hlane6/biotracker/blob/delivery_docs/downloads/tracker.zip?raw=true)
 
 ### Run Instructions
 
@@ -82,7 +84,7 @@ configuration steps necessary. They can also be found in the download section of
 this repo.
 
 + [Ubuntu Corrector Download]()
-+ [Mac Corrector Download]()
++ [Mac Corrector Download](https://github.com/hlane6/biotracker/blob/delivery_docs/downloads/mac/Corrector-1.0.0.dmg?raw=true)
 
 ### Pre-Requisites
 
