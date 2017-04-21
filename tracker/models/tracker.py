@@ -1,11 +1,10 @@
 """ Module containing the Tracker model
 """
 
-from biotracker import app
-from biotracker.models.target import Target
+from .target import Target
 from scipy.stats.mstats import mode
 from typing import List
-from settings import DEFAULT_SETTINGS
+from ..config import DEFAULT_SETTINGS
 
 import numpy as np
 import cv2
@@ -18,25 +17,18 @@ class Tracker(object):
         self.background -- the computed background image of the video
     """
 
-    def __init__(self, video: cv2.VideoCapture, storage_directory='./') -> None:
+    def __init__(self, video: cv2.VideoCapture, background_path=None) -> None:
         self.video = video
-        self.background = self.__get_background()
+        self.background = self.__get_background(background_path=background_path)
 
-    def __get_background(self, numframes=120) -> np.array:
+    def __get_background(self, numframes=120, background_path=None) -> np.array:
         """ Computes the background image of a given video by taking a
         specified number of frames from the video and taking the mode of
         those frames. For a stationary camera, the mode represents what is
         stationary in those frames aka the background. Saves the background
         so this doesn't have to be computed every time.
         """
-
-        vid_name = os.listdir(DEFAULT_SETTINGS['VID_FOLDER'])
-
-        background_path = '{}/bk_{}.png'.format(
-            DEFAULT_SETTINGS['BKGRND_FOLDER'],
-            vid_name)
-
-        if os.path.exists(background_path):
+        if (not (background_path is None)) and (os.path.exists(background_path)):
             return cv2.imread(background_path, 0)
 
         if not self.video.isOpened():

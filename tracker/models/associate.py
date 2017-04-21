@@ -1,9 +1,8 @@
 from munkres import Munkres
-from biotracker import app
-from biotracker.utils import *
-from biotracker.models.target import Target
+from ..utils import *
+from .target import Target
 from typing import List
-from settings import DEFAULT_SETTINGS
+from ..config import DEFAULT_SETTINGS
 
 def associate(targets: List[List[Target]]) -> List[List[Target]]:
     """ Takes in a list of lists of Targets which have no associated

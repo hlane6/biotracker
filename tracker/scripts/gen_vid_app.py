@@ -5,41 +5,49 @@ from decimal import *
 import cv2
 import csv
 import os.path
-import argparse
+import platform
 
 import numpy as np
 
-def genvid():
-    parser = argparse.ArgumentParser(description='Use this app to generate a video with bounding boxes. NOTE: Make sure input video is located within the video folder. Tracks to be used should be in the data folder. Stores the output video in the genVid folder.')
-    parser.add_argument('video', help='video of targets in the form "videoname.mp4"')
-    parser.add_argument('tracks', help='tracks of targets to draw bounding boxes in the form "filename.csv"')
-    args = parser.parse_args()
-    videoName = args.video
-    args.video = DEFAULT_SETTINGS['VID_FOLDER'] + args.video
-    args.tracks = DEFAULT_SETTINGS['DATA_FOLDER'] + args.tracks
+def genvid(video, tracks, out_name=None):
 
-    if os.path.isfile(args.video) and os.path.isfile(args.tracks):
-        video = cv2.VideoCapture(args.video)
+    vid = cv2.VideoCapture(video)
 
-        # Might need to change video format for linux, ubuntu, etc.
+    # Might need to change video format for linux, ubuntu, etc.
+    if (platform.system() == 'Darwin'):
         fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+    elif (platform.system() == 'Linux'):
+        fourcc = cv2.VideoWriter_fourcc(*'X264')
+    else:
+        fourcc = cv2.VideoWriter_fourcc(*'mrle')
 
-        fps = video.get(cv2.CAP_PROP_FPS)
 
-        width = int(video.get(3))
-        height = int(video.get(4))
+    fps = vid.get(cv2.CAP_PROP_FPS)
 
-        out = cv2.VideoWriter(DEFAULT_SETTINGS['GENVID_FOLDER'] + videoName, fourcc, fps, (width, height))
+    width = int(vid.get(3))
+    height = int(vid.get(4))
 
-        frameNum = 0
+    exists = False
 
-        while(video.isOpened()):
-            ret, frame = video.read()
+    if out_name is not None:
+        if os.path.isfile(os.path.join(os.path.dirname(video), out_name + '.mp4')):
+            exists = True;
+        out = cv2.VideoWriter(os.path.join(os.path.dirname(video), out_name + '.mp4'), fourcc, fps, (width, height))
+    else:
+        if os.path.isfile(os.path.join(video.split('.mp4')[0] + 'bb' + '.mp4')):
+            exists = True
+        out = cv2.VideoWriter(os.path.join(video.split('.mp4')[0] + 'bb' + '.mp4'), fourcc, fps, (width, height))
+
+    frameNum = 0
+
+    if not exists:
+        while(vid.isOpened()):
+            ret, frame = vid.read()
 
             if ret:
                 frameNum = frameNum + 1
-                with open(args.tracks, 'r') as tracks:
-                    reader = csv.reader(tracks)
+                with open(tracks, 'r') as t:
+                    reader = csv.reader(t)
                     next(reader, None)
                     for line in reader:
                         if int(line[0]) == frameNum:
@@ -63,11 +71,7 @@ def genvid():
             else:
                 break
 
-        video.release()
+        vid.release()
         out.release()
-
     else:
-        if not os.path.isfile(args.video):
-            print("Can't find video: '" + args.video + "'.")
-        if not os.path.isfile(args.tracks):
-            print("Can't find tracks: '" + args.tracks + "'.")
+        print("Bounding box video already exists. Please delete it and run again.")
