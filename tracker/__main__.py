@@ -27,8 +27,6 @@ if __name__ == '__main__':
             else:
                 if not os.path.isfile(args.video):
                     print("Can't find video: '" + args.video + "'.")
-                if not os.path.isfile(args.background):
-                    print("Can't find background image: '" + args.background + "'.")
 
     elif (args.app == 'genvid'):
         if os.path.isfile(args.video) and os.path.isfile(args.tracks):
