@@ -42,9 +42,21 @@ work properly. Run the following commands to install them:
     pip3 install numpy
     pip3 install scipy
 
-The final library you must install in opencv3. Unfortunately, this library can
+If you are running on **Ubuntu**, you **must** also run the command:
+
+	sudo apt-get install ffmpeg x264 libx264-dev
+
+This is needed for one of our dependencies to work.
+
+If you are running Ubuntu and the three `pip3` commands don't seem to work, try running these commands instead:
+
+	sudo apt-get install python3-munkres
+	sudo apt-get install python3-numpy
+	sudo apt-get install python3-scipy
+
+The final library you must install is opencv3. Unfortunately, this library can
 not be installed through pip. Installing opencv can be a fairly tricky process
-and so we have provided link below to tutorials that guide you through the process.
+and so we have provided links below to tutorials that guide you through the process.
 
 + [Installing on Ubuntu](http://www.pyimagesearch.com/2016/10/24/ubuntu-16-04-how-to-install-opencv/)
 + [Installing on Mac](http://www.pyimagesearch.com/2016/12/19/install-opencv-3-on-macos-with-homebrew-the-easy-way/)
@@ -66,7 +78,19 @@ of this repo.
 
 ### Run Instructions
 
-[ insert run instructions for scripts here ]
+Make sure your terminal is located at the highest level of the application.
+
+1. **Tracker** - To run tracker, run the command:
+
+	`python3 -m tracker -a tracker -v /path/to/video/videoname.mp4 -b /path/to/background/background.jpg`
+
+	This will create a `videoname.csv` file of your data in the same directory as your input video. Only `-a` and `-v` are necessary for tracker. `-b` is optional. However, providing the correct background image will extremely speed up the running time of tracker.
+
+2. **Genvid** - To run genvid, run the command:
+
+	`python3 -m tracker -a genvid -v /path/to/video/videoname.mp4 -t /path/to/csv/filename.csv -f nameofoutputfile`
+
+	It will create this file in the same directory as the video. Only `-a`, `-v`, and `-t` are necessary for genvid. `-f` is optional.
 
 ### Troubleshooting
 
@@ -128,6 +152,8 @@ Note that this will package the corrector for what ever system you are currently
 using. The resulting executable file will be located under corrector/release.
 
 ### Troubleshooting
+
+[ add troubleshooting here ]
 
 Release Notes
 -------------
