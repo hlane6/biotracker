@@ -48,12 +48,6 @@ If you are running on **Ubuntu**, you **must** also run the command:
 
 This is needed for one of our dependencies to work.
 
-If you are running Ubuntu and the three `pip3` commands don't seem to work, try running these commands instead:
-
-	sudo apt-get install python3-munkres
-	sudo apt-get install python3-numpy
-	sudo apt-get install python3-scipy
-
 The final library you must install is opencv3. Unfortunately, this library can
 not be installed through pip. Installing opencv can be a fairly tricky process
 and so we have provided links below to tutorials that guide you through the process.
@@ -84,18 +78,29 @@ Make sure your terminal is located at the highest level of the application.
 
 	`python3 -m tracker -a tracker -v /path/to/video/videoname.mp4 -b /path/to/background/background.jpg`
 
-	This will create a `videoname.csv` file of your data in the same directory as your input video. Only `-a` and `-v` are necessary for tracker. `-b` is optional. However, providing the correct background image will extremely speed up the running time of tracker.
+	This will create a `videoname.csv` file of your data in the same
+    directory as your input video. Only `-a` and `-v` are necessary for
+    tracker. `-b` is optional. However, providing the correct background 
+    image will extremely speed up the running time of tracker. If you
+    don't provide a background image, tracker will create one for you
+    to be used later.
 
 2. **Genvid** - To run genvid, run the command:
 
 	`python3 -m tracker -a genvid -v /path/to/video/videoname.mp4 -t /path/to/csv/filename.csv -f nameofoutputfile`
 
-	It will create this file in the same directory as the video. Only `-a`, `-v`, and `-t` are necessary for genvid. `-f` is optional.
+	It will create this file in the same directory as the video. Only 
+    `-a`, `-v`, and `-t` are necessary for genvid. `-f` is optional.
 
 ### Troubleshooting
 
-[ add troubleshooting here ]
++ If you are running Ubuntu and the three `pip3` commands don't seem to work, try running these commands instead:
 
+	sudo apt-get install python3-munkres
+	sudo apt-get install python3-numpy
+	sudo apt-get install python3-scipy
+
++ Be sure to run python 3, and not python 2, as python 2 is not supported.
 
 Install Guide (Corrector)
 -------------------------
@@ -153,7 +158,8 @@ using. The resulting executable file will be located under corrector/release.
 
 ### Troubleshooting
 
-[ add troubleshooting here ]
++ If you get errors when running any npm command, be sure you are in the
+corrector folder, and not the root folder. 
 
 Release Notes
 -------------
