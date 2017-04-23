@@ -96,9 +96,9 @@ Make sure your terminal is located at the highest level of the application.
 
 + If you are running Ubuntu and the three `pip3` commands don't seem to work, try running these commands instead:
 
-	sudo apt-get install python3-munkres
-	sudo apt-get install python3-numpy
-	sudo apt-get install python3-scipy
+	`sudo apt-get install python3-munkres`
+	`sudo apt-get install python3-numpy`
+	`sudo apt-get install python3-scipy`
 
 + Be sure to run python 3, and not python 2, as python 2 is not supported.
 
