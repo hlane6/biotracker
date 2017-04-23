@@ -63,7 +63,7 @@ tracker. There are two main options here:
 1. If you have git installed and you will be using both the tracker and corrector,
 it would be simpler to just clone this repo with the following command:
 
-    `git clone https://github.com/hlane6/biotracker.git`
+        git clone https://github.com/hlane6/biotracker.git
 
 2. Otherwise, we have provided a downloadable zip file in the download section
 of this repo.
@@ -76,7 +76,7 @@ Make sure your terminal is located at the highest level of the application.
 
 1. **Tracker** - To run tracker, run the command:
 
-	`python3 -m tracker -a tracker -v /path/to/video/videoname.mp4 -b /path/to/background/background.jpg`
+        python3 -m tracker -a tracker -v /path/to/video/videoname.mp4 -b /path/to/background/background.jpg
 
 	This will create a `videoname.csv` file of your data in the same
     directory as your input video. Only `-a` and `-v` are necessary for
@@ -87,7 +87,7 @@ Make sure your terminal is located at the highest level of the application.
 
 2. **Genvid** - To run genvid, run the command:
 
-	`python3 -m tracker -a genvid -v /path/to/video/videoname.mp4 -t /path/to/csv/filename.csv -f nameofoutputfile`
+        python3 -m tracker -a genvid -v /path/to/video/videoname.mp4 -t /path/to/csv/filename.csv -f nameofoutputfile
 
 	It will create this file in the same directory as the video. Only 
     `-a`, `-v`, and `-t` are necessary for genvid. `-f` is optional.
