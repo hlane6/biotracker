@@ -164,5 +164,26 @@ corrector folder, and not the root folder.
 Release Notes
 -------------
 
-+ New features in release
-+ known bugs and defects
+Features
+
+1. **Tracker**
++ Input: video to analyze
++ Output: CSV data of the tracked targets
+2. **Genvid**
++ Input: video and CSV data
++ Output: video with bounding boxes drawn
+3. **Corrector**
++ Allows for manual correction of the tracker’s mistakes
++ Users can select a bounding box and reassign it to a different target ID number
+
+Known Bugs
++ In the Corrector application, closing the ID editor will stay closed on Linux. In order to
+retrieve the editor, the user must restart the application.
++ Sometimes, Tracker creates an incorrect data file at first (this has to do with generating
+an image for the first time). The user must run the script again to get the correct data file.
++ Genvid outputs an error to the command line, but the error means nothing and the
+process is still successful.
++ Running a script with no arguments displays a Python error instead of a printed,
+informative error of what exactly went wrong.
++ If the video passed in is not an mp4, the scripts will display a Python error instead of a
+printed, informative error of what exactly went wrong.
