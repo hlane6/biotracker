@@ -167,14 +167,14 @@ Release Notes
 ### Features
 
 1. **Tracker**
-  + Input: video to analyze
-  + Output: CSV data of the tracked targets
+    + Input: video to analyze
+    + Output: CSV data of the tracked targets
 2. **Genvid**
-  + Input: video and CSV data
-  + Output: video with bounding boxes drawn
+    + Input: video and CSV data
+    + Output: video with bounding boxes drawn
 3. **Corrector**
-  + Allows for manual correction of the tracker’s mistakes
-  + Users can select a bounding box and reassign it to a different target ID number
+    + Allows for manual correction of the tracker’s mistakes
+    + Users can select a bounding box and reassign it to a different target ID number
 
 ### Known Bugs
 + In the Corrector application, closing the ID editor will stay closed on Linux. In order to
