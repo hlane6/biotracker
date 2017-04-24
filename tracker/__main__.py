@@ -25,10 +25,7 @@ if __name__ == '__main__':
             if os.path.isfile(args.video):
                 scripts.tracker(args.video)
             else:
-                if not os.path.isfile(args.video):
-                    print("Can't find video: '" + args.video + "'.")
-                if not os.path.isfile(args.background):
-                    print("Can't find background image: '" + args.background + "'.")
+                print("Can't find video: '" + args.video + "'.")
 
     elif (args.app == 'genvid'):
         if os.path.isfile(args.video) and os.path.isfile(args.tracks):

@@ -17,11 +17,11 @@ class Tracker(object):
         self.background -- the computed background image of the video
     """
 
-    def __init__(self, video: cv2.VideoCapture, background_path=None) -> None:
+    def __init__(self, video: cv2.VideoCapture, background_path: str=None) -> None:
         self.video = video
         self.background = self.__get_background(background_path=background_path)
 
-    def __get_background(self, numframes=120, background_path=None) -> np.array:
+    def __get_background(self, numframes: int=120, background_path: str=None) -> np.array:
         """ Computes the background image of a given video by taking a
         specified number of frames from the video and taking the mode of
         those frames. For a stationary camera, the mode represents what is
@@ -37,9 +37,9 @@ class Tracker(object):
         frames = []
         count = 0
         while(self.video.grab() and self.video.isOpened()):
-            ret, inFrame = self.video.retrieve()
+            ret, in_frame = self.video.retrieve()
             if ret:
-                grayframe = cv2.cvtColor(inFrame, cv2.COLOR_BGR2GRAY)
+                grayframe = cv2.cvtColor(in_frame, cv2.COLOR_BGR2GRAY)
                 frames.append(grayframe)
                 count += 1
                 if count >= numframes:
@@ -68,24 +68,24 @@ class Tracker(object):
         """
         all_targets = []
 
-        frameNum = 0
+        frame_num = 0
         currentDataRow = 1  # First row in the csv is a header
         while(self.video.grab() and self.video.isOpened()):
-            ret, inFrame = self.video.retrieve()
-            frameNum += 1
-            all_targets.append(self.__process_frame(inFrame, frameNum))
+            ret, in_frame = self.video.retrieve()
+            frame_num += 1
+            all_targets.append(self.__process_frame(in_frame, frame_num))
 
         return all_targets
 
-    def __process_frame(self, inFrame: np.array,
-                        frameNum: int) -> List[Target]:
-        grayframe = cv2.cvtColor(inFrame, cv2.COLOR_BGR2GRAY)
+    def __process_frame(self, in_frame: np.array,
+                        frame_num: int) -> List[Target]:
+        grayframe = cv2.cvtColor(in_frame, cv2.COLOR_BGR2GRAY)
         grayframe = cv2.absdiff(grayframe, self.background)
 
         ret, thresh_img = cv2.threshold(grayframe, 30, 255, cv2.THRESH_BINARY)
 
         # Detect targets and draw contours on the image.
-        return self.__detect_targets(thresh_img, inFrame, frameNum)
+        return self.__detect_targets(thresh_img, in_frame, frame_num)
 
     def __detect_targets(self, thresh_img: np.array,
                          in_frame: np.array, frame_num: int) -> List[Target]:

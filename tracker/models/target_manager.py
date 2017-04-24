@@ -32,7 +32,7 @@ class TargetManager:
     HEIGHT = 5
     THETA = 6
 
-    def __init__(self, video_path: str, background_path=None) -> None:
+    def __init__(self, video_path: str, background_path: str=None) -> None:
         """ Initializes the TrackerManager. A TrackerManger has the following
         instance variables:
             targets: list[list[Target]] - All of the targets for a given video.
