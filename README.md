@@ -179,8 +179,6 @@ Release Notes
 ### Known Bugs
 + In the Corrector application, closing the ID editor will stay closed on Linux. In order to
 retrieve the editor, the user must restart the application.
-+ Sometimes, Tracker creates an incorrect data file at first (this has to do with generating
-an image for the first time). The user must run the script again to get the correct data file.
 + Genvid outputs an error to the command line, but the error means nothing and the
 process is still successful.
 + Running a script with no arguments displays a Python error instead of a printed,
