@@ -164,19 +164,19 @@ corrector folder, and not the root folder.
 Release Notes
 -------------
 
-Features
+### Features
 
 1. **Tracker**
-+ Input: video to analyze
-+ Output: CSV data of the tracked targets
+  + Input: video to analyze
+  + Output: CSV data of the tracked targets
 2. **Genvid**
-+ Input: video and CSV data
-+ Output: video with bounding boxes drawn
+  + Input: video and CSV data
+  + Output: video with bounding boxes drawn
 3. **Corrector**
-+ Allows for manual correction of the tracker’s mistakes
-+ Users can select a bounding box and reassign it to a different target ID number
+  + Allows for manual correction of the tracker’s mistakes
+  + Users can select a bounding box and reassign it to a different target ID number
 
-Known Bugs
+### Known Bugs
 + In the Corrector application, closing the ID editor will stay closed on Linux. In order to
 retrieve the editor, the user must restart the application.
 + Sometimes, Tracker creates an incorrect data file at first (this has to do with generating
