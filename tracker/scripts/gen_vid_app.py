@@ -25,7 +25,6 @@ def genvid(video: str, tracks: np.array, out_name: str=None):
     else:
         fourcc = cv2.VideoWriter_fourcc(*'mrle') # STILL NOT SURE IF THIS WILL WORK WITH WINDOWS
 
-
     fps = vid.get(cv2.CAP_PROP_FPS)
 
     width = int(vid.get(3))
