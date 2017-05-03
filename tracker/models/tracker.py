@@ -17,8 +17,9 @@ class Tracker(object):
         self.background -- the computed background image of the video
     """
 
-    def __init__(self, video: cv2.VideoCapture, background_path: str=None) -> None:
-        self.video = video
+    def __init__(self, video: str, background_path: str=None) -> None:
+        self.video_path = video
+        self.video = cv2.VideoCapture(video)
         self.background = self.__get_background(background_path=background_path)
 
     def __get_background(self, numframes: int=120, background_path: str=None) -> np.array:
@@ -55,6 +56,11 @@ class Tracker(object):
 
         # Drop the third dimension.
         background = background[0, :, :]
+
+        # Reopen the video
+        self.video = cv2.VideoCapture(self.video_path)
+
+        # Write the background to disk
         cv2.imwrite(background_path, background)
         return cv2.imread(background_path, 0)
 

@@ -41,7 +41,7 @@ class TargetManager:
             video: cv2.VideoCapture - a reference to the video it is analyzing
         """
         self.targets = []
-        self.video = cv2.VideoCapture(video_path)
+        self.video_path = video_path
 
         if background_path is None:
             self.background_path = video_path.split('.mp4')[0] + '_background.jpg'
@@ -54,7 +54,7 @@ class TargetManager:
         width, height, and theta, but they will have invalid ids and there
         can be mistakes between consequtive frames of Targets disappearing.
         """
-        tracker = Tracker(self.video, self.background_path)
+        tracker = Tracker(self.video_path, self.background_path)
         self.targets = tracker.process_video()
 
     def post_process_targets(self) -> None:
