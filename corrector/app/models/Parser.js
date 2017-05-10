@@ -122,8 +122,6 @@ export default class Parser {
       });
     });
 
-    this.getFrame = this.getFrame.bind(this);
-    this.update = this.update.bind(this);
   }
 
   /**
@@ -133,7 +131,6 @@ export default class Parser {
   finish(results) {
     let boundingBoxes = [];
     const data = results.data;
-    console.log(results);
 
     boundingBoxes.push(new BoundingBox(
       data[0].target_id,
@@ -161,36 +158,9 @@ export default class Parser {
         boundingBoxes.push(box);
       }
     }
-    console.log(this.data.length);
-    this.callback();
-  }
-
-  /**
-  * @param frame the frame number to get bounding boxes for
-  * @return an array of bounding boxes for the given frame
-  */
-  getFrame(frame) {
-    if (frame < 0 || frame > this.data.length) {
-      return null;
-    }
-    return this.data[frame];
-  }
-
-  /**
-  * Updates all bounding boxes based on a given correction. From the
-      corrections starting frame, every box with the oldId will be
-      updated to have the newId and corresponding color
-  * @param correction, a correction contains an frame, oldId, and newId
-  */
-  update(correction) {
-    for (let i = correction.frame; i < this.data.length; i++) {
-      for (let j = 0; j < this.data[i].length; j++) {
-        if (correction.oldId == this.data[i][j].id) {
-          this.data[i][j].id = correction.newId;
-          this.data[i][j].color = COLORS[correction.newId];
-        }
-      }
-    }
+    this.callback(this.data);
   }
 
 }
+
+export { BoundingBox };

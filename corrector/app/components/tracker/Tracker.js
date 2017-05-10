@@ -2,8 +2,19 @@ import React from 'react';
 import { ipcRenderer } from 'electron';
 import VideoCanvas from '../video_canvas/VideoCanvas';
 import Parser from '../../models/Parser';
+import Composer from '../../models/Composer';
+import { AddCorrection,
+  MODES,
+  RemoveCorrection,
+  RotateCorrection,
+  SwitchCorrection,
+  UpdateCorrection } from '../../models/Corrections';
 import Header from '../header/Header';
 import styles from './Tracker.css';
+
+/**
+ * TODO: update design of CorrectionPanel
+ */
 
 /**
 * Root component which keeps track of the boxes, a users pick
@@ -13,6 +24,7 @@ export default class Tracker extends React.Component {
 
   constructor(props) {
     super(props);
+
     this.state = {
       videoReady: false,
       csvReady: false,
@@ -25,6 +37,7 @@ export default class Tracker extends React.Component {
     };
 
     this.parser = null;
+    this.composer = null;
 
     this.onReady = this.onReady.bind(this);
     this.handlePlayPause = this.handlePlayPause.bind(this);
@@ -38,6 +51,8 @@ export default class Tracker extends React.Component {
     // Bind the ipc call backs so we can process files
     ipcRenderer.on('selected-csv-file', this.handleCSVFile.bind(this));
     ipcRenderer.on('add-correction', this.addCorrection.bind(this));
+    ipcRenderer.on('stage-correction', this.stageCorrection.bind(this));
+    ipcRenderer.on('unstage-correction', this.unstageCorrection.bind(this));
   }
 
   /**
@@ -71,7 +86,7 @@ export default class Tracker extends React.Component {
     if (!(this.state.videoReady && this.state.csvReady)) return;
     this.setState({
       time,
-      boxes: this.parser.getFrame(Math.floor(time * 30)),
+      boxes: this.composer.frame(Math.floor(time * 30)),
       pick: null,
     });
   }
@@ -81,10 +96,12 @@ export default class Tracker extends React.Component {
    * update the proper state and start fetching the boxes.
    */
   handleCSVFile(event, file) {
-    this.parser = new Parser(file, () => {
+    this.parser = new Parser(file, (data) => {
+      this.composer = new Composer(data);
+
       this.setState({
         csvReady: true,
-        boxes: this.parser.getFrame(0),
+        boxes: this.composer.frame(0),
       });
     });
   }
@@ -95,24 +112,94 @@ export default class Tracker extends React.Component {
    */
   handleClick(event) {
     const { offsetX, offsetY } = event.nativeEvent;
+    const payload = {
+      box: null,
+      location: {
+        x: offsetX,
+        y: offsetY,
+      },
+      frame: Math.floor(this.state.time * 30),
+    };
 
     for (const box of this.state.boxes) {
       if (box.collidesWith(offsetX, offsetY)) {
-        ipcRenderer.send('update-selection', box);
+        payload.box = box;
       }
     }
+
+    ipcRenderer.send('clicked', payload);
   }
 
   /**
    * Callback occurs when an add-correction event is sent from the
    * CorrectionsWindow
    */
-  addCorrection(event, correction) {
-    this.parser.update({
-      frame: Math.floor(this.state.time / 30),
-      newId: correction.newId,
-      oldId: correction.oldId
+  addCorrection(event, payload) {
+    const { type, correction } = payload;
+    let toAdd = this.reconstructCorrection(type, correction);
+    if (correction) this.composer.add(toAdd);
+  }
+
+  /**
+   * Callback occurs when staging a correction. This will update the
+   * current frames boxes based on the current state of the correction.
+   * This correction will not be saved until the add-correction event
+   * is sent.
+   */
+  stageCorrection(event, payload) {
+    const { type, correction } = payload;
+    let toStage = this.reconstructCorrection(type, correction);
+
+    this.setState((prevState, props) => {
+      return {
+        boxes: toStage.update(
+          this.composer.frame(Math.floor(prevState.time * 30))),
+      }
     });
+  }
+
+  unstageCorrection() {
+    this.setState((prevState, props) => {
+      return {
+        boxes: this.composer.frame(Math.floor(prevState.time * 30))
+      }
+    });
+  }
+
+  reconstructCorrection(type, correction) {
+    let toAdd = null;
+
+    if (type == MODES.ADD) {
+      toAdd = new AddCorrection(
+        correction.frame,
+        correction.id,
+        correction.x,
+        correction.y,
+        correction.width,
+        correction.height,
+        correction.theta);
+    } else if (type == MODES.REMOVE) {
+      toAdd = new RemoveCorrection(
+        correction.frame,
+        correction.id);
+    } else if (type == MODES.ROTATE) {
+      toAdd = new RotateCorrection(
+        correction.frame,
+        correction.id,
+        correction.theta);
+    } else if (type == MODES.SWITCH) {
+      toAdd = new SwitchCorrection(
+        correction.frame,
+        correction.id1,
+        correction.id2);
+    } else if (type == MODES.UPDATE) {
+      toAdd = new UpdateCorrection(
+        correction.frame,
+        correction.oldId,
+        correction.newId);
+    }
+
+    return toAdd;
   }
 
   /**
@@ -120,21 +207,7 @@ export default class Tracker extends React.Component {
   * csv file based on the parsers bounding boxes.
   */
   downloadCSV() {
-    const columnDelimiter = ',';
-    const lineDelimiter = '\n';
-    const keys = ['frame_num', 'target_id', 'x', 'y', 'width', 'height', 'theta'];
-
-    let csv = 'data:text/csv;charset=utf-8,';
-    csv += keys.join(columnDelimiter);
-    csv += lineDelimiter;
-
-    for (let i = 0; i < this.parser.data.length; i++) {
-      for (let j = 0; j < this.parser.data[i].length; j++) {
-        const box = this.parser.data[i][j];
-        csv += (`${i},${box.id},${box.x},${box.y},`
-            + `${box.width},${box.height},${box.theta}\n`);
-      }
-    }
+    const csv = this.composer.csv;
 
     const filename = 'export.csv';
     const encodedCsv = encodeURI(csv);
@@ -154,7 +227,6 @@ export default class Tracker extends React.Component {
           time={this.state.time}
         />
         <VideoCanvas
-          parser={this.parser}
           paused={this.state.paused}
           time={this.state.time}
           ready={this.state.csvReady && this.state.videoReady}
