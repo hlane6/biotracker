@@ -53,7 +53,9 @@ export default class RotatePane extends React.Component {
 
       if (click.box && box === null) {
         box = click.box;
-        theta = click.box.theta;
+        theta = Math.floor(click.box.theta);
+
+        this.thetaInput.setState({ value: Math.floor(theta) });
       }
     }
 
@@ -89,6 +91,7 @@ export default class RotatePane extends React.Component {
       box: null,
       theta: 0,
     });
+    this.thetaInput.setState({ value: 0 });
   }
 
   render() {

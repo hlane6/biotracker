@@ -46,10 +46,11 @@ export default class UpdatePane extends React.Component {
 
     if (clicks.length) {
       const click = clicks.pop();
+      console.log(click);
       frame = click.frame;
 
       if (click.box) {
-        oldId = click.box.oldId;
+        oldId = click.box.id;
       }
     }
 

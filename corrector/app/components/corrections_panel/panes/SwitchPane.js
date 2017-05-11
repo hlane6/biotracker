@@ -47,8 +47,8 @@ export default class SwitchPane extends React.Component {
       frame = click.frame;
 
       if (click.box) {
-        if (!id1) id1 = click.box.id;
-        else if (!id2) id2 = click.box.id;
+        if (id1 === null) id1 = click.box.id;
+        else if (id2 === null) id2 = click.box.id;
       }
 
       this.setState({
@@ -58,7 +58,7 @@ export default class SwitchPane extends React.Component {
       });
     }
 
-    if (frame === null || id1 === null || id2 === nulll) {
+    if (frame === null || id1 === null || id2 === null) {
       return null;
     }
 
