@@ -48,4 +48,4 @@ export default class Composer {
     return csv;
   }
 
-} 
+}

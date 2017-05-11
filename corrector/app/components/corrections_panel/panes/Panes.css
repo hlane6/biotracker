@@ -1,0 +1,21 @@
+.pane {
+  height: 350px;
+}
+
+.label {
+  font-family: "Montserrat", Arial Narrow, Helvetica Neue, Helvetica, sans-serif;
+  text-align: left;
+  font-size: 16px;
+  color: #3b3b3b;
+}
+
+.id_input {
+  width: 100px;
+  height: 15px;
+  padding: 5px 15px;
+  border-color: #217F6E;
+  border-radius: 4px;
+  display: block;
+  font-size: 16px;
+}
+

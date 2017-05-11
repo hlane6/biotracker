@@ -4,7 +4,7 @@ import './app.global.css';
 import Tracker from './components/tracker/Tracker';
 
 // Fonts
-require('./assets/fonts/Montserrat/montserrat.css');
+ require('./assets/fonts/Montserrat/montserrat.css');
 
 render(
   <Tracker />,
