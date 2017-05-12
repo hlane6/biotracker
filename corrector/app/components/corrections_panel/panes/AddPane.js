@@ -38,6 +38,14 @@ export default class AddPane extends React.Component {
     this.clear = this.clear.bind(this);
   }
 
+  /**
+   * Creates an AddCorrection from the current state of the pane. Will
+   * attempt to create one by following these steps.
+   *  1. Get a valid id from saved state
+   *  2. If x, y are null, try to get them from the last click's location
+   *  3. Get width, height, theta from the appropriate sliders
+   *  4. Otherwise, if any values are null, return null
+  */
   getCorrection() {
     const { clicks } = this.props;
     let frame = this.state.frame;

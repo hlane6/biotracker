@@ -25,6 +25,7 @@ export default class UpdatePane extends React.Component {
     };
 
     this.getCorrection = this.getCorrection.bind(this);
+    this.handleId = this.handleId.bind(this);
     this.handleUpdate = this.handleUpdate.bind(this);
     this.clear = this.clear.bind(this);
   }
@@ -46,7 +47,6 @@ export default class UpdatePane extends React.Component {
 
     if (clicks.length) {
       const click = clicks.pop();
-      console.log(click);
       frame = click.frame;
 
       if (click.box) {
@@ -54,7 +54,7 @@ export default class UpdatePane extends React.Component {
       }
     }
 
-    const newId = this.input.getInput();
+    const newId = this.idInput.getInput();
 
     this.setState({
       frame,
@@ -72,21 +72,18 @@ export default class UpdatePane extends React.Component {
       newId);
   }
 
-  handleUpdate(value) {
+  handleId(value) {
     if (value == '' || Number(value) === NaN) return;
+    this.setState({ id: Number(value) }, this.handleUpdate);
+  }
 
+  handleUpdate() {
     const correction = this.getCorrection();
-
-    if (correction) {
-      correction.newId = Number(value);
-      this.props.stageHandler(correction);
-    }
-
-    this.setState({ newId: Number(value) });
+    if (correction) this.props.stageHandler(correction);
   }
 
   clear() {
-    this.input.clear();
+    this.idInput.clear();
     this.setState({
       frame: null,
       oldId: null,
@@ -105,8 +102,8 @@ export default class UpdatePane extends React.Component {
         </p>
         <NumberInput
           className={styles.id_input}
-          onChange={this.handleUpdate}
-          ref={(input) => { this.input = input; }}
+          onChange={this.handleId}
+          ref={(input) => { this.idInput = input; }}
         />
       </div>
     );
