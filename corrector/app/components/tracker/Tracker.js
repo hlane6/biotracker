@@ -13,10 +13,6 @@ import Header from '../header/Header';
 import styles from './Tracker.css';
 
 /**
- * TODO: update design of CorrectionPanel
- */
-
-/**
 * Root component which keeps track of the boxes, a users pick
 * and will update the app with video metadata once it loads
 */

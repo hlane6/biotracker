@@ -32,8 +32,7 @@ export default class CorrectionsPanel extends React.Component {
       updating: false,
       mode: MODES.ADD,
 
-      /* An array treated as a queue of clicks that will only every hold the
-       * previous 2 clicks. Each click has this form:
+      /* An array treated as a queue of clicks. Each click has this form:
        *  location: where the last click was in local x, y coordinates
        *  box: a bounding box if a box was clicked, null otherwise
        *  frame: the corresponding frame number for the click
@@ -62,7 +61,6 @@ export default class CorrectionsPanel extends React.Component {
       return { clicks };
     }, () => {
       const correction = this.pane.getCorrection();
-      console.log(correction);
       if (correction) this.handleStaging(correction);
     });
 
@@ -83,6 +81,10 @@ export default class CorrectionsPanel extends React.Component {
   handleStaging(correction) {
     if (!correction) return;
 
+    // While we are sending the actual correction here, we also
+    // have to send the type of correction so that it can be reconstructed
+    // in the main window. This is because ipc will convert the correction
+    // into json, so it's update function will be lost.
     ipcRenderer.send('stage-correction', {
       correction,
       type: correction.toString(),
