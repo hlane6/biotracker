@@ -69,7 +69,7 @@ app.on('ready', async () => {
   correctionsWindow = new BrowserWindow({
     show: false,
     width: 250,
-    height: 325,
+    height: 680,
     resizeable: false,
     parent: mainWindow,
     title: 'Corrections',
@@ -124,6 +124,14 @@ ipcMain.on('add-correction', (event, correction) => {
   mainWindow.webContents.send('add-correction', correction);
 });
 
-ipcMain.on('update-selection', (event, selection) => {
-  correctionsWindow.webContents.send('update-selection', selection);
+ipcMain.on('stage-correction', (event, correction) => {
+  mainWindow.webContents.send('stage-correction', correction);
+});
+
+ipcMain.on('unstage-correction', (event) => {
+  mainWindow.webContents.send('unstage-correction');
+});
+
+ipcMain.on('clicked', (event, selection) => {
+  correctionsWindow.webContents.send('clicked', selection);
 });
